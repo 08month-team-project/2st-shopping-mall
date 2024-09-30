@@ -2,7 +2,9 @@ spring:
   profiles:
     group:
       local: local
-
+  # .env import
+  config:
+    import: optional:file:.env[.properties]
 ---
 spring:
    config:
