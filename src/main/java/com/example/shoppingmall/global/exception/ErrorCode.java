@@ -10,9 +10,9 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    temporarily(null, null),
+    //ItemException
+    NOT_FOUND_ITEM(NOT_FOUND, "물품을 찾을 수 없습니다."),
     ;
-
 
     private final HttpStatus httpStatus;
     private final String message;
