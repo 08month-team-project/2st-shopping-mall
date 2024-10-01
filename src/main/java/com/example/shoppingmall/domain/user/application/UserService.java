@@ -37,7 +37,7 @@ public class UserService {
             response.put("message","success signup");
             return response;
         }else {
-            throw new UserException(ErrorCode.USER_CREATE_FAIL);
+            throw new UserException(ErrorCode.CREATE_USER_FAILED);
         }
 
     }
