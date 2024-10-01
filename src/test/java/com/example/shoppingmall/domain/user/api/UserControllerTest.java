@@ -3,6 +3,7 @@ package com.example.shoppingmall.domain.user.api;
 import com.example.shoppingmall.domain.user.application.UserService;
 import com.example.shoppingmall.domain.user.dto.AddressRequest;
 import com.example.shoppingmall.domain.user.dto.SignupRequest;
+import com.example.shoppingmall.domain.user.dto.SignupResponse;
 import com.example.shoppingmall.domain.user.type.Gender;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -39,21 +40,16 @@ class UserControllerTest {
 
     private ObjectMapper objectMapper;
 
+    private SignupRequest signupRequest;
     @BeforeEach
     public void setUp(){
         objectMapper = new ObjectMapper();
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
-    }
-
-    @Test
-    @DisplayName("POST 회원 가입 성공")
-    void signup() throws Exception {
-        //given
         AddressRequest addressRequest = AddressRequest.builder()
                 .street("강남대로 123")
                 .city("서울 특별시 강남구")
                 .zipcode("1010").build();
-        SignupRequest signupRequest = SignupRequest.builder()
+        signupRequest = SignupRequest.builder()
                 .email("example@gmail.com")
                 .name("홍길동")
                 .nickname("길동이")
@@ -62,7 +58,13 @@ class UserControllerTest {
                 .phoneNumber("010-1234-1234")
                 .address(addressRequest)
                 .build();
-        Map<String, String> response = Map.of("message", "success signup");
+    }
+
+    @Test
+    @DisplayName("POST 회원 가입 성공")
+    void signup() throws Exception {
+        //given
+        SignupResponse response = SignupResponse.builder().message("success signup").build();
 
         //when
         when(userService.createUser(any())).thenReturn(response);
