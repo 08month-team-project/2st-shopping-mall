@@ -38,25 +38,30 @@ public class Item extends BaseTimeEntity {
     @OneToMany(mappedBy = "item")
     private List<ItemImage> images = new ArrayList<>();
 
+    @OneToMany(mappedBy = "item")
+    private List<ItemStock> stocks = new ArrayList<>();
+
     @Column(name = "thumbnail_url")
     private String thumbnailUrl;
 
     @Column(nullable = false, name = "expired_at")
     private LocalDateTime expiredAt;
 
-    @Column(name = "thumbnail_url", nullable = false)
-    private String thumbnailUrl;
 
     // TODO 조회 수 구현하게 될 때 생각해볼 예정
     @Column(nullable = false, name = "hit_count")
     private Long hitCount;
 
+    @Column(nullable = false)
+    private String description;
+
 
     /* TODO 양방향 고려
      *  - cart_item
      *  - order_item
-     *  - item_stock
      *  - item_category
+     *
+     *  - item_stock
      *  - item_image
      */
 }
