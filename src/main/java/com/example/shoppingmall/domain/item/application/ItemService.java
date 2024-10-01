@@ -19,6 +19,6 @@ public class ItemService {
         PageRequest pageRequest = PageRequest.of(pageNum, 12, Sort.by(DESC, "created_at"));
 
         return itemRepository
-                .findAll(pageRequest).map(ItemResponse::new);
+                .findMainPage(pageRequest).map(ItemResponse::new);
     }
 }
