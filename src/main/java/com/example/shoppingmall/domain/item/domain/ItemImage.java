@@ -2,10 +2,13 @@ package com.example.shoppingmall.domain.item.domain;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.*;
-import static jakarta.persistence.GenerationType.*;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
+@NoArgsConstructor(access = PROTECTED)
 @Getter
 @Entity
 public class ItemImage {
@@ -18,8 +21,7 @@ public class ItemImage {
     @ManyToOne(fetch = LAZY)
     private Item item;
 
-    @Column(nullable = false)
+    @Column(name = "image_url", nullable = false)
     private String imageUrl;
 
-    private boolean isThumbnail;
 }
