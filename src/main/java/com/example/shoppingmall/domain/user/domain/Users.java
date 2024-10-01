@@ -44,9 +44,11 @@ public class Users extends BaseTimeEntity {
     private Gender gender;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserStatus status;
 
     private String profileImageUrl;
