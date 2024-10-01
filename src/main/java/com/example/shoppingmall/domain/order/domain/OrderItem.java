@@ -2,13 +2,16 @@ package com.example.shoppingmall.domain.order.domain;
 
 import com.example.shoppingmall.domain.item.domain.Item;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.*;
 
 @Getter
 @Entity
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
     @Id
@@ -24,7 +27,9 @@ public class OrderItem {
     @ManyToOne(fetch = LAZY)
     private Item item;
 
-    private int quantity;
+    @Column(nullable = false)
+    private Integer quantity;
 
-    private int price;
+    @Column(nullable = false)
+    private Integer price;
 }
