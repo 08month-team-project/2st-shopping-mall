@@ -1,7 +1,7 @@
 package com.example.shoppingmall.domain.item.domain;
 
 import com.example.shoppingmall.domain.common.BaseTimeEntity;
-import com.example.shoppingmall.domain.user.domain.Users;
+import com.example.shoppingmall.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -27,7 +27,7 @@ public class Item extends BaseTimeEntity {
 
     @JoinColumn(name = "user_id")
     @ManyToOne(fetch = LAZY)
-    private Users user;
+    private User user;
 
     @Column(name = "item_name")
     private String name;

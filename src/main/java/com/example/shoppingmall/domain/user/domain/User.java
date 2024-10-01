@@ -5,16 +5,17 @@ import com.example.shoppingmall.domain.user.type.Gender;
 import com.example.shoppingmall.domain.user.type.UserRole;
 import com.example.shoppingmall.domain.user.type.UserStatus;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Getter
 @Entity
-public class Users extends BaseTimeEntity {
+@Builder
+@Table(name = "users")
+@AllArgsConstructor
+public class User extends BaseTimeEntity {
 
 
     @Id
@@ -44,9 +45,11 @@ public class Users extends BaseTimeEntity {
     private Gender gender;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserStatus status;
 
     private String profileImageUrl;
@@ -64,6 +67,5 @@ public class Users extends BaseTimeEntity {
         role = UserRole.CUSTOMER;
         status = UserStatus.ACTIVE;
     }
-
 
 }

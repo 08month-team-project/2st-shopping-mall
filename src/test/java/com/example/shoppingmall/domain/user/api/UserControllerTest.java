@@ -1,0 +1,83 @@
+package com.example.shoppingmall.domain.user.api;
+
+import com.example.shoppingmall.domain.user.application.UserService;
+import com.example.shoppingmall.domain.user.dto.AddressRequest;
+import com.example.shoppingmall.domain.user.dto.SignupRequest;
+import com.example.shoppingmall.domain.user.dto.SignupResponse;
+import com.example.shoppingmall.domain.user.type.Gender;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
+import java.util.Map;
+
+import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
+@ExtendWith(MockitoExtension.class)
+class UserControllerTest {
+
+    @InjectMocks
+    private UserController userController;
+
+    @Mock
+    private UserService userService;
+
+    private MockMvc mockMvc;
+
+    private ObjectMapper objectMapper;
+
+    private SignupRequest signupRequest;
+    @BeforeEach
+    public void setUp(){
+        objectMapper = new ObjectMapper();
+        mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
+        AddressRequest addressRequest = AddressRequest.builder()
+                .street("강남대로 123")
+                .city("서울 특별시 강남구")
+                .zipcode("1010").build();
+        signupRequest = SignupRequest.builder()
+                .email("example@gmail.com")
+                .name("홍길동")
+                .nickname("길동이")
+                .password("mypass1234")
+                .gender(Gender.MALE)
+                .phoneNumber("010-1234-1234")
+                .address(addressRequest)
+                .build();
+    }
+
+    @Test
+    @DisplayName("POST 회원 가입 성공")
+    void signup() throws Exception {
+        //given
+        SignupResponse response = SignupResponse.builder().message("success signup").build();
+
+        //when
+        when(userService.createUser(any())).thenReturn(response);
+
+        ResultActions resultActions = mockMvc.perform(post("/users/signup")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(signupRequest)));
+
+        //then
+        resultActions
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message")
+                .value("success signup"));
+    }
+}
