@@ -5,15 +5,15 @@ import com.example.shoppingmall.domain.user.type.Gender;
 import com.example.shoppingmall.domain.user.type.UserRole;
 import com.example.shoppingmall.domain.user.type.UserStatus;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor
 @Getter
 @Entity
+@Builder
+@AllArgsConstructor
 public class Users extends BaseTimeEntity {
 
 
@@ -64,6 +64,5 @@ public class Users extends BaseTimeEntity {
         role = UserRole.CUSTOMER;
         status = UserStatus.ACTIVE;
     }
-
 
 }
