@@ -1,7 +1,7 @@
 package com.example.shoppingmall.domain.user.dto;
 
 import com.example.shoppingmall.domain.user.domain.Address;
-import com.example.shoppingmall.domain.user.domain.Users;
+import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.type.Gender;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
@@ -45,8 +45,8 @@ public class SignupRequest {
     @Valid
     private AddressRequest address;
 
-    public Users dtoToEntity(String encodedPwd){
-        return Users.builder()
+    public User dtoToEntity(String encodedPwd){
+        return User.builder()
                 .email(email).name(name).nickname(nickname)
                 .password(encodedPwd).gender(gender).phoneNumber(phoneNumber)
                 .address(Address.builder()

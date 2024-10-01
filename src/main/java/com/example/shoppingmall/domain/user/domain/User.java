@@ -13,8 +13,9 @@ import static jakarta.persistence.GenerationType.IDENTITY;
 @Getter
 @Entity
 @Builder
+@Table(name = "users")
 @AllArgsConstructor
-public class Users extends BaseTimeEntity {
+public class User extends BaseTimeEntity {
 
 
     @Id

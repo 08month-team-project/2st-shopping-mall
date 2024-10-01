@@ -2,7 +2,7 @@ package com.example.shoppingmall.domain.user.application;
 
 import com.example.shoppingmall.domain.user.dao.UserRepository;
 import com.example.shoppingmall.domain.user.domain.Address;
-import com.example.shoppingmall.domain.user.domain.Users;
+import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.dto.AddressRequest;
 import com.example.shoppingmall.domain.user.dto.SignupRequest;
 import com.example.shoppingmall.domain.user.excepction.UserException;
@@ -60,7 +60,7 @@ class UserServiceTest {
                 .phoneNumber(correctPhone)
                 .address(addressRequest)
                 .build();
-        Users user = Users.builder()
+        User user = User.builder()
                 .id(1L)
                 .email(correctEmail)
                 .name("홍길동")
@@ -101,7 +101,7 @@ class UserServiceTest {
                 .build();
 
         //when
-        when(userRepository.findByEmail(existingEmail)).thenReturn(Optional.of(new Users()));
+        when(userRepository.findByEmail(existingEmail)).thenReturn(Optional.of(new User()));
 
         //then
         assertThrows(UserException.class, () -> userService.createUser(signupRequest));

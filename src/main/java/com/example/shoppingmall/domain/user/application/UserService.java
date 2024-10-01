@@ -1,7 +1,7 @@
 package com.example.shoppingmall.domain.user.application;
 
 import com.example.shoppingmall.domain.user.dao.UserRepository;
-import com.example.shoppingmall.domain.user.domain.Users;
+import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.dto.SignupRequest;
 import com.example.shoppingmall.domain.user.excepction.UserException;
 import com.example.shoppingmall.global.exception.ErrorCode;
@@ -24,13 +24,13 @@ public class UserService {
 
     @Transactional
     public Map<String,String> createUser(SignupRequest signupRequest){
-        Optional<Users> findUser = userRepository.findByEmail(signupRequest.getEmail());
+        Optional<User> findUser = userRepository.findByEmail(signupRequest.getEmail());
         if (findUser.isPresent()){
             throw new UserException(ErrorCode.ALREADY_EXIST_USER);
         }
         String encodedPwd = bCryptPasswordEncoder.encode(signupRequest.getPassword());
-        Users users = signupRequest.dtoToEntity(encodedPwd);
-        Optional<Users> savedUser = Optional.of(userRepository.save(users));
+        User user = signupRequest.dtoToEntity(encodedPwd);
+        Optional<User> savedUser = Optional.of(userRepository.save(user));
 
         Map<String,String> response = new HashMap<>();
         if (savedUser.get().getId() != null){

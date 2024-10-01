@@ -1,7 +1,7 @@
 package com.example.shoppingmall.domain.user.dao;
 
 import com.example.shoppingmall.domain.user.domain.Address;
-import com.example.shoppingmall.domain.user.domain.Users;
+import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.type.Gender;
 import com.example.shoppingmall.domain.user.type.UserRole;
 import com.example.shoppingmall.domain.user.type.UserStatus;
@@ -30,7 +30,7 @@ class UserRepositoryTest {
                 .street("강남대로 123")
                 .city("서울 특별시 강남구")
                 .zipcode("1101").build();
-        Users users = Users.builder()
+        User user = User.builder()
                 .email("example@gmail.com")
                 .name("홍길동")
                 .nickname("길동이")
@@ -40,11 +40,11 @@ class UserRepositoryTest {
                 .address(address).build();
 
         //when
-        Users savedUser = userRepository.save(users);
+        User savedUser = userRepository.save(user);
 
         //then
         assertNotNull(savedUser);
-        assertEquals(users.getEmail(), savedUser.getEmail());
+        assertEquals(user.getEmail(), savedUser.getEmail());
         assertEquals(UserRole.CUSTOMER,savedUser.getRole());
         assertEquals(UserStatus.ACTIVE,savedUser.getStatus());
     }
@@ -57,7 +57,7 @@ class UserRepositoryTest {
                 .street("강남대로 123")
                 .city("서울 특별시 강남구")
                 .zipcode("1101").build();
-        Users users = Users.builder()
+        User user = User.builder()
                 .email("example@gmail.com")
                 .name("홍길동")
                 .nickname("길동이")
@@ -68,8 +68,8 @@ class UserRepositoryTest {
         String email = "example@gmail.com";
 
         //when
-        Users savedUser = userRepository.save(users);
-        Optional<Users> findUser = userRepository.findByEmail(email);
+        User savedUser = userRepository.save(user);
+        Optional<User> findUser = userRepository.findByEmail(email);
 
         //then
         assertNotNull(findUser);
