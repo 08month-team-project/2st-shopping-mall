@@ -30,10 +30,10 @@ public class UserService {
         }
         String encodedPwd = bCryptPasswordEncoder.encode(signupRequest.getPassword());
         User user = signupRequest.dtoToEntity(encodedPwd);
-        Optional<User> savedUser = Optional.of(userRepository.save(user));
+        User savedUser = userRepository.save(user);
 
         Map<String,String> response = new HashMap<>();
-        if (savedUser.get().getId() != null){
+        if (savedUser.getId() != null){
             response.put("message","success signup");
             return response;
         }else {
