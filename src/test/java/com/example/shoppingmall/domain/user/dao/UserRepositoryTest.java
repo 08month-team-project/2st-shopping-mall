@@ -13,8 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -50,7 +49,7 @@ class UserRepositoryTest {
     }
 
     @Test
-    @DisplayName("이메일 정보를 가지고 데이터베이스에서 사용자를 찾아 반환합니다.")
+    @DisplayName("이메일 정보를 가지고 데이터베이스에서 중복된 사용자를 찾습니다.")
     void findByEmail() {
         //given
         Address address = Address.builder()
@@ -69,12 +68,12 @@ class UserRepositoryTest {
 
         //when
         User savedUser = userRepository.save(user);
-        Optional<User> findUser = userRepository.findByEmail(email);
+        boolean isExist = userRepository.existsByEmail(email);
 
         //then
-        assertNotNull(findUser);
-        assertEquals(savedUser.getEmail(),findUser.get().getEmail());
-        assertEquals(savedUser.getName(),findUser.get().getName());
+        assertTrue(isExist);
+        assertEquals(user.getEmail(),savedUser.getEmail());
+        assertEquals(user.getName(),savedUser.getName());
     }
 
 }

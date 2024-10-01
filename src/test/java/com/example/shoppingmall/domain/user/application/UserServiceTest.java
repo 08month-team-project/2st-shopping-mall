@@ -101,7 +101,7 @@ class UserServiceTest {
                 .build();
 
         //when
-        when(userRepository.findByEmail(existingEmail)).thenReturn(Optional.of(new User()));
+        when(userRepository.existsByEmail(existingEmail)).thenReturn(true);
 
         //then
         assertThrows(UserException.class, () -> userService.createUser(signupRequest));
@@ -129,7 +129,7 @@ class UserServiceTest {
                 .build();
 
         // when
-        when(userRepository.findByEmail(correctEmail)).thenReturn(Optional.empty());
+        when(userRepository.existsByEmail(correctEmail)).thenReturn(false);
         when(bCryptPasswordEncoder.encode(correctPwd)).thenReturn(correctPwd);
         when(userRepository.save(any())).thenThrow(new UserException(ErrorCode.CREATE_USER_FAILED));
 
