@@ -24,8 +24,8 @@ public class UserService {
 
     @Transactional
     public Map<String,String> createUser(SignupRequest signupRequest){
-        Optional<User> findUser = userRepository.findByEmail(signupRequest.getEmail());
-        if (findUser.isPresent()){
+
+        if (userRepository.existsByEmail(signupRequest.getEmail())){
             throw new UserException(ErrorCode.ALREADY_EXIST_USER);
         }
         String encodedPwd = bCryptPasswordEncoder.encode(signupRequest.getPassword());
