@@ -3,6 +3,7 @@ package com.example.shoppingmall.domain.user.api;
 
 import com.example.shoppingmall.domain.user.application.UserService;
 import com.example.shoppingmall.domain.user.dto.SignupRequest;
+import com.example.shoppingmall.domain.user.dto.SignupResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,8 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/signup")
-    public ResponseEntity<Map<String,String>> signup(@Valid @RequestBody SignupRequest signupRequest){
-        Map<String,String> response = userService.createUser(signupRequest);
-        return ResponseEntity.ok(response);
+    public ResponseEntity<SignupResponse> signup(@Valid @RequestBody SignupRequest signupRequest){
+        return ResponseEntity.ok(userService.createUser(signupRequest));
     }
 }

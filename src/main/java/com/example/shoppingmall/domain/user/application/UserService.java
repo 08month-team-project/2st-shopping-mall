@@ -3,6 +3,7 @@ package com.example.shoppingmall.domain.user.application;
 import com.example.shoppingmall.domain.user.dao.UserRepository;
 import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.dto.SignupRequest;
+import com.example.shoppingmall.domain.user.dto.SignupResponse;
 import com.example.shoppingmall.domain.user.excepction.UserException;
 import com.example.shoppingmall.global.exception.ErrorCode;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,7 @@ public class UserService {
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Transactional
-    public Map<String,String> createUser(SignupRequest signupRequest){
+    public SignupResponse createUser(SignupRequest signupRequest){
 
         if (userRepository.existsByEmail(signupRequest.getEmail())){
             throw new UserException(ErrorCode.ALREADY_EXIST_USER);
@@ -32,10 +33,9 @@ public class UserService {
         User user = signupRequest.dtoToEntity(encodedPwd);
         User savedUser = userRepository.save(user);
 
-        Map<String,String> response = new HashMap<>();
         if (savedUser.getId() != null){
-            response.put("message","success signup");
-            return response;
+            return SignupResponse.builder()
+                    .message("success signup").build();
         }else {
             throw new UserException(ErrorCode.CREATE_USER_FAILED);
         }
