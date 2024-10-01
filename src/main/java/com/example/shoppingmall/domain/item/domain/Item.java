@@ -41,6 +41,9 @@ public class Item extends BaseTimeEntity {
     @Column(nullable = false)
     private LocalDateTime expiredAt;
 
+    @Column(name = "thumbnail_url", nullable = false)
+    private String thumbnailUrl;
+
     // TODO 조회 수 구현하게 될 때 생각해볼 예정
     private long hitCount;
 
