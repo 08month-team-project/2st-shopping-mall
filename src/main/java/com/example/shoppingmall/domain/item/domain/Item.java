@@ -1,6 +1,7 @@
 package com.example.shoppingmall.domain.item.domain;
 
 import com.example.shoppingmall.domain.common.BaseTimeEntity;
+import com.example.shoppingmall.domain.item.type.ClothingSize;
 import com.example.shoppingmall.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -57,6 +58,25 @@ public class Item extends BaseTimeEntity {
     @Column(nullable = false)
     private String description;
 
+
+    /**
+     * 이미 존재하는 옵션의 재고 수정 X
+     * 새로운 옵션 자체를 추가
+     */
+    public void addStockOption(ClothingSize size, int stock) {
+
+        for (ItemStock itemStock : stocks) {
+            if(itemStock!= null && itemStock.getSize().equals(size)){
+                itemStock.addStock(stock);
+                break;
+            }
+        }
+        stocks.add(new ItemStock(this, size, stock));
+    }
+
+    public void addImage(String imageUrl) {
+        images.add(new ItemImage(this, imageUrl));
+    }
 
     /* TODO 양방향 고려
      *  - cart_item
