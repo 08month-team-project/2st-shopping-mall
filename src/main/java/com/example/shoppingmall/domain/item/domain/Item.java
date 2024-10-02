@@ -3,9 +3,7 @@ package com.example.shoppingmall.domain.item.domain;
 import com.example.shoppingmall.domain.common.BaseTimeEntity;
 import com.example.shoppingmall.domain.user.domain.User;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -14,6 +12,8 @@ import java.util.List;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
+@Builder
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -35,10 +35,12 @@ public class Item extends BaseTimeEntity {
     @Column(name = "item_price", nullable = false)
     private Integer price;
 
-    @OneToMany(mappedBy = "item")
+    @Builder.Default
+    @OneToMany(mappedBy = "item", cascade = CascadeType.PERSIST)
     private List<ItemImage> images = new ArrayList<>();
 
-    @OneToMany(mappedBy = "item")
+    @Builder.Default
+    @OneToMany(mappedBy = "item", cascade = CascadeType.PERSIST)
     private List<ItemStock> stocks = new ArrayList<>();
 
     @Column(name = "thumbnail_url")
