@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Long> {
+public interface ItemRepository extends JpaRepository<Item, Long>, ItemRepositoryCustom {
 
     @Query("select i from Item i join fetch i.user join fetch i.stocks where i.id = :itemId")
     Optional<Item> findItemAndStockAndSeller(Long itemId);
