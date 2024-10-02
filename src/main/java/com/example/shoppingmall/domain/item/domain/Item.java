@@ -2,6 +2,7 @@ package com.example.shoppingmall.domain.item.domain;
 
 import com.example.shoppingmall.domain.common.BaseTimeEntity;
 import com.example.shoppingmall.domain.item.type.ClothingSize;
+import com.example.shoppingmall.domain.item.type.ItemStatus;
 import com.example.shoppingmall.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.EnumType.*;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -57,6 +59,10 @@ public class Item extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String description;
+
+    @Enumerated(STRING)
+    @Column( nullable = false, name = "item_status")
+    private ItemStatus status;
 
 
     /**
