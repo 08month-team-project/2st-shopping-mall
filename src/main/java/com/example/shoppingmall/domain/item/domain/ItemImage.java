@@ -28,4 +28,10 @@ public class ItemImage {
         this.item = item;
         this.imageUrl = imageUrl;
     }
+
+    public ItemImage(Long imageId, Item item, String imageUrl) {
+        this.id = imageId;
+        this.item = item;
+        this.imageUrl = imageUrl;
+    }
 }
