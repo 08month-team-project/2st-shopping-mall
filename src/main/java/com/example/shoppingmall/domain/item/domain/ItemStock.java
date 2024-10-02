@@ -6,8 +6,8 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.EnumType.*;
-import static jakarta.persistence.FetchType.*;
+import static jakarta.persistence.EnumType.STRING;
+import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -32,4 +32,13 @@ public class ItemStock {
     @ManyToOne(fetch = LAZY)
     private Item item;
 
+    public ItemStock(Item item, ClothingSize size, Integer stock) {
+        this.item = item;
+        this.size = size;
+        this.stock = stock;
+    }
+
+    public void addStock(int stock) {
+        this.stock += stock;
+    }
 }
