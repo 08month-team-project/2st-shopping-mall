@@ -1,6 +1,6 @@
 package com.example.shoppingmall.domain.cart.domain;
 
-import com.example.shoppingmall.domain.user.domain.Users;
+import com.example.shoppingmall.domain.user.domain.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 
@@ -19,7 +19,7 @@ public class Cart {
 
     @JoinColumn(name = "user_id")
     @OneToOne(fetch = LAZY)
-    private Users users;
+    private User user;
 
     /* TODO 양방향 고려
     *   - user (oneToOne)
