@@ -1,8 +1,10 @@
 package com.example.shoppingmall.domain.item.dto;
 
 import com.example.shoppingmall.domain.item.domain.ItemImage;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor
 @Getter
 public class ItemImageResponse {
 

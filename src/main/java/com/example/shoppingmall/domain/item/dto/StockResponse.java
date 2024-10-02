@@ -2,8 +2,10 @@ package com.example.shoppingmall.domain.item.dto;
 
 import com.example.shoppingmall.domain.item.domain.ItemStock;
 import com.example.shoppingmall.domain.item.type.ClothingSize;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+@AllArgsConstructor
 @Getter
 public class StockResponse {
 
