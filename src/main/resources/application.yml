@@ -25,6 +25,16 @@ spring:
         format_sql: true
      open-in-view: false
 
+   cloud:
+     aws:
+       credentials:
+         accessKey: ${ACCESSKEY}
+         secretKey: ${SECRETKEY}
+       s3:
+         bucket: ${BUCKET}
+       region:
+         static: ${STATIC_REGION}
+
 logging:
   level:
     org.hibernate.SQL: debug
