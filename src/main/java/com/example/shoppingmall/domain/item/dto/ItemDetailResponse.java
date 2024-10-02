@@ -2,13 +2,18 @@ package com.example.shoppingmall.domain.item.dto;
 
 import com.example.shoppingmall.domain.item.domain.Item;
 import com.example.shoppingmall.domain.item.domain.ItemImage;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+@AllArgsConstructor
+@Builder
 @Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ItemDetailResponse {
@@ -22,7 +27,10 @@ public class ItemDetailResponse {
     private long sellerId;
     private String sellerNickname;
 
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime createdAt;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime expiredAt;
 
     private List<ItemImageResponse> itemImageList;
