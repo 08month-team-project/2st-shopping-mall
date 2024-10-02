@@ -12,7 +12,6 @@ import java.util.Optional;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long> {
 
-    Page<Item> findMainPage(Pageable pageable);
     @Query("select i from Item i join fetch i.user join fetch i.stocks where i.id = :itemId")
     Optional<Item> findItemAndStockAndSeller(Long itemId);
 }

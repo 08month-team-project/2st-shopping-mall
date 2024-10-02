@@ -15,12 +15,6 @@ public class ItemController {
 
     private final ItemService itemService;
 
-    @GetMapping
-    public ResponseEntity<Page<ItemResponse>> getItemMainPage(
-            @RequestParam(name = "page", defaultValue = "1") int pageNum) {
-
-        return ResponseEntity.ok(itemService.getItemMainPage(pageNum));
-    }
 
     @GetMapping("/{item_id}")
     public ResponseEntity<ItemDetailResponse> getItemDetail(

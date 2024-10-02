@@ -24,12 +24,6 @@ public class ItemService {
     private final ItemRepository itemRepository;
     private final ImageRepository imageRepository;
 
-    public Page<ItemResponse> getItemMainPage(int pageNum) {
-        PageRequest pageRequest = PageRequest.of(pageNum, 12, Sort.by(DESC, "created_at"));
-
-        return itemRepository
-                .findMainPage(pageRequest).map(ItemResponse::new);
-    }
 
     public ItemDetailResponse getItemDetail(long itemId) {
 
