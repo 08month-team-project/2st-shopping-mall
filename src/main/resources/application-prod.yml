@@ -13,3 +13,12 @@ spring:
     url: ${AWS_DB_URL}
     username: ${AWS_DB_USERNAME}
     password: ${AWS_DB_PASSWORD}
+  cloud:
+    aws:
+      credentials:
+        accessKey: ${ACCESSKEY}
+        secretKey: ${SECRETKEY}
+      s3:
+        bucket: ${BUCKET}
+      region:
+        static: ${STATIC_REGION}
