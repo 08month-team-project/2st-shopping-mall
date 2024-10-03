@@ -61,8 +61,7 @@ public class S3Service {
 
     private String uploadValidation(MultipartFile file) {
 
-        // 1. 파일 이름이 동일할 경우 UUID를 통해 고유 키를 나눠주고
-        // 이미지를 하나이상은 등록하게 설정
+        // 1. 파일 이름이 동일할 경우를 대비해서 UUID 에서 생성된 키와 함께 S3에 저장
         String uniqueFileName = Optional.of(file)
                 .filter(f -> !f.isEmpty())
                 .map(f -> {
