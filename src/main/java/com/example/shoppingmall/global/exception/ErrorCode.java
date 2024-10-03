@@ -14,9 +14,18 @@ public enum ErrorCode {
     ALREADY_EXIST_USER(CONFLICT,"이미 존재하는 사용자입니다."),
     CREATE_USER_FAILED(INTERNAL_SERVER_ERROR,"회원가입에 실패했습니다."),
 
-
     //ItemException
     NOT_FOUND_ITEM(NOT_FOUND, "물품을 찾을 수 없습니다."),
+
+    //S3Exception
+    INVALID_IMAGE_TYPE(BAD_REQUEST, "허용되지 않는 파일 형식입니다. JPEG, JPG, PNG 파일만 가능합니다."),
+    IMAGE_TOO_LARGE(PAYLOAD_TOO_LARGE, "파일 크기가 1MB를 초과합니다."),
+    NOT_FOUND_IMAGE_URL(NOT_FOUND,"해당 사진의 주소가 존재 하지 않습니다."),
+    NOT_VALID_URL(NOT_FOUND,"잘못된 URL 형태입니다."),
+    NOT_ENOUGH_IMAGES(NOT_FOUND,"최소 1장의 이미지를 업로드해야 합니다."),
+    MAX_UPLOAD_LIMIT(NOT_FOUND,"최대 3장 까지만 업로드가 가능합니다."),
+    INVALID_URL_FORMAT(NOT_FOUND,"잘못된 URL 형식입니다.")
+
     ;
 
     private final HttpStatus httpStatus;
