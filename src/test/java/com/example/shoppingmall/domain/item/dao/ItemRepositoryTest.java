@@ -2,6 +2,7 @@ package com.example.shoppingmall.domain.item.dao;
 
 import com.example.shoppingmall.domain.item.domain.Item;
 import com.example.shoppingmall.domain.item.domain.ItemStock;
+import com.example.shoppingmall.domain.item.type.ItemStatus;
 import com.example.shoppingmall.domain.user.dao.UserRepository;
 import com.example.shoppingmall.domain.user.domain.Address;
 import com.example.shoppingmall.domain.user.domain.User;
@@ -68,6 +69,8 @@ class ItemRepositoryTest {
                 .description("당신도 입을 수 있어요!")
                 .stocks(new ArrayList<>())
                 .images(new ArrayList<>())
+                .categoryItems(new ArrayList<>())
+                .status(ItemStatus.IN_STOCK)
                 .build();
 
         item1.addStockOption(S, 4);
