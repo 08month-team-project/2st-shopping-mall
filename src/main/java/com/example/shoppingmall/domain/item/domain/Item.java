@@ -48,7 +48,7 @@ public class Item extends BaseTimeEntity {
 
     @Builder.Default
     @OneToMany(mappedBy = "item", cascade = CascadeType.PERSIST)
-    private List<CategoryItem> categoryItem = new ArrayList<>();
+    private List<CategoryItem> categoryItems = new ArrayList<>();
 
     @Column(name = "thumbnail_url")
     private String thumbnailUrl;

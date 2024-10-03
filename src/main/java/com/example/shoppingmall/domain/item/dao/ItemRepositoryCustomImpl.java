@@ -77,7 +77,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                                         Pageable pageable) {
 
         List<Item> resultContents = factory.selectFrom(item)
-                .join(item.categoryItem, categoryItem)
+                .join(item.categoryItems, categoryItem)
                 .where(
                         categoryCondition(categoryId),
                         itemNameCondition(itemName),
@@ -89,7 +89,7 @@ public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
                 .fetch();
 
         JPAQuery<Long> totalCount = factory.select(item.count())
-                .join(item.categoryItem, categoryItem)
+                .join(item.categoryItems, categoryItem)
                 .where(
                         categoryCondition(categoryId),
                         itemNameCondition(itemName),
