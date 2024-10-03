@@ -3,11 +3,14 @@ package com.example.shoppingmall.domain.item.dto;
 import com.example.shoppingmall.domain.item.domain.Item;
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
-
-@Getter
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@Builder
+@AllArgsConstructor
+@Getter
 public class ItemResponse {
 
     private long itemId;
@@ -17,7 +20,7 @@ public class ItemResponse {
     private long hits;
 
 
-    public ItemResponse (Item item) {
+    public ItemResponse(Item item) {
         this.itemId = item.getId();
         this.itemName = item.getName();
         this.price = item.getPrice();
