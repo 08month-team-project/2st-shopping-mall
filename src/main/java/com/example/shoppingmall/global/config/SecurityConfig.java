@@ -34,7 +34,8 @@ public class SecurityConfig {
 
         http.formLogin(auth->auth.disable())
                 .httpBasic(auth->auth.disable())
-                .csrf(auth->auth.disable());
+                .csrf(auth->auth.disable())
+                .cors(auth->auth.disable());
 
 
         //경로별 인가 작업 ? 인가 = 접근 권한을 얻는 (인터넷에선 주로 토큰)
