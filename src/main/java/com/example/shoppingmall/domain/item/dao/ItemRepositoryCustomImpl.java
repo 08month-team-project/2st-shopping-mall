@@ -7,11 +7,13 @@ import com.querydsl.core.types.OrderSpecifier;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.support.PageableExecutionUtils;
+import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
 
 import java.time.LocalDateTime;
@@ -25,10 +27,16 @@ import static com.example.shoppingmall.domain.item.type.StatusCondition.AVAILABL
 import static org.springframework.data.domain.Sort.Direction.ASC;
 import static org.springframework.data.domain.Sort.Direction.DESC;
 
-@RequiredArgsConstructor
+@Repository
 public class ItemRepositoryCustomImpl implements ItemRepositoryCustom {
 
     private final JPAQueryFactory factory;
+
+    public ItemRepositoryCustomImpl(EntityManager entityManager) {
+        factory = new JPAQueryFactory(entityManager);
+    }
+
+
 
     private final int SEARCH_PAGE_SIZE = 12;
 
