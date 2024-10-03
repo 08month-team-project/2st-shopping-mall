@@ -46,6 +46,10 @@ public class Item extends BaseTimeEntity {
     @OneToMany(mappedBy = "item", cascade = CascadeType.PERSIST)
     private List<ItemStock> stocks = new ArrayList<>();
 
+    @Builder.Default
+    @OneToMany(mappedBy = "item", cascade = CascadeType.PERSIST)
+    private List<CategoryItem> categoryItem = new ArrayList<>();
+
     @Column(name = "thumbnail_url")
     private String thumbnailUrl;
 
@@ -61,7 +65,7 @@ public class Item extends BaseTimeEntity {
     private String description;
 
     @Enumerated(STRING)
-    @Column( nullable = false, name = "item_status")
+    @Column(nullable = false, name = "item_status")
     private ItemStatus status;
 
 
@@ -72,7 +76,7 @@ public class Item extends BaseTimeEntity {
     public void addStockOption(ClothingSize size, int stock) {
 
         for (ItemStock itemStock : stocks) {
-            if(itemStock!= null && itemStock.getSize().equals(size)){
+            if (itemStock != null && itemStock.getSize().equals(size)) {
                 itemStock.addStock(stock);
                 break;
             }
@@ -87,8 +91,8 @@ public class Item extends BaseTimeEntity {
     /* TODO 양방향 고려
      *  - cart_item
      *  - order_item
-     *  - item_category
      *
+     *  - item_category
      *  - item_stock
      *  - item_image
      */
