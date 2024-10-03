@@ -1,5 +1,6 @@
 package com.example.shoppingmall.domain.item.dao;
 
+import com.example.shoppingmall.TestQueryDslConfig;
 import com.example.shoppingmall.domain.item.domain.Item;
 import com.example.shoppingmall.domain.item.domain.ItemStock;
 import com.example.shoppingmall.domain.item.type.ItemStatus;
@@ -7,12 +8,16 @@ import com.example.shoppingmall.domain.user.dao.UserRepository;
 import com.example.shoppingmall.domain.user.domain.Address;
 import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.type.Gender;
+import com.querydsl.jpa.impl.JPAQueryFactory;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -21,11 +26,13 @@ import java.util.List;
 import static com.example.shoppingmall.domain.item.type.ClothingSize.*;
 import static org.assertj.core.api.Assertions.assertThat;
 
-
+// 아래 주석처리 된 애노테이션은 실제 db 에 들어가는 거 보고싶을 때 사용하고 있습니다..
 //@Rollback(value = false)
 //@SpringBootTest
-@DataJpaTest
+
+@Import(TestQueryDslConfig.class)   // UnsatisfiedDependencyException  , IllegalStateException
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@DataJpaTest
 class ItemRepositoryTest {
 
     @Autowired
@@ -34,12 +41,19 @@ class ItemRepositoryTest {
     @Autowired
     private ItemRepository itemRepository;
 
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    @Autowired
+    private final JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(entityManager);
+
     private User user;
     private List<Item> items;
 
 
     @BeforeEach
     public void init() {
+
         items = new ArrayList<>();
 
         Address address = Address.builder()
