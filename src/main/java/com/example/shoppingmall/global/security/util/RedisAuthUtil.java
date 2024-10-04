@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit;
 
 @Component
 @RequiredArgsConstructor
-public class RedisUtil {
+public class RedisAuthUtil {
     private final RedisTemplate<String,String> redisTemplate;
 
     public void saveRefreshToken(String email, String refreshToken){

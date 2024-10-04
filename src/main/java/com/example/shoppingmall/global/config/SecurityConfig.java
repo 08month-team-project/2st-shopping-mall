@@ -4,7 +4,7 @@ import com.example.shoppingmall.global.security.filter.CustomLogoutFilter;
 import com.example.shoppingmall.global.security.filter.JwtAuthenticationFilter;
 import com.example.shoppingmall.global.security.filter.LoginFilter;
 import com.example.shoppingmall.global.security.util.JwtUtil;
-import com.example.shoppingmall.global.security.util.RedisUtil;
+import com.example.shoppingmall.global.security.util.RedisAuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,7 +28,7 @@ public class SecurityConfig {
 
     private final AuthenticationConfiguration authenticationConfiguration;
     private final JwtUtil jwtUtil;
-    private final RedisUtil redisUtil;
+    private final RedisAuthUtil redisAuthUtil;
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
@@ -66,9 +66,9 @@ public class SecurityConfig {
                 .anyRequest().authenticated());
 
 
-        http.addFilterAt(new LoginFilter(jwtUtil, redisUtil, authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(new JwtAuthenticationFilter(jwtUtil,redisUtil),UsernamePasswordAuthenticationFilter.class);
-        http.addFilterBefore(new CustomLogoutFilter(jwtUtil, redisUtil), LogoutFilter.class);
+        http.addFilterAt(new LoginFilter(jwtUtil, redisAuthUtil, authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new JwtAuthenticationFilter(jwtUtil, redisAuthUtil),UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(new CustomLogoutFilter(jwtUtil, redisAuthUtil), LogoutFilter.class);
 
 
 

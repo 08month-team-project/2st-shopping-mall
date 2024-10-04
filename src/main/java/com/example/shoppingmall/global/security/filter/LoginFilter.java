@@ -3,7 +3,7 @@ package com.example.shoppingmall.global.security.filter;
 import com.example.shoppingmall.domain.user.dto.SigninRequest;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
 import com.example.shoppingmall.global.security.util.JwtUtil;
-import com.example.shoppingmall.global.security.util.RedisUtil;
+import com.example.shoppingmall.global.security.util.RedisAuthUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -26,12 +26,12 @@ import java.util.regex.Pattern;
 
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final JwtUtil jwtUtil;
-    private final RedisUtil redisUtil;
+    private final RedisAuthUtil redisAuthUtil;
     private final AuthenticationManager authenticationManager;
 
-    public LoginFilter(JwtUtil jwtUtil, RedisUtil redisUtil, AuthenticationManager authenticationManager) {
+    public LoginFilter(JwtUtil jwtUtil, RedisAuthUtil redisAuthUtil, AuthenticationManager authenticationManager) {
         this.jwtUtil = jwtUtil;
-        this.redisUtil = redisUtil;
+        this.redisAuthUtil = redisAuthUtil;
         this.authenticationManager = authenticationManager;
         setFilterProcessesUrl("/users/signin");
     }
@@ -61,6 +61,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
             UsernamePasswordAuthenticationToken authToken =
                     new UsernamePasswordAuthenticationToken(email,password,null);
             return authenticationManager.authenticate(authToken);
+
         } catch (IOException e) {
             response.setContentType("application/json; charset=UTF-8");
             try {
@@ -95,7 +96,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
         String accessToken = jwtUtil.createJwt("access",userEmail,role, 1000*60*60L);
         String refreshToken = jwtUtil.createJwt("refresh",userEmail,role, 1000*60*60*24*3L);
-        redisUtil.saveRefreshToken(userEmail,refreshToken);
+        redisAuthUtil.saveRefreshToken(userEmail,refreshToken);
 
         Cookie refreshCookie = new Cookie("refresh",refreshToken);
         refreshCookie.setHttpOnly(true);

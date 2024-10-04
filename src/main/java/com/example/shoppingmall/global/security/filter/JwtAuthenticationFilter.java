@@ -3,7 +3,7 @@ package com.example.shoppingmall.global.security.filter;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
 import com.example.shoppingmall.global.security.dto.UserDetailsDTO;
 import com.example.shoppingmall.global.security.util.JwtUtil;
-import com.example.shoppingmall.global.security.util.RedisUtil;
+import com.example.shoppingmall.global.security.util.RedisAuthUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,7 +23,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtUtil jwtUtil;
-    private final RedisUtil redisUtil;
+    private final RedisAuthUtil redisAuthUtil;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
@@ -51,7 +51,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 if (validateRefreshToken(refreshTokenFromCookie)) {
                     String userEmail = jwtUtil.getEmail(refreshTokenFromCookie);
-                    String refreshTokenFromRedis = redisUtil.getRefreshToken(userEmail);
+                    String refreshTokenFromRedis = redisAuthUtil.getRefreshToken(userEmail);
                     if (compareRefreshToken(refreshTokenFromCookie, refreshTokenFromRedis)) {
                         String newAccessToken = jwtUtil.createJwt("access", userEmail, jwtUtil.getRole(refreshTokenFromCookie), 1000*60*60L);
                         response.setHeader("Authorization", "Bearer " + newAccessToken);

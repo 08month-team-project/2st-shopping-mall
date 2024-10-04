@@ -1,7 +1,7 @@
 package com.example.shoppingmall.global.security.filter;
 
 import com.example.shoppingmall.global.security.util.JwtUtil;
-import com.example.shoppingmall.global.security.util.RedisUtil;
+import com.example.shoppingmall.global.security.util.RedisAuthUtil;
 import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -18,7 +18,7 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class CustomLogoutFilter extends GenericFilterBean {
     private final JwtUtil jwtUtil;
-    private final RedisUtil redisUtil;
+    private final RedisAuthUtil redisAuthUtil;
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
@@ -65,7 +65,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
         }
 
         String email = jwtUtil.getEmail(refreshToken);
-        String redisRefreshToken = redisUtil.getRefreshToken(email);
+        String redisRefreshToken = redisAuthUtil.getRefreshToken(email);
         try {
             if (jwtUtil.isExpired(redisRefreshToken)){
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
@@ -84,7 +84,7 @@ public class CustomLogoutFilter extends GenericFilterBean {
         Cookie cookie = new Cookie("refresh",null);
         cookie.setMaxAge(0);
         cookie.setPath("/");
-        redisUtil.deleteRefreshToken(email);
+        redisAuthUtil.deleteRefreshToken(email);
 
         response.addCookie(cookie);
         response.setContentType("application/json; charset=UTF-8");
