@@ -1,0 +1,24 @@
+spring:
+  profiles:
+    group:
+      local: prod
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+  datasource:
+    driver-class-name: ${AWS_DB_DRIVER}
+    url: ${AWS_DB_URL}
+    username: ${AWS_DB_USERNAME}
+    password: ${AWS_DB_PASSWORD}
+  cloud:
+    aws:
+      credentials:
+        accessKey: ${ACCESSKEY}
+        secretKey: ${SECRETKEY}
+      s3:
+        bucket: ${BUCKET}
+      region:
+        static: ${STATIC_REGION}
