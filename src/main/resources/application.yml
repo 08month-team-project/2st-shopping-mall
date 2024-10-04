@@ -35,6 +35,15 @@ spring:
       region:
         static: ${STATIC_REGION}
 
+  jwt:
+    secret: ${SECRET_KEY}
+
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      password: ${REDIS_PASSWORD}
+
 logging:
   level:
     org.hibernate.SQL: debug

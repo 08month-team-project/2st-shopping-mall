@@ -4,8 +4,12 @@ import com.example.shoppingmall.domain.common.BaseTimeEntity;
 import com.example.shoppingmall.domain.user.type.Gender;
 import com.example.shoppingmall.domain.user.type.UserRole;
 import com.example.shoppingmall.domain.user.type.UserStatus;
+import com.example.shoppingmall.global.security.dto.UserDetailsDTO;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import static jakarta.persistence.GenerationType.IDENTITY;
 
