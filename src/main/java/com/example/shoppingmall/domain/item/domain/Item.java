@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import static jakarta.persistence.EnumType.*;
+import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -87,6 +87,11 @@ public class Item extends BaseTimeEntity {
     public void addImage(String imageUrl) {
         images.add(new ItemImage(this, imageUrl));
     }
+
+    public void addCategory(Category category){
+        categoryItems.add(new CategoryItem(category, this));
+    }
+
 
     /* TODO 양방향 고려
      *  - cart_item
