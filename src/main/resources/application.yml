@@ -7,23 +7,33 @@ spring:
     import: optional:file:.env[.properties]
 ---
 spring:
-   config:
-     activate:
-       on-profile: local
-   datasource:
+  config:
+    activate:
+      on-profile: local
+  datasource:
     driver-class-name: ${DB_DRIVER}
     url: ${DB_URL}
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
-   jpa:
-     hibernate:
-       ddl-auto: create
-     show-sql: true
-     properties:
+  jpa:
+    hibernate:
+      ddl-auto: create
+    show-sql: true
+    properties:
       hibernate:
         format_sql: true
-     open-in-view: false
+    open-in-view: false
+
+  cloud:
+    aws:
+      credentials:
+        accessKey: ${ACCESSKEY}
+        secretKey: ${SECRETKEY}
+      s3:
+        bucket: ${BUCKET}
+      region:
+        static: ${STATIC_REGION}
 
 logging:
   level:

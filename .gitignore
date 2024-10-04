@@ -37,7 +37,6 @@ out/
 .vscode/
 
 ### Package Files ###
-*.jar
 *.war
 *.nar
 *.ear
@@ -47,5 +46,5 @@ out/
 
 
 ### 설정파일 ###
-*.properties
+
 .env
