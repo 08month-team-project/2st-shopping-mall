@@ -1,5 +1,6 @@
 package com.example.shoppingmall.global.exception;
 
+import com.example.shoppingmall.domain.item.excepction.ItemException;
 import com.example.shoppingmall.domain.user.excepction.UserException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(UserException.class)
     public ResponseEntity<ErrorResult> handleUserException(UserException e){
+        return makeErrorResult(e.getErrorCode());
+    }
+
+    @ExceptionHandler(ItemException.class)
+    public ResponseEntity<ErrorResult> handleItemException(ItemException e){
         return makeErrorResult(e.getErrorCode());
     }
 
