@@ -102,7 +102,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         refreshCookie.setHttpOnly(true);
         refreshCookie.setSecure(true);
         refreshCookie.setPath("/");
-        refreshCookie.setMaxAge(60 * 60 * 24 * 7);
+        refreshCookie.setMaxAge(60 * 60 * 24 * 3);
         response.addCookie(refreshCookie);
 
         response.setContentType("application/json; charset=UTF-8");
