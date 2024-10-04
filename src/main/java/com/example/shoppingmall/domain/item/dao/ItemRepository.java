@@ -3,6 +3,7 @@ package com.example.shoppingmall.domain.item.dao;
 import com.example.shoppingmall.domain.item.domain.Item;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
@@ -11,5 +12,5 @@ import java.util.Optional;
 public interface ItemRepository extends JpaRepository<Item, Long>, ItemRepositoryCustom {
 
     @Query("select i from Item i join fetch i.user join fetch i.stocks where i.id = :itemId")
-    Optional<Item> findItemAndStockAndSeller(Long itemId);
+    Optional<Item> findItemAndStockAndSeller(@Param("itemId") Long itemId);
 }
