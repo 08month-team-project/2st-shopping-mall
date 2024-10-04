@@ -7,6 +7,7 @@ import com.example.shoppingmall.domain.item.dto.ItemResponse;
 import com.example.shoppingmall.domain.item.type.SortCondition;
 import com.example.shoppingmall.domain.item.type.StatusCondition;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
