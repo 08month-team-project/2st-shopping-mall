@@ -5,18 +5,14 @@ import lombok.Getter;
 
 @Getter
 @JsonFormat(shape = JsonFormat.Shape.STRING)
-public enum CategoryName {
+public enum ItemStatus {
 
-    MALE("남성"),
-    FEMALE("여성"),
-    UNISEX("남녀공용"),
-    CHILDREN("아동")
-    ;
+    IN_STOCK("재고있음"),
+    OUT_OF_STOCK("재고없음");
 
     private final String name;
 
-
-    CategoryName(String name){
+    ItemStatus(String name) {
         this.name = name;
     }
 

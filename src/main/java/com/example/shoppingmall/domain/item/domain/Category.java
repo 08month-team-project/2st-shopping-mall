@@ -3,12 +3,15 @@ package com.example.shoppingmall.domain.item.domain;
 import com.example.shoppingmall.domain.item.type.CategoryName;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.GenerationType.IDENTITY;
+import static jakarta.persistence.EnumType.*;
+import static jakarta.persistence.GenerationType.*;
 
 
+@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter
 @Entity
@@ -19,19 +22,19 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "category_name", nullable = false)
-    private CategoryName name;
+    @Enumerated(STRING)
+    private CategoryName categoryName;
+
+    public Category(CategoryName categoryName) {
+        this.categoryName = categoryName;
+    }
 
     /** 양방향 고려
      * - category_item
      */
-
-    private Category(CategoryName name) {
-        this.name = name;
-    }
     // 정적 팩토리 메서드
-    public static Category of(CategoryName name) {
-        return new Category(name);
+    public static Category of(CategoryName categoryName) {
+        return new Category(categoryName);
     }
 }

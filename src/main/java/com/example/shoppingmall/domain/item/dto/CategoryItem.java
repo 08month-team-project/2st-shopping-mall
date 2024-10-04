@@ -13,7 +13,7 @@ public class CategoryItem {
 
     public static CategoryItem fromEntity(Category category) {
         return CategoryItem.builder()
-                .categoryName(category.getName())
+                .categoryName(category.getCategoryName())
                 .build();
     };
     

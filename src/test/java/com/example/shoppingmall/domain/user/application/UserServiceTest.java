@@ -3,9 +3,7 @@ package com.example.shoppingmall.domain.user.application;
 import com.example.shoppingmall.domain.user.dao.UserRepository;
 import com.example.shoppingmall.domain.user.domain.Address;
 import com.example.shoppingmall.domain.user.domain.User;
-import com.example.shoppingmall.domain.user.dto.AddressRequest;
-import com.example.shoppingmall.domain.user.dto.SignupRequest;
-import com.example.shoppingmall.domain.user.dto.SignupResponse;
+import com.example.shoppingmall.domain.user.dto.*;
 import com.example.shoppingmall.domain.user.excepction.UserException;
 import com.example.shoppingmall.domain.user.type.Gender;
 import com.example.shoppingmall.global.exception.ErrorCode;
@@ -108,6 +106,36 @@ class UserServiceTest {
 
         // then
         assertThrows(UserException.class, () -> userService.createUser(signupRequest));
+    }
+
+    @Test
+    @DisplayName("회원가입시 이메일 중복 체크 - 성공")
+    void checkEmailDuplicateSuccess(){
+        //given
+        String notDupEmail = "example15@gmail.com";
+        CheckEmailRequest request = CheckEmailRequest.builder()
+                .email(notDupEmail)
+                .build();
+        //when
+        when(userRepository.existsByEmail(notDupEmail)).thenReturn(false);
+        UserResponse userResponse = userService.checkEmailDuplicate(request);
+
+        //then
+        assertThat(userResponse.getMessage()).isEqualTo("사용 가능한 이메일입니다.");
+    }
+    @Test
+    @DisplayName("회원가입시 이메일 중복 체크 - 실패")
+    void checkEmailDuplicateFail(){
+        //given
+        String dupEmail = "example@gmail.com";
+        CheckEmailRequest request = CheckEmailRequest.builder()
+                .email(dupEmail)
+                .build();
+        //when
+        when(userRepository.existsByEmail(dupEmail)).thenReturn(true);
+
+        //then
+        assertThrows(UserException.class,()->userService.checkEmailDuplicate(request));
     }
 
 

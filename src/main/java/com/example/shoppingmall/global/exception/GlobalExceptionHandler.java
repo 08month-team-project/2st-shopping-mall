@@ -1,5 +1,7 @@
 package com.example.shoppingmall.global.exception;
 
+import com.example.shoppingmall.domain.item.excepction.ItemException;
+import com.example.shoppingmall.domain.user.excepction.UserException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -21,6 +23,21 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ErrorResult> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error("[MethodArgumentNotValidException] {}", FieldErrorCustom.getFieldErrorList(e.getFieldErrors()));
         return ResponseEntity.badRequest().body(new ErrorResult(e));
+    }
+
+    @ExceptionHandler(UserException.class)
+    public ResponseEntity<ErrorResult> handleUserException(UserException e){
+        return makeErrorResult(e.getErrorCode());
+    }
+
+    @ExceptionHandler(ItemException.class)
+    public ResponseEntity<ErrorResult> handleItemException(ItemException e){
+        return makeErrorResult(e.getErrorCode());
+    }
+
+    private ResponseEntity<ErrorResult> makeErrorResult(ErrorCode errorCode){
+        return ResponseEntity.status(errorCode.getHttpStatus())
+                .body(new ErrorResult(errorCode));
     }
 
 }

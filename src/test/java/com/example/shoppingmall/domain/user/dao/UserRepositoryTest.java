@@ -1,5 +1,6 @@
 package com.example.shoppingmall.domain.user.dao;
 
+import com.example.shoppingmall.TestQueryDslConfig;
 import com.example.shoppingmall.domain.user.domain.Address;
 import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.type.Gender;
@@ -11,11 +12,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
-import java.util.Optional;
+import org.springframework.context.annotation.Import;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Import(TestQueryDslConfig.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class UserRepositoryTest {
