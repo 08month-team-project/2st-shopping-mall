@@ -72,11 +72,4 @@ public class User extends BaseTimeEntity {
         status = UserStatus.ACTIVE;
     }
 
-    public UserDetailsDTO toUserDetailsDTO(){
-        return UserDetailsDTO.builder()
-                .email(email)
-                .password(password)
-                .role(role.name()).build();
-    }
-
 }
