@@ -7,12 +7,12 @@ import lombok.Getter;
 
 @Getter
 @Builder
-public class CategoryItem {
+public class CategoryList {
     
     private CategoryName categoryName;
 
-    public static CategoryItem fromEntity(Category category) {
-        return CategoryItem.builder()
+    public static CategoryList fromEntity(Category category) {
+        return CategoryList.builder()
                 .categoryName(category.getCategoryName())
                 .build();
     };
