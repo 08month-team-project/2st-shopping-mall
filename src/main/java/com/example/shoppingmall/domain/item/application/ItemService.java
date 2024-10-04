@@ -39,10 +39,9 @@ public class ItemService {
                                           String itemName,
                                           StatusCondition statusCondition,
                                           SortCondition sortCondition,
-                                          int pageNumber) {
+                                          Integer pageNumber) {
 
         return itemRepository.searchItems(
-                    categoryId, itemName, statusCondition, sortCondition, pageNumber)
-                .map(ItemResponse::new);
+                    categoryId, itemName, statusCondition, sortCondition, pageNumber);
     }
 }

@@ -31,7 +31,7 @@ public class ItemController {
             @RequestParam(name = "item_name", required = false) String itemName,
             @RequestParam(name = "status_condition", required = false) StatusCondition statusCondition,
             @RequestParam(name = "sort_condition", required = false) SortCondition sortCondition,
-            @RequestParam(name = "page_number", required = false) int pageNumber
+            @RequestParam(name = "page_number", required = false) Integer pageNumber
     ) {
 
         return ResponseEntity.ok(itemService.searchItems(
