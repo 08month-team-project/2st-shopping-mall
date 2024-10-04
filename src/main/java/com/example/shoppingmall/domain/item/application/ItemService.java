@@ -62,4 +62,11 @@ public class ItemService {
                 .sizeItemList(sizeItems)
                 .build();
     }
+
+    // 아이템 등록 기능
+//    public SellerResponse itemResister(RegisterRequest request) {
+//
+//
+//
+//    }
 }

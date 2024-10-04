@@ -2,7 +2,8 @@ package com.example.shoppingmall.domain.item.api;
 
 import com.example.shoppingmall.domain.item.application.ItemService;
 import com.example.shoppingmall.domain.item.application.S3Service;
-import com.example.shoppingmall.domain.item.dto.ItemDetailResponse;
+import com.example.shoppingmall.domain.item.dto.*;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,5 +33,24 @@ public class ItemController {
         return ResponseEntity.ok(urls);
     }
 
+    // 카테고리 조회 -> 추후 캐싱 도전
+    @GetMapping("/categories")
+    public ResponseEntity<CategoryResponse> getCategoryList() {
+        CategoryResponse response = itemService.getCategoryList();
+        return ResponseEntity.ok(response);
+    }
+
+    // size 조회 -> 추후 캐싱 도전
+    @GetMapping("/size")
+    public ResponseEntity<SizeResponse> getSizeList() {
+        SizeResponse response = itemService.getSizeList();
+        return ResponseEntity.ok(response);
+    }
+
+//    @PostMapping("/seller/register")
+//    public ResponseEntity<SellerResponse> itemResister(@Valid @RequestBody RegisterRequest request) {
+//        SellerResponse response = itemService.itemResister(request);
+//        return ResponseEntity.ok(response);
+//    }
 
 }
