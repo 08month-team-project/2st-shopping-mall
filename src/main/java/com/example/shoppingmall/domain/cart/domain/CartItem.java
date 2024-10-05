@@ -62,7 +62,7 @@ public class CartItem extends BaseTimeEntity {
         }
 
         // 현재 재고보다 많은 수량을 담을 수 없음
-        if ((this.quantity + quantity) > itemStock.getStock()) { // 새로 담은 아이템이 아니면 N+1 문제 발생
+        if ((this.quantity + quantity) > itemStock.getStock()) {
             throw new ItemException(CART_QUANTITY_EXCEEDS_STOCK);
         }
 
