@@ -50,7 +50,6 @@ public class SignupRequest {
                 .email(email).name(name).nickname(nickname)
                 .password(encodedPwd).gender(gender).phoneNumber(phoneNumber)
                 .address(Address.builder()
-                        .street(address.getStreet())
                         .city(address.getCity())
                         .zipcode(address.getZipcode()).build())
                 .build();

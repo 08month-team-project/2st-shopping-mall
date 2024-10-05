@@ -46,8 +46,7 @@ public class TestDataInit_SearchItems {
 
         // 유저 ===================================================
         Address address = Address.builder()
-                .street("강남대로 123")
-                .city("서울 특별시 강남구")
+                .city("서울 특별시 강남구 강남대로 123")
                 .zipcode("1101").build();
 
         User user = userRepository.save(User.builder()
