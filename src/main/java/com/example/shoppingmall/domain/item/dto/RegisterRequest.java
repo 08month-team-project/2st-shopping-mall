@@ -1,6 +1,7 @@
 package com.example.shoppingmall.domain.item.dto;
 
 import com.example.shoppingmall.domain.item.type.CategoryName;
+import com.example.shoppingmall.domain.item.type.ClothingSize;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -38,5 +39,8 @@ public class RegisterRequest {
 
     @Future(message = "만료일은 현재 시점 이후여야 합니다.")
     private LocalDateTime expiredAt;
+
+    @NotNull(message = "싸이즈를 선택해주세요")
+    private ClothingSize size;
 
 }
