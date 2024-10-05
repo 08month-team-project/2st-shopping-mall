@@ -11,12 +11,15 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDetailsDTO {
+
+    private Long userId;
     private String email;
     private String password;
     private String role;
 
     public static UserDetailsDTO toUserEntity(User user){
         return UserDetailsDTO.builder()
+                .userId(user.getId())
                 .email(user.getEmail())
                 .password(user.getPassword())
                 .role(user.getRole().name()).build();
