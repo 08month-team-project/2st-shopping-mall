@@ -44,12 +44,13 @@ public class ItemStock {
     }
 
     //
-    public ItemStock(Integer stock, ClothSize clothSize) {
-        this.stock = stock;
+    public ItemStock(Item item,ClothSize clothSize,Integer stock ) {
+        this.item = item;
         this.clothSize = clothSize;
+        this.stock = stock;
     }
 
-    public static ItemStock of(Integer stock, ClothSize clothSize) {
-        return new ItemStock(stock,clothSize);
+    public static ItemStock of(Item item,ClothSize clothSize,Integer stock ) {
+        return new ItemStock(item,clothSize,stock);
     }
 }
