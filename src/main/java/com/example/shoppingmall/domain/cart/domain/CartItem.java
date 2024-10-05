@@ -6,10 +6,7 @@ import com.example.shoppingmall.domain.item.domain.ItemStock;
 import com.example.shoppingmall.domain.item.excepction.ItemException;
 import com.example.shoppingmall.domain.item.type.ItemStatus;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -17,11 +14,12 @@ import static com.example.shoppingmall.global.exception.ErrorCode.CART_QUANTITY_
 import static com.example.shoppingmall.global.exception.ErrorCode.PRODUCT_NOT_FOR_SALE;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.*;
 import static lombok.AccessLevel.PROTECTED;
 
 @NoArgsConstructor(access = PROTECTED)
-@AllArgsConstructor
-@Builder
+@AllArgsConstructor(access = PRIVATE)
+@Builder(access = PRIVATE)
 @Getter
 @Entity
 public class CartItem extends BaseTimeEntity {
@@ -46,7 +44,6 @@ public class CartItem extends BaseTimeEntity {
     private int quantity;
 
     public static CartItem of(Cart cart, Item item, ItemStock itemStock) {
-
         return CartItem.builder()
                 .cart(cart)
                 .item(item)
