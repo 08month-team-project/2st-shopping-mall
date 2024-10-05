@@ -64,7 +64,9 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth-> auth
                 .requestMatchers("users/signup","users/signin",
-                        "/","users/check-email").permitAll()
+                        "/","users/check-email",
+                        "items/search", "items/{item_id}"
+                        ).permitAll()
                 .anyRequest().authenticated());
 
 
