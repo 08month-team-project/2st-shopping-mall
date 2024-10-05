@@ -23,4 +23,7 @@ public class ClothingSize {
     @Enumerated(STRING)
     private ClothingSizeName sizeName;
 
+    public ClothingSize(ClothingSizeName sizeName) {
+        this.sizeName = sizeName;
+    }
 }
