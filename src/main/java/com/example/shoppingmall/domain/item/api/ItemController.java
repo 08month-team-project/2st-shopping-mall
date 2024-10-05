@@ -2,7 +2,6 @@ package com.example.shoppingmall.domain.item.api;
 
 import com.example.shoppingmall.domain.item.application.ItemService;
 import com.example.shoppingmall.domain.item.application.S3Service;
-import com.example.shoppingmall.domain.item.dto.ItemDetailResponse;
 import com.example.shoppingmall.domain.item.dto.ItemResponse;
 import com.example.shoppingmall.domain.item.type.SortCondition;
 import com.example.shoppingmall.domain.item.type.StatusCondition;
@@ -21,13 +20,13 @@ public class ItemController {
 
     private final ItemService itemService;
     private final S3Service s3Service;
-
-    @GetMapping("/{item_id}")
-    public ResponseEntity<ItemDetailResponse> getItemDetail(
-            @PathVariable("item_id") long itemId) {
-
-        return ResponseEntity.ok(itemService.getItemDetail(itemId));
-    }
+//    @GetMapping("/{item_id}")
+//    public ResponseEntity<ItemDetailResponse> getItemDetail(
+//            @PathVariable("item_id") long itemId) {
+//
+//        return ResponseEntity.ok(itemService.getItemDetail(itemId));
+//    }
+//
 
     @GetMapping("/search")
     public ResponseEntity<Page<ItemResponse>> searchItems(
