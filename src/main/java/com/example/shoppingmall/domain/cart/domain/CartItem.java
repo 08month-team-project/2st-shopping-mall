@@ -68,4 +68,11 @@ public class CartItem extends BaseTimeEntity {
                 .build();
     }
 
+    // 장바구기 담기 (장바구니 수정기능 X)
+    public void addQuantity(int quantity) {
+        if (quantity < 1) quantity = 1;
+
+        this.quantity += quantity;
+    }
+
 }
