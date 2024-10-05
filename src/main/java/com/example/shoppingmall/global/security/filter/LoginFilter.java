@@ -33,12 +33,20 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         this.jwtUtil = jwtUtil;
         this.redisAuthUtil = redisAuthUtil;
         this.authenticationManager = authenticationManager;
-        setFilterProcessesUrl("/users/signin");
+        setFilterProcessesUrl("/users/login");
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+
         try {
+            if (!request.getMethod().equals("POST")){
+                response.setContentType("application/json; charset=UTF-8");
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().write("{\"message\":\"요청 메소드가 올바르지 않습니다.\"}");
+                return null;
+            }
+
             ObjectMapper objectMapper = new ObjectMapper();
             LoginRequest loginRequest = objectMapper.readValue(request.getInputStream(), LoginRequest.class);
             String email = loginRequest.getEmail();
