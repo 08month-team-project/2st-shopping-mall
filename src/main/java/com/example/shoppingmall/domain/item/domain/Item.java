@@ -90,12 +90,4 @@ public class Item extends BaseTimeEntity {
     }
 
 
-    /* TODO 양방향 고려
-     *  - cart_item
-     *  - order_item
-     *
-     *  - item_category
-     *  - item_stock
-     *  - item_image
-     */
 }
