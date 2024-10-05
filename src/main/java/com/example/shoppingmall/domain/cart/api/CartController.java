@@ -2,7 +2,7 @@ package com.example.shoppingmall.domain.cart.api;
 
 import com.example.shoppingmall.domain.cart.application.CartService;
 import com.example.shoppingmall.domain.cart.dto.AddCartItemRequest;
-import com.example.shoppingmall.global.security.dto.UserDetailsDTO;
+import com.example.shoppingmall.global.security.detail.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class CartController { // TODO 정말 만약에 시간이 남는다면, �
     @PostMapping
     public ResponseEntity<Void> addCartItem(
             @Valid @RequestBody AddCartItemRequest request,
-            @AuthenticationPrincipal UserDetailsDTO userDetails) {
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
 
         cartService.addCartItem(userDetails, request);
         return ResponseEntity.ok().build();
