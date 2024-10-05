@@ -50,7 +50,7 @@ public class Item extends BaseTimeEntity {
     @OneToMany(mappedBy = "item", cascade = CascadeType.PERSIST)
     private List<CategoryItem> categoryItems = new ArrayList<>();
 
-    @Column(name = "thumbnail_url")
+    @Column(name = "thumbnail_url", columnDefinition = "TEXT")
     private String thumbnailUrl;
 
     @Column(nullable = false, name = "expired_at")
@@ -58,7 +58,8 @@ public class Item extends BaseTimeEntity {
 
 
     // TODO 조회 수 구현하게 될 때 생각해볼 예정
-    @Column(nullable = false, name = "hit_count")
+    // 아이템 등록할떄 널값을 허용안해서 오류 납니다 ㅠㅠ
+//    @Column(nullable = false, name = "hit_count")
     private Long hitCount;
 
     @Column(nullable = false)
@@ -73,16 +74,18 @@ public class Item extends BaseTimeEntity {
      * 이미 존재하는 옵션의 재고 수정 X
      * 새로운 옵션 자체를 추가
      */
-    public void addStockOption(ClothingSize size, int stock) {
 
-        for (ItemStock itemStock : stocks) {
-            if (itemStock != null && itemStock.getSize().equals(size)) {
-                itemStock.addStock(stock);
-                break;
-            }
-        }
-        stocks.add(new ItemStock(this, size, stock));
-    }
+
+//    public void addStockOption(ClothingSize size, int stock) {
+//
+//        for (ItemStock itemStock : stocks) {
+//            if (itemStock != null && itemStock.getSize().equals(size)) {
+//                itemStock.addStock(stock);
+//                break;
+//            }
+//        }
+//        stocks.add(new ItemStock(this, size, stock));
+//    }
 
     public void addImage(String imageUrl) {
         images.add(new ItemImage(this, imageUrl));
@@ -101,4 +104,5 @@ public class Item extends BaseTimeEntity {
      *  - item_stock
      *  - item_image
      */
+
 }
