@@ -13,6 +13,7 @@ public class MyPageRequest {
     private String email;
     private String phone;
 
+    // 전송해야할 데이터는 이름,닉네임,폰번,이메일,성별,주소,소개글
     public MyPageRequest(User user) {
         name = user.getName();
         email = user.getEmail();
