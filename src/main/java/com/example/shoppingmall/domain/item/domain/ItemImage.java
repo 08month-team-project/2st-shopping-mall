@@ -21,7 +21,7 @@ public class ItemImage {
     @ManyToOne(fetch = LAZY)
     private Item item;
 
-    @Column(name = "image_url", nullable = false)
+    @Column(name = "image_url", nullable = false, columnDefinition = "TEXT")
     private String imageUrl;
 
     public ItemImage(Item item, String imageUrl) {
