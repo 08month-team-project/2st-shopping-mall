@@ -42,7 +42,6 @@ public class TestDataInit_Cart {
 
         // 유저 ===================================================
         Address address = Address.builder()
-                .street("강남대로 123")
                 .city("서울 특별시 강남구")
                 .zipcode("1101").build();
 
