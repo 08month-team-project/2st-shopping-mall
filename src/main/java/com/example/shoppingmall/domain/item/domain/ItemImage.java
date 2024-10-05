@@ -34,4 +34,8 @@ public class ItemImage {
         this.item = item;
         this.imageUrl = imageUrl;
     }
+
+    public static ItemImage of(Item item, String imageUrl) {
+       return new ItemImage(item,imageUrl);
+    }
 }
