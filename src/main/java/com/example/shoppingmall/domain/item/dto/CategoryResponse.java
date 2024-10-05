@@ -9,6 +9,6 @@ import java.util.List;
 @Builder
 public class CategoryResponse {
 
-    private List<CategoryItem> categoryList;
+    private List<CategoryList> categoryList;
 
 }
