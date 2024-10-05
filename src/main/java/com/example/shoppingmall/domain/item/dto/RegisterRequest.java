@@ -25,6 +25,7 @@ public class RegisterRequest {
     private Integer price;
 
     @NotBlank(message = "닉네임은 필수입니다.")
+    @JsonProperty("nick_name")
     private String nickName;
 
     @NotNull(message = "카테고리는 필수입니다.")
