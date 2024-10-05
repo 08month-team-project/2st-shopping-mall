@@ -1,7 +1,6 @@
 package com.example.shoppingmall.domain.item.domain;
 
 import com.example.shoppingmall.domain.common.BaseTimeEntity;
-import com.example.shoppingmall.domain.item.type.ClothingSize;
 import com.example.shoppingmall.domain.item.type.ItemStatus;
 import com.example.shoppingmall.domain.user.domain.User;
 import jakarta.persistence.*;
@@ -69,18 +68,16 @@ public class Item extends BaseTimeEntity {
     private ItemStatus status;
 
 
-    /**
-     * 이미 존재하는 옵션의 재고 수정 X
-     * 새로운 옵션 자체를 추가
-     */
-    public void addStockOption(ClothingSize size, int stock) {
+    public void addItemStock(ClothingSize size, int stock) {
 
+        // 물품에 이미 등록돼있는 사이즈옵션이라면 재고수량을 추가
         for (ItemStock itemStock : stocks) {
-            if (itemStock != null && itemStock.getSize().equals(size)) {
+            if (itemStock != null && itemStock.getClothingSize().getId().equals(size.getId())) {
                 itemStock.addStock(stock);
-                break;
+                return;
             }
         }
+        // 등록된 적 없는 사이즈옵션이라면 새로 추가
         stocks.add(new ItemStock(this, size, stock));
     }
 
