@@ -1,10 +1,12 @@
 package com.example.shoppingmall.domain.user.api;
 
 import com.example.shoppingmall.domain.user.application.UserService;
-import com.example.shoppingmall.domain.user.dto.AddressRequest;
-import com.example.shoppingmall.domain.user.dto.SignupRequest;
-import com.example.shoppingmall.domain.user.dto.SignupResponse;
+import com.example.shoppingmall.domain.user.dto.*;
+import com.example.shoppingmall.domain.user.excepction.UserException;
 import com.example.shoppingmall.domain.user.type.Gender;
+import com.example.shoppingmall.global.exception.ErrorCode;
+import com.example.shoppingmall.global.exception.ErrorResult;
+import com.example.shoppingmall.global.exception.GlobalExceptionHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -13,15 +15,13 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
-import java.util.Map;
-
-import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -39,6 +39,7 @@ class UserControllerTest {
     private MockMvc mockMvc;
 
     private ObjectMapper objectMapper;
+
 
     private SignupRequest signupRequest;
     @BeforeEach
@@ -78,6 +79,30 @@ class UserControllerTest {
         resultActions
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message")
-                .value("success signup"));
+                .value(response.getMessage()));
     }
+    @Test
+    @DisplayName("POST 이메일 중복 체크 성공")
+    void checkEmailSuccess() throws Exception {
+        //give
+        CheckEmailRequest request = CheckEmailRequest.builder()
+                .email("example1234@gmail.com").build();
+
+        UserResponse response = UserResponse.builder()
+                .message("사용 가능한 이메일입니다.").build();
+
+        //when
+        doReturn(response).when(userService).checkEmailDuplicate(any(CheckEmailRequest.class));
+        ResultActions resultActions = mockMvc.perform(post("/users/check-email")
+                .accept(MediaType.APPLICATION_JSON)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(request)));
+
+        //then
+        resultActions.andExpect(status().isOk())
+                .andExpect(jsonPath("$.message")
+                        .value(response.getMessage()));
+
+    }
+
 }
