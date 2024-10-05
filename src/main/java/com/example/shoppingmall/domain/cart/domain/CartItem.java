@@ -45,9 +45,18 @@ public class CartItem extends BaseTimeEntity {
 
     private int quantity;
 
-    public static CartItem of(Cart cart, Item item, ItemStock itemStock, int quantity) {
+    public static CartItem of(Cart cart, Item item, ItemStock itemStock) {
 
-        if (quantity == 0) quantity = 1;
+        return CartItem.builder()
+                .cart(cart)
+                .item(item)
+                .itemStock(itemStock)
+                .build();
+    }
+
+    // 장바구기 담기 (장바구니 수정기능 X)
+    public void addQuantity(int quantity) {
+        if (quantity < 1) quantity = 1;
 
         // 물품에 속하는 모든 옵션(사이즈 등) 의 재고가 없을 때 or 만료일자
         if (item.getStatus() == ItemStatus.OUT_OF_STOCK ||
@@ -56,21 +65,10 @@ public class CartItem extends BaseTimeEntity {
         }
 
         // 현재 재고보다 많은 수량을 담을 수 없음
-        if (itemStock.getStock() < quantity) {
+        if ((this.quantity + quantity) > itemStock.getStock()) { // 새로 담은 아이템이 아니면 N+1 문제 발생
             throw new ItemException(CART_QUANTITY_EXCEEDS_STOCK);
         }
 
-        return CartItem.builder()
-                .cart(cart)
-                .item(item)
-                .itemStock(itemStock)
-                .quantity(quantity)
-                .build();
-    }
-
-    // 장바구기 담기 (장바구니 수정기능 X)
-    public void addQuantity(int quantity) {
-        if (quantity < 1) quantity = 1;
 
         this.quantity += quantity;
     }
