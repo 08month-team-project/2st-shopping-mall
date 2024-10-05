@@ -43,20 +43,18 @@ public class CartService {
 
         // 장바구니가 존재하면 User 엔티티를 찾아올 필요가 없다.
         if (cartOptional.isPresent()) {
+            Cart cart = cartOptional.get();
 
             // 장바구니에 동일한 아이템 존재하는지 확인
-            // 존재한다면 기존 아이템에 수량만 변경, 없다면 새로 만들어서 추가
             Optional<CartItem> cartItemOptional = cartItemRepository
-                    .findCartItem(cartOptional.get().getId(), itemStock.getId());
+                    .findCartItemByFetch(cart.getId(), itemStock.getId());
 
+            // 이미 담았던 물품이면 수량만 변경
             if (cartItemOptional.isPresent()) {
                 cartItemOptional.get().addQuantity(request.getQuantity());
-            } else {
-                cartItemRepository.save(
-                        CartItem.of(cartOptional.get(),
-                                itemStock.getItem(),
-                                itemStock,
-                                request.getQuantity()));
+
+            } else { // 담은 적이 없다면 엔티티를 새로 만들어서 추가
+                cart.addCartItem(itemStock.getItem(), itemStock, request.getQuantity());
             }
 
         } else {
@@ -64,7 +62,8 @@ public class CartService {
             User user = userRepository.findById(userDetails.getUserId())
                     .orElseThrow(() -> new UserException(ErrorCode.USER_NOT_FOUND));
             user.addCart();
-            user.getCart().addCartItem(itemStock, request.getQuantity());
+            user.getCart()
+                    .addCartItem(itemStock.getItem(), itemStock, request.getQuantity());
         }
 
 
