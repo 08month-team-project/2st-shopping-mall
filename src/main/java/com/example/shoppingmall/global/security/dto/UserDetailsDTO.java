@@ -17,7 +17,7 @@ public class UserDetailsDTO {
     private String password;
     private String role;
 
-    public static UserDetailsDTO toUserEntity(User user){
+    public static UserDetailsDTO from(User user){
         return UserDetailsDTO.builder()
                 .userId(user.getId())
                 .email(user.getEmail())
