@@ -16,7 +16,7 @@ public enum ErrorCode {
 
     //ItemException
     NOT_FOUND_ITEM(NOT_FOUND, "물품 및 해당 물품옵션을 찾을 수 없습니다."),
-    CART_QUANTITY_EXCEEDS_STOCK(BAD_REQUEST, "장바구니에 담은 수량이 재고보다 많습니다."),
+    CART_QUANTITY_EXCEEDS_STOCK(BAD_REQUEST, "재고보다 많을 수량을 담을 수 없습니다."),
     PRODUCT_NOT_FOR_SALE(NOT_FOUND, "이 상품은 현재 판매 중이 아닙니다."),
 
     //S3Exception
