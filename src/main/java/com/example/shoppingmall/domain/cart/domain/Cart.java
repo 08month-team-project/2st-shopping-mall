@@ -2,11 +2,18 @@ package com.example.shoppingmall.domain.cart.domain;
 
 import com.example.shoppingmall.domain.user.domain.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.FetchType.*;
-import static jakarta.persistence.GenerationType.*;
+import static jakarta.persistence.FetchType.LAZY;
+import static jakarta.persistence.GenerationType.IDENTITY;
+import static lombok.AccessLevel.PROTECTED;
 
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor(access = PROTECTED)
 @Getter
 @Entity
 public class Cart {
@@ -21,10 +28,12 @@ public class Cart {
     @OneToOne(fetch = LAZY)
     private User user;
 
-    /* TODO 양방향 고려
-    *   - user (oneToOne)
-    *   - cart_item (oneToMany)
-    */
+
+    public Cart(User user) {
+        this.user = user;
+    }
+
+
 
 
 }
