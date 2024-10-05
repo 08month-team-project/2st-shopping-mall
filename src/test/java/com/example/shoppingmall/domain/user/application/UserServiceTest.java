@@ -16,9 +16,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import java.util.Map;
-import java.util.Optional;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -47,12 +44,10 @@ class UserServiceTest {
         String correctPwd = "example1234";
         String correctPhone = "010-1234-1234";
         AddressRequest addressRequest = AddressRequest.builder()
-                .street("강남대로 123")
-                .city("서울 특별시 강남구")
+                .city("서울 특별시 강남구 강남대로 123")
                 .zipcode("1010").build();
         Address address = Address.builder()
-                .street("강남대로 123")
-                .city("서울 특별시 강남구")
+                .city("서울 특별시 강남구 강남대로 123")
                 .zipcode("1010")
                 .build();
         signupRequest = SignupRequest.builder()

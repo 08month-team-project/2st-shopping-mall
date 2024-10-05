@@ -12,9 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class AddressRequest {
 
-    @NotBlank(message = "도로명 주소를 입력해주세요.")
-    private String street;
-    @NotBlank(message = "시/군/구 주소를 입력해주세요.")
+    @NotBlank(message = "주소를 입력해주세요.")
     private String city;
     @NotBlank(message = "우편번호를 입력해주세요.")
     private String zipcode;

@@ -57,8 +57,7 @@ class ItemServiceTest {
                 .gender(Gender.MALE)
                 .phoneNumber("010-1234-1234")
                 .address(Address.builder()
-                        .street("강남대로 123")
-                        .city("서울 특별시 강남구")
+                        .city("서울 특별시 강남구 강남대로 123")
                         .zipcode("1101").build())
                 .build();
 
