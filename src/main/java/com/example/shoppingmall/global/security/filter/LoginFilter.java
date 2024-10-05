@@ -1,6 +1,6 @@
 package com.example.shoppingmall.global.security.filter;
 
-import com.example.shoppingmall.domain.user.dto.SigninRequest;
+import com.example.shoppingmall.domain.user.dto.LoginRequest;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
 import com.example.shoppingmall.global.security.util.JwtUtil;
 import com.example.shoppingmall.global.security.util.RedisAuthUtil;
@@ -40,9 +40,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             ObjectMapper objectMapper = new ObjectMapper();
-            SigninRequest signinRequest = objectMapper.readValue(request.getInputStream(), SigninRequest.class);
-            String email = signinRequest.getEmail();
-            String password = signinRequest.getPassword();
+            LoginRequest loginRequest = objectMapper.readValue(request.getInputStream(), LoginRequest.class);
+            String email = loginRequest.getEmail();
+            String password = loginRequest.getPassword();
 
             if (!isEmailValid(email)) {
                 response.setContentType("application/json; charset=UTF-8");
