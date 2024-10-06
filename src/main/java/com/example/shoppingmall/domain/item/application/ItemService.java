@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class ItemService {
 
@@ -29,7 +29,7 @@ public class ItemService {
 //    }
 
 
-    @Transactional(readOnly = true)
+
     public Page<ItemResponse> searchItems(Long categoryId,
                                           String itemName,
                                           StatusCondition statusCondition,
