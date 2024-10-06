@@ -63,8 +63,11 @@ public class SecurityConfig {
 
 
         http.authorizeHttpRequests(auth-> auth
-                .requestMatchers("users/signup","users/signin",
-                        "/","users/check-email").permitAll()
+                .requestMatchers(
+                        "/",
+                        "users/signup",
+                        "users/login",
+                        "users/check-email").permitAll()
                 .anyRequest().authenticated());
 
 

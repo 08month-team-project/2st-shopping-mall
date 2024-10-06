@@ -57,8 +57,7 @@ class ItemRepositoryTest {
         items = new ArrayList<>();
 
         Address address = Address.builder()
-                .street("강남대로 123")
-                .city("서울 특별시 강남구")
+                .city("서울 특별시 강남구 강남대로 123")
                 .zipcode("1101").build();
 
         user = User.builder()
