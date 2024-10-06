@@ -9,15 +9,21 @@ import java.util.Collection;
 
 public class CustomUserDetails implements UserDetails {
 
+    private Long userId;
     private String userEmail;
     private String userPassword;
     private Collection<GrantedAuthority> authorities;
 
     public CustomUserDetails(UserDetailsDTO dto) {
+        userId = dto.getUserId();
         userEmail = dto.getEmail();
         userPassword = dto.getPassword();
         authorities = new ArrayList<>();
         authorities.add((GrantedAuthority) dto::getRole);
+    }
+
+    public Long getUserId() {
+        return userId;
     }
 
     @Override

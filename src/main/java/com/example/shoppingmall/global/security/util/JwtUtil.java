@@ -16,34 +16,44 @@ import java.util.UUID;
 public class JwtUtil {
     private SecretKey secretKey;
 
-    public JwtUtil(@Value("${spring.jwt.secret}")String secret){
+    public JwtUtil(@Value("${spring.jwt.secret}") String secret) {
         secretKey = new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8),
                 Jwts.SIG.HS256.key().build().getAlgorithm());
     }
-    public String getEmail(String token){
+
+    public Long getId(String token) {
+        return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token)
+                .getPayload().get("id", Long.class);
+    }
+
+    public String getEmail(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token)
                 .getPayload().get("email", String.class);
     }
-    public String getRole(String token){
+
+    public String getRole(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token)
                 .getPayload().get("role", String.class);
     }
-    public String getCategory(String token){
+
+    public String getCategory(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token)
                 .getPayload().get("category", String.class);
     }
-    public Boolean isExpired(String token){
+
+    public Boolean isExpired(String token) {
         return Jwts.parser().verifyWith(secretKey).build().parseSignedClaims(token)
                 .getPayload().getExpiration().before(new Date());
     }
 
-    public String createJwt(String category, String email, String role, Long expiredMs){
+    public String createJwt(String category, Long userId, String email, String role, Long expiredMs) {
         String unique = UUID.randomUUID().toString();
         return Jwts.builder()
-                .claim("category",category)
-                .claim("email",email)
-                .claim("role",role)
-                .claim("unique",unique)
+                .claim("category", category)
+                .claim("id", userId)
+                .claim("email", email)
+                .claim("role", role)
+                .claim("unique", unique)
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(new Date(System.currentTimeMillis() + expiredMs))
                 .signWith(secretKey)
