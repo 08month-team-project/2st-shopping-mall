@@ -23,6 +23,10 @@ public enum ErrorCode {
     NOT_FOUND_CATEGORY(NOT_FOUND,"카테고리를 찾을수 없습니다."),
     NOT_FOUND_SIZE(NOT_FOUND,"싸이즈를 찾을수 없습니다."),
 
+    //CartException
+    CART_ITEM_NOT_MODIFIABLE(FORBIDDEN, "본인의 장바구니에 담긴 물품만 수정할 수 있습니다."),
+    CART_ITEM_QUANTITY_MIN_LIMIT(BAD_REQUEST, "최소 1개 이상 담아야합니다."),
+
     //S3Exception
     INVALID_IMAGE_TYPE(BAD_REQUEST, "허용되지 않는 파일 형식입니다. JPEG, JPG, PNG 파일만 가능합니다."),
     IMAGE_TOO_LARGE(PAYLOAD_TOO_LARGE, "파일 크기가 1MB를 초과합니다."),
@@ -30,8 +34,7 @@ public enum ErrorCode {
     NOT_VALID_URL(NOT_FOUND,"잘못된 URL 형태입니다."),
     NOT_ENOUGH_IMAGES(NOT_FOUND,"최소 1장의 이미지를 업로드해야 합니다."),
     MAX_UPLOAD_LIMIT(NOT_FOUND,"최대 3장 까지만 업로드가 가능합니다."),
-    INVALID_URL_FORMAT(NOT_FOUND,"잘못된 URL 형식입니다."),
-    UPLOAD_FALL(NOT_FOUND,"업로드에 실패 했습니다.")
+    INVALID_URL_FORMAT(NOT_FOUND,"잘못된 URL 형식입니다.")
 
     ;
 
