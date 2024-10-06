@@ -7,7 +7,6 @@ import java.util.Map;
 
 @Service
 public class CensorService {
-
     private static final Map<String, String> badWordsMap = new HashMap<>();
 
     static {
@@ -16,13 +15,15 @@ public class CensorService {
         badWordsMap.put("년", "****");
         badWordsMap.put("씹","****");
         badWordsMap.put("창","****");
-        // 비속어 목록 추가
+        // 추가 비속어 정의
     }
 
-    public String filterBadWords(String text) {
-        for (Map.Entry<String, String> entry : badWordsMap.entrySet()) {
-            text = text.replaceAll(entry.getKey(), entry.getValue());
+    public boolean containsBadWords(String input) {
+        for (String badWord : badWordsMap.keySet()) {
+            if (input.contains(badWord)) {
+                return true; // 비속어가 포함되어 있다면 true 반환
+            }
         }
-        return text;
+        return false; // 비속어가 없으면 false 반환
     }
 }
