@@ -1,5 +1,6 @@
 package com.example.shoppingmall.global.exception;
 
+import com.example.shoppingmall.domain.cart.excepction.CartException;
 import com.example.shoppingmall.domain.item.excepction.ItemException;
 import com.example.shoppingmall.domain.user.excepction.UserException;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ItemException.class)
     public ResponseEntity<ErrorResult> handleItemException(ItemException e){
+        return makeErrorResult(e.getErrorCode());
+    }
+
+    @ExceptionHandler(CartException.class)
+    public ResponseEntity<ErrorResult> handleCartException(CartException e){
         return makeErrorResult(e.getErrorCode());
     }
 

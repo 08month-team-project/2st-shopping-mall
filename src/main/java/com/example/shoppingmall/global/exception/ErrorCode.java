@@ -19,6 +19,9 @@ public enum ErrorCode {
     CART_QUANTITY_EXCEEDS_STOCK(BAD_REQUEST, "재고보다 많을 수량을 담을 수 없습니다."),
     PRODUCT_NOT_FOR_SALE(NOT_FOUND, "이 상품은 현재 판매 중이 아닙니다."),
 
+    //CartException
+    CART_ITEM_NOT_MODIFIABLE(FORBIDDEN, "본인의 장바구니에 담긴 물품만 수정할 수 있습니다."),
+
     //S3Exception
     INVALID_IMAGE_TYPE(BAD_REQUEST, "허용되지 않는 파일 형식입니다. JPEG, JPG, PNG 파일만 가능합니다."),
     IMAGE_TOO_LARGE(PAYLOAD_TOO_LARGE, "파일 크기가 1MB를 초과합니다."),
