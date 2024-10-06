@@ -25,4 +25,14 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
             " join fetch is.clothingSize " +
             " where ci.cart.id = :cartId")
     Slice<CartItem> findMyCartItems(@Param("cartId") Long cartId, Pageable pageable);
+
+
+    @Query("select ci from CartItem ci " +
+            " join fetch ci.cart " +
+            " join fetch ci.item " +
+            " join fetch ci.itemStock " +
+            " where ci.id = :cartItemId")
+    Optional<CartItem> findCartItemByFetch(@Param("cartItemId") long cartItemId);
+
 }
+

@@ -37,4 +37,15 @@ public class CartController { // TODO 정말 만약에 시간이 남는다면, �
 
         return ResponseEntity.ok(cartService.getMyCartItems(userDetails, pageNumber));
     }
+
+
+    @PatchMapping("/items/{cart_item_id}")
+    public ResponseEntity<Void> modifyCartItemQuantity(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @PathVariable("cart_item_id") long cartItemId,
+            @RequestParam("quantity") int quantity) {
+
+        cartService.modifyCartItemQuantity(customUserDetails, cartItemId, quantity);
+        return ResponseEntity.ok().build();
+    }
 }

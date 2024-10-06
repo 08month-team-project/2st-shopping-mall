@@ -6,15 +6,17 @@ import com.example.shoppingmall.domain.item.domain.ItemStock;
 import com.example.shoppingmall.domain.item.excepction.ItemException;
 import com.example.shoppingmall.domain.item.type.ItemStatus;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-import static com.example.shoppingmall.global.exception.ErrorCode.CART_QUANTITY_EXCEEDS_STOCK;
-import static com.example.shoppingmall.global.exception.ErrorCode.PRODUCT_NOT_FOR_SALE;
+import static com.example.shoppingmall.global.exception.ErrorCode.*;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
-import static lombok.AccessLevel.*;
+import static lombok.AccessLevel.PRIVATE;
 import static lombok.AccessLevel.PROTECTED;
 
 @NoArgsConstructor(access = PROTECTED)
@@ -70,4 +72,21 @@ public class CartItem extends BaseTimeEntity {
         this.quantity += quantity;
     }
 
+    // 장바구니 수정 (수량 변경)
+    public void modifyQuantity(int quantity) {
+        // 이미 담아놨던 물품이 만료일자인지, 품절처리 상태인지 확인
+        if ((item.getStatus() == null) || item.getStatus().equals(ItemStatus.OUT_OF_STOCK)) {
+            throw new ItemException(PRODUCT_NOT_FOR_SALE);
+        }
+        // 판매중이면, 넣어놓은 옵션(사이즈) 의 물품의 개별 재고를 확인
+        if (quantity > itemStock.getStock()) {
+            throw new ItemException(CART_QUANTITY_EXCEEDS_STOCK);
+        }
+
+        if(quantity < 1){
+            throw new ItemException(CART_ITEM_QUANTITY_MIN_LIMIT);
+        }
+
+        this.quantity = quantity;
+    }
 }
