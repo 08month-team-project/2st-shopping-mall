@@ -11,6 +11,10 @@ import java.util.Optional;
 @Repository
 public interface ItemRepository extends JpaRepository<Item, Long>, ItemRepositoryCustom {
 
-    @Query("select i from Item i join fetch i.user join fetch i.stocks where i.id = :itemId")
+    @Query("select i from Item i " +
+            " join fetch i.user " +
+            " join fetch i.stocks is " +
+            " join fetch is.clothingSize " +
+            " where i.id = :itemId")
     Optional<Item> findItemAndStockAndSeller(@Param("itemId") Long itemId);
 }
