@@ -78,12 +78,6 @@ public class SecurityConfig {
                         "items/images/upload",
                         "items/seller/register").hasAuthority("SELLER")
                 .anyRequest().authenticated());
-        //여기서 중요한 점은, hasRole("SELLER")를 사용할 경우 SELLER 앞에 자동으로 ROLE_이 붙습니다. 즉, Spring Security는 실제로 ROLE_SELLER라는 값을 기대합니다.
-        //
-        //만약 DB나 토큰에서 SELLER라는 값만 저장하고 있다면, 다음과 같이 변경해야 합니다.
-        //
-        //코드 복사
-        //.requestMatchers(HttpMethod.POST, "/items/seller/register").hasAuthority("SELLER")
 
         http.addFilterAt(new LoginFilter(jwtUtil, redisAuthUtil, authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new JwtAuthenticationFilter(jwtUtil, redisAuthUtil),UsernamePasswordAuthenticationFilter.class);
