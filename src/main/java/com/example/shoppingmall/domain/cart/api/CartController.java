@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -48,4 +50,15 @@ public class CartController { // TODO 정말 만약에 시간이 남는다면, �
         cartService.modifyCartItemQuantity(customUserDetails, cartItemId, quantity);
         return ResponseEntity.ok().build();
     }
+
+
+    @DeleteMapping("/items")
+    public ResponseEntity<Void> deleteCartItems(
+            @RequestParam("cart_item_id") List<Long> cartItemIdList,
+            @AuthenticationPrincipal CustomUserDetails userDetails) {
+
+        cartService.deleteCartItems(cartItemIdList, userDetails);
+        return ResponseEntity.ok().build();
+    }
+
 }
