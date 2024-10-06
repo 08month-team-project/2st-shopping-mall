@@ -1,7 +1,7 @@
 package com.example.shoppingmall.domain.item.dto;
 
-import com.example.shoppingmall.domain.item.domain.ClothSize;
-import com.example.shoppingmall.domain.item.type.ClothingSize;
+import com.example.shoppingmall.domain.item.domain.ClothingSize;
+import com.example.shoppingmall.domain.item.type.ClothingSizeName;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -9,11 +9,11 @@ import lombok.Getter;
 @Builder
 public class SizeItem {
 
-    private ClothingSize size;
+    private ClothingSizeName sizeName;
 
-    public static SizeItem fromEntity(ClothSize clothSize) {
+    public static SizeItem fromEntity(ClothingSize clothSize) {
         return SizeItem.builder()
-                .size(clothSize.getSizeName())
+                .sizeName(clothSize.getSizeName())
                 .build();
     }
 }
