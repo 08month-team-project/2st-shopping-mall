@@ -3,8 +3,8 @@ package com.example.shoppingmall.domain.item.application;
 import com.example.shoppingmall.domain.item.dao.ImageRepository;
 import com.example.shoppingmall.domain.item.dao.ItemRepository;
 import com.example.shoppingmall.domain.item.domain.Item;
+import com.example.shoppingmall.domain.item.dto.ItemDetailImages;
 import com.example.shoppingmall.domain.item.dto.ItemDetailResponse;
-import com.example.shoppingmall.domain.item.dto.ItemImageResponse;
 import com.example.shoppingmall.domain.item.dto.ItemResponse;
 import com.example.shoppingmall.domain.item.excepction.ItemException;
 import com.example.shoppingmall.domain.item.type.SortCondition;
@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 import static com.example.shoppingmall.global.exception.ErrorCode.NOT_FOUND_ITEM;
 
@@ -35,9 +33,8 @@ public class ItemService {
         return new ItemDetailResponse(item);
     }
 
-    public List<ItemImageResponse> getItemImages(long itemId) {
-        return imageRepository.findAllByItemId(itemId).stream()
-                .map(ItemImageResponse::from).toList();
+    public ItemDetailImages getItemImages(long itemId) {
+        return ItemDetailImages.of(itemId, imageRepository.findAllByItemId(itemId));
     }
 
 

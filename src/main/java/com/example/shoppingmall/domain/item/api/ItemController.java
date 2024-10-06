@@ -2,8 +2,8 @@ package com.example.shoppingmall.domain.item.api;
 
 import com.example.shoppingmall.domain.item.application.ItemService;
 import com.example.shoppingmall.domain.item.application.S3Service;
+import com.example.shoppingmall.domain.item.dto.ItemDetailImages;
 import com.example.shoppingmall.domain.item.dto.ItemDetailResponse;
-import com.example.shoppingmall.domain.item.dto.ItemImageResponse;
 import com.example.shoppingmall.domain.item.dto.ItemResponse;
 import com.example.shoppingmall.domain.item.type.SortCondition;
 import com.example.shoppingmall.domain.item.type.StatusCondition;
@@ -32,7 +32,7 @@ public class ItemController {
     }
 
     @GetMapping("/{item_id}/images")
-    public ResponseEntity<List<ItemImageResponse>> getItemImages(
+    public ResponseEntity<ItemDetailImages> getItemImages(
             @PathVariable("item_id") long itemId) {
 
         return ResponseEntity.ok(itemService.getItemImages(itemId));
