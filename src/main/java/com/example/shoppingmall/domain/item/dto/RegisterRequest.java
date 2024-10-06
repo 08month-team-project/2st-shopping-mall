@@ -2,7 +2,7 @@ package com.example.shoppingmall.domain.item.dto;
 
 import com.example.shoppingmall.domain.item.type.CategoryName;
 import com.example.shoppingmall.domain.item.type.ClothingSizeName;
-import com.example.shoppingmall.global.annotation.Censor;
+import com.example.shoppingmall.global.annotation.BadWordFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -18,7 +18,7 @@ public class RegisterRequest {
     @JsonProperty("images_url")
     private List<@NotNull(message = "이미지 칸은 비어있을 수 없습니다.") String> imagesUrl;
 
-    @Censor  // 비속어 필터링 추가
+    @BadWordFilter  // 비속어 필터링 추가
     @NotBlank(message = "상품 이름은 필수입니다.")
     private String name;
 
@@ -33,7 +33,7 @@ public class RegisterRequest {
     @Min(value = 0, message = "재고 수량은 0 이상이어야 합니다.")
     private Integer stuck;
 
-    @Censor  // 비속어 필터링 추가
+    @BadWordFilter  // 비속어 필터링 추가
     @Size(max = 500, message = "설명은 최대 500자 이내여야 합니다.")
     private String description;
 
