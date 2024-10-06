@@ -1,12 +1,10 @@
 package com.example.shoppingmall.domain.item.domain;
 
-import com.example.shoppingmall.domain.item.type.ClothingSize;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -24,9 +22,9 @@ public class ItemStock {
     @Column(nullable = false)
     private Integer stock;
 
-    @Column(nullable = false)
-    @Enumerated(STRING)
-    private ClothingSize size;
+    @JoinColumn(name = "clothing_size_id")
+    @ManyToOne(fetch = LAZY)
+    private ClothingSize clothingSize;
 
     @JoinColumn(name = "item_id")
     @ManyToOne(fetch = LAZY)
@@ -34,7 +32,7 @@ public class ItemStock {
 
     public ItemStock(Item item, ClothingSize size, Integer stock) {
         this.item = item;
-        this.size = size;
+        this.clothingSize = size;
         this.stock = stock;
     }
 

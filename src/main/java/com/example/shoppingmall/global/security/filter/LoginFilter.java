@@ -96,14 +96,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
+        Long userId = customUserDetails.getUserId();
         String userEmail = customUserDetails.getUsername();
         Collection<? extends GrantedAuthority> authorities = customUserDetails.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority authority = iterator.next();
         String role = authority.getAuthority();
 
-        String accessToken = jwtUtil.createJwt("access",userEmail,role, 1000*60*60L);
-        String refreshToken = jwtUtil.createJwt("refresh",userEmail,role, 1000*60*60*24*3L);
+        String accessToken = jwtUtil.createJwt("access",userId,userEmail,role, 1000*60*60L);
+        String refreshToken = jwtUtil.createJwt("refresh",userId,userEmail,role, 1000*60*60*24*3L);
         redisAuthUtil.saveRefreshToken(userEmail,refreshToken);
 
         Cookie refreshCookie = new Cookie("refresh",refreshToken);

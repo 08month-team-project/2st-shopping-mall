@@ -51,9 +51,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             try {
                 if (validateRefreshToken(refreshTokenFromCookie)) {
                     String userEmail = jwtUtil.getEmail(refreshTokenFromCookie);
+                    Long userId = jwtUtil.getId(refreshTokenFromCookie);
                     String refreshTokenFromRedis = redisAuthUtil.getRefreshToken(userEmail);
                     if (compareRefreshToken(refreshTokenFromCookie, refreshTokenFromRedis)) {
-                        String newAccessToken = jwtUtil.createJwt("access", userEmail, jwtUtil.getRole(refreshTokenFromCookie), 1000*60*60L);
+                        String newAccessToken = jwtUtil.createJwt("access", userId, userEmail, jwtUtil.getRole(refreshTokenFromCookie), 1000*60*60L);
                         response.setHeader("Authorization", "Bearer " + newAccessToken);
                         authenticateWithAccessToken(newAccessToken);
                     } else {
@@ -82,6 +83,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private void authenticateWithAccessToken(String accessToken) {
         UserDetailsDTO userDetailsDTO = UserDetailsDTO.builder()
+                .userId(jwtUtil.getId(accessToken))
                 .email(jwtUtil.getEmail(accessToken))
                 .role(jwtUtil.getRole(accessToken))
                 .build();

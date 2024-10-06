@@ -15,7 +15,9 @@ public enum ErrorCode {
     CREATE_USER_FAILED(INTERNAL_SERVER_ERROR,"회원가입에 실패했습니다."),
 
     //ItemException
-    NOT_FOUND_ITEM(NOT_FOUND, "물품을 찾을 수 없습니다."),
+    NOT_FOUND_ITEM(NOT_FOUND, "물품 및 해당 물품옵션을 찾을 수 없습니다."),
+    CART_QUANTITY_EXCEEDS_STOCK(BAD_REQUEST, "재고보다 많을 수량을 담을 수 없습니다."),
+    PRODUCT_NOT_FOR_SALE(NOT_FOUND, "이 상품은 현재 판매 중이 아닙니다."),
 
     //S3Exception
     INVALID_IMAGE_TYPE(BAD_REQUEST, "허용되지 않는 파일 형식입니다. JPEG, JPG, PNG 파일만 가능합니다."),
