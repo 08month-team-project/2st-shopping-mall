@@ -33,8 +33,4 @@ public class Category {
     /** 양방향 고려
      * - category_item
      */
-    // 정적 팩토리 메서드
-    public static Category of(CategoryName categoryName) {
-        return new Category(categoryName);
-    }
 }
