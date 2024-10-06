@@ -4,10 +4,12 @@ import com.example.shoppingmall.domain.cart.domain.CartItem;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -33,6 +35,15 @@ public interface CartItemRepository extends JpaRepository<CartItem, Long> {
             " join fetch ci.itemStock " +
             " where ci.id = :cartItemId")
     Optional<CartItem> findCartItemByFetch(@Param("cartItemId") long cartItemId);
+
+
+
+    @Modifying
+    @Query("delete from CartItem ci " +
+            " where ci.id in :cartItemIds and " +
+            " ci.cart.user.id = :userId")
+    void deleteCartItems( @Param("cartItemIds") List<Long> cartItemIds, @Param("userId") Long userId);
+
 
 }
 
