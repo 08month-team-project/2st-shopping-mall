@@ -1,7 +1,8 @@
 package com.example.shoppingmall.domain.item.dto;
 
 import com.example.shoppingmall.domain.item.type.CategoryName;
-import com.example.shoppingmall.domain.item.type.ClothingSize;
+import com.example.shoppingmall.domain.item.type.ClothingSizeName;
+import com.example.shoppingmall.global.annotation.Censor;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
@@ -17,16 +18,13 @@ public class RegisterRequest {
     @JsonProperty("images_url")
     private List<@NotNull(message = "이미지 칸은 비어있을 수 없습니다.") String> imagesUrl;
 
+    @Censor  // 비속어 필터링 추가
     @NotBlank(message = "상품 이름은 필수입니다.")
     private String name;
 
     @NotNull(message = "가격은 필수입니다.")
     @Min(value = 0, message = "가격은 0 이상이어야 합니다.")
     private Integer price;
-
-    @NotBlank(message = "닉네임은 필수입니다.")
-    @JsonProperty("nick_name")
-    private String nickName;
 
     @NotNull(message = "카테고리는 필수입니다.")
     private CategoryName category;
@@ -35,6 +33,7 @@ public class RegisterRequest {
     @Min(value = 0, message = "재고 수량은 0 이상이어야 합니다.")
     private Integer stuck;
 
+    @Censor  // 비속어 필터링 추가
     @Size(max = 500, message = "설명은 최대 500자 이내여야 합니다.")
     private String description;
 
@@ -42,6 +41,7 @@ public class RegisterRequest {
     private LocalDateTime expiredAt;
 
     @NotNull(message = "싸이즈를 선택해주세요")
-    private ClothingSize size;
+    @JsonProperty("size_name")
+    private ClothingSizeName sizeName;
 
 }
