@@ -4,6 +4,7 @@ import com.example.shoppingmall.domain.cart.dao.CartRepository;
 import com.example.shoppingmall.domain.cart.domain.Cart;
 import com.example.shoppingmall.domain.cart.domain.CartItem;
 import com.example.shoppingmall.domain.cart.dto.AddCartItemRequest;
+import com.example.shoppingmall.domain.cart.excepction.CartException;
 import com.example.shoppingmall.domain.item.dao.CartItemRepository;
 import com.example.shoppingmall.domain.item.dao.ItemStockRepository;
 import com.example.shoppingmall.domain.item.domain.ItemStock;
@@ -19,7 +20,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
-@Transactional
+import static com.example.shoppingmall.global.exception.ErrorCode.CART_ITEM_NOT_MODIFIABLE;
+import static com.example.shoppingmall.global.exception.ErrorCode.NOT_FOUND_ITEM;
+
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class CartService {
@@ -31,11 +35,12 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
 
 
+    @Transactional
     public void addCartItem(CustomUserDetails userDetails, AddCartItemRequest request) {
 
         // 담고싶은 물품정보를 가져온다.
         ItemStock itemStock = itemStockRepository.findItemStockWithItem(request.getItemStockId())
-                .orElseThrow(() -> new ItemException(ErrorCode.NOT_FOUND_ITEM));
+                .orElseThrow(() -> new ItemException(NOT_FOUND_ITEM));
 
 
         // 인증객체로 가져온 유저아이디에 속한 장바구니를 가져온다.
@@ -67,5 +72,20 @@ public class CartService {
         }
 
 
+    }
+
+    @Transactional
+    public void modifyCartItemQuantity(CustomUserDetails customUserDetails,
+                                       long cartItemId, int quantity) {
+
+        CartItem cartItem = cartItemRepository.findCartItemByFetch(cartItemId)
+                .orElseThrow(() -> new ItemException(NOT_FOUND_ITEM));
+
+        Long userId = cartItem.getCart().getUser().getId();
+        if(userId == null || !userId.equals(customUserDetails.getUserId())){
+            throw new CartException(CART_ITEM_NOT_MODIFIABLE);
+        }
+
+        cartItem.modifyQuantity(quantity);
     }
 }
