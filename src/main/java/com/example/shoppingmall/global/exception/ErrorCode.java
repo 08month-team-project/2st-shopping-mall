@@ -34,7 +34,8 @@ public enum ErrorCode {
     NOT_VALID_URL(NOT_FOUND,"잘못된 URL 형태입니다."),
     NOT_ENOUGH_IMAGES(NOT_FOUND,"최소 1장의 이미지를 업로드해야 합니다."),
     MAX_UPLOAD_LIMIT(NOT_FOUND,"최대 3장 까지만 업로드가 가능합니다."),
-    INVALID_URL_FORMAT(NOT_FOUND,"잘못된 URL 형식입니다.")
+    INVALID_URL_FORMAT(NOT_FOUND,"잘못된 URL 형식입니다."),
+    UPLOAD_FALL(INTERNAL_SERVER_ERROR,"업로드에 실패 했습니다.")
 
     ;
 
