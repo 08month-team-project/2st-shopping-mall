@@ -1,10 +1,10 @@
 package com.example.shoppingmall.domain.user.domain;
 
+import com.example.shoppingmall.domain.cart.domain.Cart;
 import com.example.shoppingmall.domain.common.BaseTimeEntity;
 import com.example.shoppingmall.domain.user.type.Gender;
 import com.example.shoppingmall.domain.user.type.UserRole;
 import com.example.shoppingmall.domain.user.type.UserStatus;
-import com.example.shoppingmall.global.security.dto.UserDetailsDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -58,18 +58,21 @@ public class User extends BaseTimeEntity {
 
     private String profileImageUrl;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
+    private Cart cart;
 
-    /* TODO 양방향 고려
-        - cart (oneToOne)
-
-        - order (oneToMany)
-        - item (oneToMany)
-     */
 
     @PrePersist
     public void prePersist() {
         role = UserRole.CUSTOMER;
         status = UserStatus.ACTIVE;
+        addCart();
+    }
+
+    // 굳이 public 메서드로 한 이유
+    // 모종의 이유로 cart 가 존재하지 않을 때, 서비스에서 새로 만들 수 있게 하기 위함
+    public void addCart() {
+        cart = new Cart(this);
     }
 
 }

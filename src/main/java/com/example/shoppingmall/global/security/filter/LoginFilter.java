@@ -1,6 +1,6 @@
 package com.example.shoppingmall.global.security.filter;
 
-import com.example.shoppingmall.domain.user.dto.SigninRequest;
+import com.example.shoppingmall.domain.user.dto.LoginRequest;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
 import com.example.shoppingmall.global.security.util.JwtUtil;
 import com.example.shoppingmall.global.security.util.RedisAuthUtil;
@@ -33,16 +33,24 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         this.jwtUtil = jwtUtil;
         this.redisAuthUtil = redisAuthUtil;
         this.authenticationManager = authenticationManager;
-        setFilterProcessesUrl("/users/signin");
+        setFilterProcessesUrl("/users/login");
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
+
         try {
+            if (!request.getMethod().equals("POST")){
+                response.setContentType("application/json; charset=UTF-8");
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                response.getWriter().write("{\"message\":\"요청 메소드가 올바르지 않습니다.\"}");
+                return null;
+            }
+
             ObjectMapper objectMapper = new ObjectMapper();
-            SigninRequest signinRequest = objectMapper.readValue(request.getInputStream(), SigninRequest.class);
-            String email = signinRequest.getEmail();
-            String password = signinRequest.getPassword();
+            LoginRequest loginRequest = objectMapper.readValue(request.getInputStream(), LoginRequest.class);
+            String email = loginRequest.getEmail();
+            String password = loginRequest.getPassword();
 
             if (!isEmailValid(email)) {
                 response.setContentType("application/json; charset=UTF-8");
@@ -88,14 +96,15 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
+        Long userId = customUserDetails.getUserId();
         String userEmail = customUserDetails.getUsername();
         Collection<? extends GrantedAuthority> authorities = customUserDetails.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority authority = iterator.next();
         String role = authority.getAuthority();
 
-        String accessToken = jwtUtil.createJwt("access",userEmail,role, 1000*60*60L);
-        String refreshToken = jwtUtil.createJwt("refresh",userEmail,role, 1000*60*60*24*3L);
+        String accessToken = jwtUtil.createJwt("access",userId,userEmail,role, 1000*60*60L);
+        String refreshToken = jwtUtil.createJwt("refresh",userId,userEmail,role, 1000*60*60*24*3L);
         redisAuthUtil.saveRefreshToken(userEmail,refreshToken);
 
         Cookie refreshCookie = new Cookie("refresh",refreshToken);

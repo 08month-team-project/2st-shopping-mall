@@ -19,8 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.example.shoppingmall.global.exception.ErrorCode.NOT_FOUND_ITEM;
-
 @RequiredArgsConstructor
 @Transactional
 @Service
@@ -32,14 +30,17 @@ public class ItemService {
     private final ClothSizeRepository clothSizeRepository;
 
 
-    @Transactional(readOnly = true)
-    public ItemDetailResponse getItemDetail(long itemId) {
+//    @Transactional(readOnly = true)
+//    public ItemDetailResponse getItemDetail(long itemId) {
+//
+//        Item item = itemRepository.findItemAndStockAndSeller(itemId)
+//                .orElseThrow(() -> new ItemException(NOT_FOUND_ITEM));
+//
+//        return new ItemDetailResponse(item, imageRepository.findAllByItemId(item.getId()));
+//    }
 
-        Item item = itemRepository.findItemAndStockAndSeller(itemId)
-                .orElseThrow(() -> new ItemException(NOT_FOUND_ITEM));
 
-        return new ItemDetailResponse(item, imageRepository.findAllByItemId(item.getId()));
-    }
+
 
 
     @Transactional(readOnly = true)

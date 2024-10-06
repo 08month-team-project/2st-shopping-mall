@@ -2,11 +2,7 @@ package com.example.shoppingmall.domain.user.api;
 
 import com.example.shoppingmall.domain.user.application.UserService;
 import com.example.shoppingmall.domain.user.dto.*;
-import com.example.shoppingmall.domain.user.excepction.UserException;
 import com.example.shoppingmall.domain.user.type.Gender;
-import com.example.shoppingmall.global.exception.ErrorCode;
-import com.example.shoppingmall.global.exception.ErrorResult;
-import com.example.shoppingmall.global.exception.GlobalExceptionHandler;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -15,7 +11,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
@@ -47,8 +42,7 @@ class UserControllerTest {
         objectMapper = new ObjectMapper();
         mockMvc = MockMvcBuilders.standaloneSetup(userController).build();
         AddressRequest addressRequest = AddressRequest.builder()
-                .street("강남대로 123")
-                .city("서울 특별시 강남구")
+                .city("서울 특별시 강남구 강남대로 123")
                 .zipcode("1010").build();
         signupRequest = SignupRequest.builder()
                 .email("example@gmail.com")

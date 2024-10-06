@@ -22,12 +22,13 @@ public class ItemController {
     private final ItemService itemService;
     private final S3Service s3Service;
 
-    @GetMapping("/{item_id}")
-    public ResponseEntity<ItemDetailResponse> getItemDetail(
-            @PathVariable("item_id") long itemId) {
-
-        return ResponseEntity.ok(itemService.getItemDetail(itemId));
-    }
+//    @GetMapping("/{item_id}")
+//    public ResponseEntity<ItemDetailResponse> getItemDetail(
+//            @PathVariable("item_id") long itemId) {
+//
+//        return ResponseEntity.ok(itemService.getItemDetail(itemId));
+//    }
+//
 
     @GetMapping("/search")
     public ResponseEntity<Page<ItemResponse>> searchItems(
@@ -63,9 +64,9 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
-//    @PostMapping("/seller/register")
-//    public ResponseEntity<SellerResponse> itemResister(@Valid @RequestBody RegisterRequest request) {
-//        SellerResponse response = itemService.itemResister(request);
-//        return ResponseEntity.ok(response);
-//    }
+    @PostMapping("/seller/register")
+    public ResponseEntity<SellerResponse> itemResister(@Valid @RequestBody RegisterRequest request) {
+        SellerResponse response = itemService.itemResister(request);
+        return ResponseEntity.ok(response);
+    }
 }

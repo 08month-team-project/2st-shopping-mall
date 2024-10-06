@@ -1,13 +1,10 @@
 package com.example.shoppingmall.domain.item.domain;
 
-import com.example.shoppingmall.domain.item.type.ClothingSize;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import static jakarta.persistence.EnumType.STRING;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -22,20 +19,20 @@ public class ItemStock {
     @Column(name = "item_stock_id")
     private Long id;
 
+    @Column(nullable = false)
+    private Integer stock;
+
+    @JoinColumn(name = "clothing_size_id")
+    @ManyToOne(fetch = LAZY)
+    private ClothingSize clothingSize;
+
     @JoinColumn(name = "item_id")
     @ManyToOne(fetch = LAZY)
     private Item item;
 
-    @JoinColumn(name = "cloth_size_id")
-    @ManyToOne(fetch = LAZY)
-    private ClothSize clothSize;
-
-    @Column(nullable = false)
-    private Integer stock;
-
-
-    public ItemStock(Item item, Integer stock) {
+    public ItemStock(Item item, ClothingSize size, Integer stock) {
         this.item = item;
+        this.clothingSize = size;
         this.stock = stock;
     }
 
@@ -43,14 +40,7 @@ public class ItemStock {
         this.stock += stock;
     }
 
-    //
-    public ItemStock(Item item,ClothSize clothSize,Integer stock ) {
-        this.item = item;
-        this.clothSize = clothSize;
-        this.stock = stock;
-    }
-
-    public static ItemStock of(Item item,ClothSize clothSize,Integer stock ) {
-        return new ItemStock(item,clothSize,stock);
+    public static ItemStock of(Item item, ClothingSize size, Integer stock ) {
+        return new ItemStock(item, size, stock);
     }
 }

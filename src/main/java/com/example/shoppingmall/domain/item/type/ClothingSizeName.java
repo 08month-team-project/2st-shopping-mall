@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @JsonFormat(shape = JsonFormat.Shape.STRING)
-public enum ClothingSize {
+public enum ClothingSizeName {
     XS, S, M, L, XL, XXL, ETC
 
 }

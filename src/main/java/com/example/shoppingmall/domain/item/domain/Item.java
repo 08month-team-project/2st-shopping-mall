@@ -1,7 +1,6 @@
 package com.example.shoppingmall.domain.item.domain;
 
 import com.example.shoppingmall.domain.common.BaseTimeEntity;
-import com.example.shoppingmall.domain.item.type.ClothingSize;
 import com.example.shoppingmall.domain.item.type.ItemStatus;
 import com.example.shoppingmall.domain.user.domain.User;
 import jakarta.persistence.*;
@@ -58,8 +57,7 @@ public class Item extends BaseTimeEntity {
 
 
     // TODO 조회 수 구현하게 될 때 생각해볼 예정
-    // 아이템 등록할떄 널값을 허용안해서 오류 납니다 ㅠㅠ
-//    @Column(nullable = false, name = "hit_count")
+    @Column(nullable = false, name = "hit_count")
     private Long hitCount;
 
     @Column(nullable = false)
@@ -70,22 +68,18 @@ public class Item extends BaseTimeEntity {
     private ItemStatus status;
 
 
-    /**
-     * 이미 존재하는 옵션의 재고 수정 X
-     * 새로운 옵션 자체를 추가
-     */
+    public void addItemStock(ClothingSize size, int stock) {
 
-
-//    public void addStockOption(ClothingSize size, int stock) {
-//
-//        for (ItemStock itemStock : stocks) {
-//            if (itemStock != null && itemStock.getSize().equals(size)) {
-//                itemStock.addStock(stock);
-//                break;
-//            }
-//        }
-//        stocks.add(new ItemStock(this, size, stock));
-//    }
+        // 물품에 이미 등록돼있는 사이즈옵션이라면 재고수량을 추가
+        for (ItemStock itemStock : stocks) {
+            if (itemStock != null && itemStock.getClothingSize().getId().equals(size.getId())) {
+                itemStock.addStock(stock);
+                return;
+            }
+        }
+        // 등록된 적 없는 사이즈옵션이라면 새로 추가
+        stocks.add(new ItemStock(this, size, stock));
+    }
 
     public void addImage(String imageUrl) {
         images.add(new ItemImage(this, imageUrl));
@@ -94,15 +88,5 @@ public class Item extends BaseTimeEntity {
     public void addCategory(Category category){
         categoryItems.add(new CategoryItem(category, this));
     }
-
-
-    /* TODO 양방향 고려
-     *  - cart_item
-     *  - order_item
-     *
-     *  - item_category
-     *  - item_stock
-     *  - item_image
-     */
 
 }

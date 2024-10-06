@@ -8,6 +8,7 @@ import com.example.shoppingmall.global.security.util.RedisAuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -20,6 +21,8 @@ import org.springframework.security.web.authentication.logout.LogoutFilter;
 import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
+
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -63,8 +66,13 @@ public class SecurityConfig {
 
 
         http.authorizeHttpRequests(auth-> auth
-                .requestMatchers("users/signup","users/signin",
-                        "/","users/check-email").permitAll()
+                .requestMatchers(
+                        "/",
+                        "users/signup",
+                        "users/login",
+                        "users/check-email",
+                        "items/search").permitAll()
+                .requestMatchers(GET, "items/{item_id}").permitAll()
                 .anyRequest().authenticated());
 
 
