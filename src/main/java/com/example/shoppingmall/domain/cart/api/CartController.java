@@ -7,10 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 
 @RequiredArgsConstructor
@@ -29,4 +26,15 @@ public class CartController { // TODO 정말 만약에 시간이 남는다면, �
         cartService.addCartItem(userDetails, request);
         return ResponseEntity.ok().build();
     }
+
+    @PatchMapping("/items/{cart_item_id}")
+    public ResponseEntity<Void> modifyCartItemQuantity(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            @PathVariable("cart_item_id") long cartItemId,
+            @RequestParam("quantity") int quantity) {
+
+        cartService.modifyCartItemQuantity(customUserDetails, cartItemId, quantity);
+        return ResponseEntity.ok().build();
+    }
+
 }
