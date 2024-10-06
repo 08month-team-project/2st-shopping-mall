@@ -21,6 +21,7 @@ public enum ErrorCode {
 
     //CartException
     CART_ITEM_NOT_MODIFIABLE(FORBIDDEN, "본인의 장바구니에 담긴 물품만 수정할 수 있습니다."),
+    CART_ITEM_QUANTITY_MIN_LIMIT(BAD_REQUEST, "최소 1개 이상 담아야합니다."),
 
     //S3Exception
     INVALID_IMAGE_TYPE(BAD_REQUEST, "허용되지 않는 파일 형식입니다. JPEG, JPG, PNG 파일만 가능합니다."),
