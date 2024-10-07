@@ -1,6 +1,7 @@
 package com.example.shoppingmall.domain.item.domain;
 
 import com.example.shoppingmall.domain.common.BaseTimeEntity;
+import com.example.shoppingmall.domain.item.dto.RegisterRequest;
 import com.example.shoppingmall.domain.item.type.ItemStatus;
 import com.example.shoppingmall.domain.user.domain.User;
 import jakarta.persistence.*;
@@ -49,7 +50,7 @@ public class Item extends BaseTimeEntity {
     @OneToMany(mappedBy = "item", cascade = CascadeType.PERSIST)
     private List<CategoryItem> categoryItems = new ArrayList<>();
 
-    @Column(name = "thumbnail_url")
+    @Column(name = "thumbnail_url", columnDefinition = "TEXT")
     private String thumbnailUrl;
 
     @Column(nullable = false, name = "expired_at")
@@ -66,7 +67,6 @@ public class Item extends BaseTimeEntity {
     @Enumerated(STRING)
     @Column(nullable = false, name = "item_status")
     private ItemStatus status;
-
 
     public void addItemStock(ClothingSize size, int stock) {
 
@@ -89,5 +89,26 @@ public class Item extends BaseTimeEntity {
         categoryItems.add(new CategoryItem(category, this));
     }
 
+    @PrePersist
+    public void hitCountAndItemStatus() {
+        this.hitCount = 0L;
+        this.status = ItemStatus.IN_STOCK;
+    }
+
+    public static Item createItem(RegisterRequest request, User user, String thumbnailUrl) {
+        return Item.builder()
+                .name(request.getName())
+                .price(request.getPrice())
+                .description(request.getDescription())
+                .expiredAt(request.getExpiredAt())
+                .thumbnailUrl(thumbnailUrl)
+                .user(user)
+                .build();
+    }
+
+    public void addItemImage(List<String> imageUrls) {
+        imageUrls.stream().skip(1) // 임시로 첫번째 사진을 썸네일 컬럼에 넣기 떄문에 제외
+                .forEach(url -> this.images.add(ItemImage.of(this, url)));
+    }
 
 }

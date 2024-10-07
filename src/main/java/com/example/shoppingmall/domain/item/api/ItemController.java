@@ -2,14 +2,15 @@ package com.example.shoppingmall.domain.item.api;
 
 import com.example.shoppingmall.domain.item.application.ItemService;
 import com.example.shoppingmall.domain.item.application.S3Service;
-import com.example.shoppingmall.domain.item.dto.ItemDetailImages;
-import com.example.shoppingmall.domain.item.dto.ItemDetailResponse;
-import com.example.shoppingmall.domain.item.dto.ItemResponse;
+import com.example.shoppingmall.domain.item.dto.*;
 import com.example.shoppingmall.domain.item.type.SortCondition;
 import com.example.shoppingmall.domain.item.type.StatusCondition;
+import com.example.shoppingmall.global.security.detail.CustomUserDetails;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -58,5 +59,25 @@ public class ItemController {
         return ResponseEntity.ok(urls);
     }
 
+    // 카테고리 조회 -> 추후 캐싱 도전
+    @GetMapping("/categories")
+    public ResponseEntity<CategoryResponse> getCategoryList() {
+        CategoryResponse response = itemService.getCategoryList();
+        return ResponseEntity.ok(response);
+    }
 
+    // size 조회 -> 추후 캐싱 도전
+    @GetMapping("/size")
+    public ResponseEntity<SizeResponse> getSizeList() {
+        SizeResponse response = itemService.getSizeList();
+        return ResponseEntity.ok(response);
+    }
+
+    // 상품등록
+    @PostMapping("/seller/register")
+    public ResponseEntity<SellerResponse> itemResister(@Valid @RequestBody RegisterRequest request,
+                                                       @AuthenticationPrincipal CustomUserDetails userDetails) {
+        SellerResponse response = itemService.itemRegister(request, userDetails);
+        return ResponseEntity.ok(response);
+    }
 }

@@ -3,6 +3,7 @@ package com.example.shoppingmall.domain.user.dto;
 import com.example.shoppingmall.domain.user.domain.Address;
 import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.type.Gender;
+import com.example.shoppingmall.global.annotation.BadWordFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -27,6 +28,7 @@ public class SignupRequest {
     @NotBlank(message = "이름은 필수 입력 값입니다.")
     private String name;
 
+    @BadWordFilter // 다른 패키지에서도 동작 하는지 확인
     @NotBlank(message = "닉네임은 필수 입력 값입니다.")
     private String nickname;
 

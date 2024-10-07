@@ -39,4 +39,8 @@ public class ItemStock {
     public void addStock(int stock) {
         this.stock += stock;
     }
+
+    public static ItemStock of(Item item, ClothingSize size, Integer stock ) {
+        return new ItemStock(item, size, stock);
+    }
 }
