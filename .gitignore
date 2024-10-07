@@ -48,3 +48,6 @@ out/
 ### 설정파일 ###
 
 .env
+/src/main/generated
+
+
