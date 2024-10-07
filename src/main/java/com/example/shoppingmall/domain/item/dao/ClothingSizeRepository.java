@@ -1,4 +1,4 @@
-package com.example.shoppingmall.domain.item.dto;
+package com.example.shoppingmall.domain.item.dao;
 
 import com.example.shoppingmall.domain.item.domain.ClothingSize;
 import org.springframework.data.jpa.repository.JpaRepository;

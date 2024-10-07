@@ -4,9 +4,11 @@ import com.example.shoppingmall.domain.cart.dao.CartRepository;
 import com.example.shoppingmall.domain.cart.domain.Cart;
 import com.example.shoppingmall.domain.cart.domain.CartItem;
 import com.example.shoppingmall.domain.cart.dto.AddCartItemRequest;
+import com.example.shoppingmall.domain.cart.excepction.CartException;
 import com.example.shoppingmall.domain.item.dao.CartItemRepository;
 import com.example.shoppingmall.domain.item.dao.ItemStockRepository;
 import com.example.shoppingmall.domain.item.domain.ItemStock;
+import com.example.shoppingmall.domain.item.dto.CartItemResponse;
 import com.example.shoppingmall.domain.item.excepction.ItemException;
 import com.example.shoppingmall.domain.user.dao.UserRepository;
 import com.example.shoppingmall.domain.user.domain.User;
@@ -14,12 +16,18 @@ import com.example.shoppingmall.domain.user.excepction.UserException;
 import com.example.shoppingmall.global.exception.ErrorCode;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
-@Transactional
+import static com.example.shoppingmall.global.exception.ErrorCode.CART_ITEM_NOT_MODIFIABLE;
+import static com.example.shoppingmall.global.exception.ErrorCode.NOT_FOUND_ITEM;
+
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 @Service
 public class CartService {
@@ -31,11 +39,12 @@ public class CartService {
     private final CartItemRepository cartItemRepository;
 
 
+    @Transactional
     public void addCartItem(CustomUserDetails userDetails, AddCartItemRequest request) {
 
         // 담고싶은 물품정보를 가져온다.
         ItemStock itemStock = itemStockRepository.findItemStockWithItem(request.getItemStockId())
-                .orElseThrow(() -> new ItemException(ErrorCode.NOT_FOUND_ITEM));
+                .orElseThrow(() -> new ItemException(NOT_FOUND_ITEM));
 
 
         // 인증객체로 가져온 유저아이디에 속한 장바구니를 가져온다.
@@ -66,6 +75,50 @@ public class CartService {
                     .addCartItem(itemStock.getItem(), itemStock, request.getQuantity());
         }
 
+    }
 
+
+    /**
+     * 검색때와 마찬가지로 Pageable 로 받지 않았습니다.
+     * 현재는 잘못된 값이 들어왔을 때
+     * 서비스나 커스텀레파지토리에서 처리해서 새로운 PageRequest 를 만들어서 사용하는 방식을 취했지만,
+     * 다음 프로젝트 때 기회가 된다면
+     * Pageable 에 관련한 커스텀 예외 처리 클래스를 따로 만들어보는 방식으로 해보겠습니다.
+     */
+    public Slice<CartItemResponse> getMyCartItems(CustomUserDetails userDetails, int pageNumber) {
+
+        Long cartId = cartRepository.findCartId(userDetails.getUserId());
+        if(cartId == null || cartId == 0){
+            return new SliceImpl<>(new ArrayList<>(), PageRequest.ofSize(0), false);
+        }
+        if(--pageNumber < 0)  pageNumber = 0;
+        System.out.println("pageNumber: " +  pageNumber);
+
+        return cartItemRepository.findMyCartItems(cartId, cartPageable(pageNumber))
+                .map(CartItemResponse::from);
+    }
+
+    private Pageable cartPageable(int pageNumber) {
+        return PageRequest.of(pageNumber, 20, Sort.Direction.DESC, "createdAt");
+    }
+
+    @Transactional
+    public void modifyCartItemQuantity(CustomUserDetails customUserDetails,
+                                       long cartItemId, int quantity) {
+
+        CartItem cartItem = cartItemRepository.findCartItemByFetch(cartItemId)
+                .orElseThrow(() -> new ItemException(NOT_FOUND_ITEM));
+
+        Long userId = cartItem.getCart().getUser().getId();
+        if(userId == null || !userId.equals(customUserDetails.getUserId())){
+            throw new CartException(CART_ITEM_NOT_MODIFIABLE);
+        }
+
+        cartItem.modifyQuantity(quantity);
+    }
+
+    @Transactional
+    public void deleteCartItems(List<Long> cartItemIdList, CustomUserDetails userDetails) {
+        cartItemRepository.deleteCartItems(cartItemIdList, userDetails.getUserId());
     }
 }
