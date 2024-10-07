@@ -59,7 +59,7 @@ public class User extends BaseTimeEntity {
 
     private String profileImageUrl;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = LAZY)
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = LAZY)
     private Cart cart;
 
 
@@ -74,6 +74,10 @@ public class User extends BaseTimeEntity {
     // 모종의 이유로 cart 가 존재하지 않을 때, 서비스에서 새로 만들 수 있게 하기 위함
     public void addCart() {
         cart = new Cart(this);
+    }
+
+    public void deleteUser(){
+        status = UserStatus.WITHDRAWAL;
     }
 
 }
