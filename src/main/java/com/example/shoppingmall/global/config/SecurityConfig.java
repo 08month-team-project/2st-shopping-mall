@@ -8,6 +8,7 @@ import com.example.shoppingmall.global.security.util.RedisAuthUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,7 +22,7 @@ import org.springframework.web.cors.CorsConfiguration;
 
 import java.util.Collections;
 
-import static org.springframework.http.HttpMethod.GET;
+import static org.springframework.http.HttpMethod.*;
 
 @Configuration
 @EnableWebSecurity(debug = true)
@@ -74,10 +75,12 @@ public class SecurityConfig {
                         "items/categories",
                         "items/size").permitAll()
                 .requestMatchers(GET, "items/{item_id}").permitAll()
+                .requestMatchers(GET, "items/{item_id}/images").permitAll()
                 .requestMatchers(
                         "items/images/upload",
                         "items/seller/register").hasAuthority("SELLER")
                 .anyRequest().authenticated());
+
 
         http.addFilterAt(new LoginFilter(jwtUtil, redisAuthUtil, authenticationManager(authenticationConfiguration)), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new JwtAuthenticationFilter(jwtUtil, redisAuthUtil),UsernamePasswordAuthenticationFilter.class);

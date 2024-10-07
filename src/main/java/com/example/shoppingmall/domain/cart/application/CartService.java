@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import static com.example.shoppingmall.global.exception.ErrorCode.CART_ITEM_NOT_MODIFIABLE;
@@ -114,5 +115,10 @@ public class CartService {
         }
 
         cartItem.modifyQuantity(quantity);
+    }
+
+    @Transactional
+    public void deleteCartItems(List<Long> cartItemIdList, CustomUserDetails userDetails) {
+        cartItemRepository.deleteCartItems(cartItemIdList, userDetails.getUserId());
     }
 }

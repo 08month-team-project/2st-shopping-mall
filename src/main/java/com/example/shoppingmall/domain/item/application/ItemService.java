@@ -1,14 +1,19 @@
 package com.example.shoppingmall.domain.item.application;
 
 import com.example.shoppingmall.domain.item.dao.CategoryRepository;
-import com.example.shoppingmall.domain.item.dao.ClothSizeRepository;
+
+import com.example.shoppingmall.domain.item.dao.ClothingSizeRepository;
 import com.example.shoppingmall.domain.item.dao.ImageRepository;
 import com.example.shoppingmall.domain.item.dao.ItemRepository;
 import com.example.shoppingmall.domain.item.domain.Category;
+import com.example.shoppingmall.domain.item.domain.CategoryItem;
 import com.example.shoppingmall.domain.item.domain.ClothSize;
 import com.example.shoppingmall.domain.item.domain.Item;
 import com.example.shoppingmall.domain.item.dto.*;
 import com.example.shoppingmall.domain.item.excepction.ItemException;
+import com.example.shoppingmall.domain.item.dto.ItemDetailImages;
+import com.example.shoppingmall.domain.item.dto.ItemDetailResponse;
+import com.example.shoppingmall.domain.item.dto.ItemResponse;
 import com.example.shoppingmall.domain.item.type.SortCondition;
 import com.example.shoppingmall.domain.item.type.StatusCondition;
 import lombok.RequiredArgsConstructor;
@@ -18,32 +23,32 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import static com.example.shoppingmall.global.exception.ErrorCode.NOT_FOUND_ITEM;
 
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class ItemService {
 
     private final ItemRepository itemRepository;
     private final ImageRepository imageRepository;
     private final CategoryRepository categoryRepository;
-    private final ClothSizeRepository clothSizeRepository;
+    private final ClothingSizeRepository clothSizeRepository;
 
 
-//    @Transactional(readOnly = true)
-//    public ItemDetailResponse getItemDetail(long itemId) {
-//
-//        Item item = itemRepository.findItemAndStockAndSeller(itemId)
-//                .orElseThrow(() -> new ItemException(NOT_FOUND_ITEM));
-//
-//        return new ItemDetailResponse(item, imageRepository.findAllByItemId(item.getId()));
-//    }
+    public ItemDetailResponse getItemDetail(long itemId) {
+
+        Item item = itemRepository.findItemAndStockAndSeller(itemId)
+                .orElseThrow(() -> new ItemException(NOT_FOUND_ITEM));
+
+        return new ItemDetailResponse(item);
+    }
+
+    public ItemDetailImages getItemImages(long itemId) {
+        return ItemDetailImages.of(itemId, imageRepository.findAllByItemId(itemId));
+    }
 
 
-
-
-
-    @Transactional(readOnly = true)
     public Page<ItemResponse> searchItems(Long categoryId,
                                           String itemName,
                                           StatusCondition statusCondition,
@@ -87,3 +92,4 @@ public class ItemService {
 //
 //    }
 }
+
