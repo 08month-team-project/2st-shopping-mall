@@ -78,7 +78,7 @@ public class SecurityConfig {
                 .requestMatchers(GET, "items/{item_id}/images").permitAll()
                 .requestMatchers(
                         "items/images/upload",
-                        "items/seller/register").permitAll()
+                        "items/seller/register").hasAuthority("SELLER")
                 .anyRequest().authenticated());
 
 
