@@ -2,10 +2,11 @@ package com.example.shoppingmall.domain.my.api;
 
 import com.example.shoppingmall.domain.my.application.MyPageService;
 import com.example.shoppingmall.domain.my.dto.MyPageRequest;
-import com.example.shoppingmall.global.security.detail.CustomUserDetails;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +19,7 @@ public class MyPageController {
     private final MyPageService myPageService;
 
     @GetMapping
-    public ResponseEntity<MyPageRequest> myPage(@AuthenticationPrincipal
-                                                    CustomUserDetails userDetails) {
-        return ResponseEntity.ok(myPageService.profileCheck(userDetails));
+    public ResponseEntity<MyPageRequest> myPage(@Valid @AuthenticationPrincipal UserDetails userDetails) {
+        return ResponseEntity.ok(myPageService.check(userDetails));
     }
 }

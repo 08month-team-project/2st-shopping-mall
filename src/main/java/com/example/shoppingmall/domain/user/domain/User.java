@@ -61,7 +61,6 @@ public class User extends BaseTimeEntity {
     @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
     private Cart cart;
 
-    private String comment;
 
     @PrePersist
     public void prePersist() {
