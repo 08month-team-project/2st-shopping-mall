@@ -3,15 +3,14 @@ package com.example.shoppingmall.domain.item.api;
 import com.example.shoppingmall.domain.item.application.ItemService;
 import com.example.shoppingmall.domain.item.application.S3Service;
 import com.example.shoppingmall.domain.item.dto.*;
-import jakarta.validation.Valid;
-import com.example.shoppingmall.domain.item.dto.ItemDetailImages;
-import com.example.shoppingmall.domain.item.dto.ItemDetailResponse;
-import com.example.shoppingmall.domain.item.dto.ItemResponse;
 import com.example.shoppingmall.domain.item.type.SortCondition;
 import com.example.shoppingmall.domain.item.type.StatusCondition;
+import com.example.shoppingmall.global.security.detail.CustomUserDetails;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -74,9 +73,11 @@ public class ItemController {
         return ResponseEntity.ok(response);
     }
 
+    // 상품등록
     @PostMapping("/seller/register")
-    public ResponseEntity<SellerResponse> itemResister(@Valid @RequestBody RegisterRequest request) {
-        SellerResponse response = itemService.itemResister(request);
+    public ResponseEntity<SellerResponse> itemResister(@Valid @RequestBody RegisterRequest request,
+                                                       @AuthenticationPrincipal CustomUserDetails userDetails) {
+        SellerResponse response = itemService.itemRegister(request, userDetails);
         return ResponseEntity.ok(response);
     }
 }
