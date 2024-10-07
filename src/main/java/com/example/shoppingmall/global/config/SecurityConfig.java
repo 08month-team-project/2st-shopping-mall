@@ -73,6 +73,7 @@ public class SecurityConfig {
                         "users/check-email",
                         "items/search").permitAll()
                 .requestMatchers(GET, "items/{item_id}").permitAll()
+                .requestMatchers(GET, "items/{item_id}/images").permitAll()
                 .anyRequest().authenticated());
 
 

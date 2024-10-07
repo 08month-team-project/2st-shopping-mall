@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @NoArgsConstructor
@@ -58,7 +59,7 @@ public class User extends BaseTimeEntity {
 
     private String profileImageUrl;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST, fetch = LAZY)
     private Cart cart;
 
 
