@@ -10,10 +10,12 @@ import java.util.Collection;
 
 public class CustomUserDetails implements UserDetails {
 
-    private Long userId;
+
     private String userEmail;
     private String userPassword;
     private Collection<GrantedAuthority> authorities;
+    @Getter
+    private Long userId;
     @Getter
     private String name;
     @Getter
