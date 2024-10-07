@@ -30,4 +30,10 @@ public class CategoryItem {
         this.category = category;
         this.item = item;
     }
+
+    // 정적 팩토리 메서드
+    public static CategoryItem of(Category category, Item item) {
+        return new CategoryItem(category, item);
+    }
+
 }

@@ -5,7 +5,7 @@ import com.example.shoppingmall.domain.item.dao.ItemRepository;
 import com.example.shoppingmall.domain.item.domain.Category;
 import com.example.shoppingmall.domain.item.domain.ClothingSize;
 import com.example.shoppingmall.domain.item.domain.Item;
-import com.example.shoppingmall.domain.item.dto.ClothingSizeRepository;
+import com.example.shoppingmall.domain.item.dao.ClothingSizeRepository;
 import com.example.shoppingmall.domain.item.type.CategoryName;
 import com.example.shoppingmall.domain.item.type.ClothingSizeName;
 import com.example.shoppingmall.domain.item.type.ItemStatus;
@@ -14,8 +14,6 @@ import com.example.shoppingmall.domain.user.domain.Address;
 import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.type.Gender;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
