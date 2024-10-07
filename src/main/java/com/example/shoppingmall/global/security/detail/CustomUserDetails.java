@@ -38,10 +38,6 @@ public class CustomUserDetails implements UserDetails {
         authorities.add((GrantedAuthority) dto::getRole);
     }
 
-    public Long getUserId() {
-        return userId;
-    }
-
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
