@@ -60,8 +60,8 @@ public class SecurityConfig {
 
         http.formLogin(auth->auth.disable())
                 .httpBasic(auth->auth.disable())
-                .csrf(auth->auth.disable())
-                .cors(auth->auth.disable());
+                .csrf(auth->auth.disable());
+
 
 
 
