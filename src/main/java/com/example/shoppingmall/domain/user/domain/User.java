@@ -65,7 +65,7 @@ public class User extends BaseTimeEntity {
 
     @PrePersist
     public void prePersist() {
-        role = UserRole.CUSTOMER;
+        role = UserRole.SELLER;
         status = UserStatus.ACTIVE;
         addCart();
     }
