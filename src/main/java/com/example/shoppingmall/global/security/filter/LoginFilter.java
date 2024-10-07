@@ -98,6 +98,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
         Long userId = customUserDetails.getUserId();
         String userEmail = customUserDetails.getUsername();
+        String name = customUserDetails.getName();
+        String nickname = customUserDetails.getNickname();
+        String gender = customUserDetails.getGender();
+        String phoneNumber = customUserDetails.getPhoneNumber();
         Collection<? extends GrantedAuthority> authorities = customUserDetails.getAuthorities();
         Iterator<? extends GrantedAuthority> iterator = authorities.iterator();
         GrantedAuthority authority = iterator.next();
@@ -115,7 +119,14 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.addCookie(refreshCookie);
 
         response.setContentType("application/json; charset=UTF-8");
-        response.getWriter().write("{\"message\":\"로그인 성공\"}");
+        response.getWriter().write("{" +
+                "\"message\":\"로그인 성공\"," +
+                "\"email\":\"" + userEmail + "\"," +
+                "\"name\":\"" + name + "\"," +
+                "\"nickname\":\"" + nickname + "\"," +
+                "\"gender\":\"" + gender + "\"," +
+                "\"phone\":\"" + phoneNumber + "\"" +
+                "}");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader("Authorization","Bearer "+accessToken);
     }
