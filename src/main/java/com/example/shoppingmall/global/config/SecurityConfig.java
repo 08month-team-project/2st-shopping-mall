@@ -71,9 +71,14 @@ public class SecurityConfig {
                         "users/signup",
                         "users/login",
                         "users/check-email",
-                        "items/search").permitAll()
+                        "items/search",
+                        "items/categories",
+                        "items/size").permitAll()
                 .requestMatchers(GET, "items/{item_id}").permitAll()
                 .requestMatchers(GET, "items/{item_id}/images").permitAll()
+                .requestMatchers(
+                        "items/images/upload",
+                        "items/seller/register").hasAuthority("SELLER")
                 .anyRequest().authenticated());
 
 

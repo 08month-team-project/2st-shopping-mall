@@ -19,6 +19,10 @@ public enum ErrorCode {
     CART_QUANTITY_EXCEEDS_STOCK(BAD_REQUEST, "재고보다 많을 수량을 담을 수 없습니다."),
     PRODUCT_NOT_FOR_SALE(NOT_FOUND, "이 상품은 현재 판매 중이 아닙니다."),
 
+    // 등록 상황 ItemException
+    NOT_FOUND_CATEGORY(NOT_FOUND,"카테고리를 찾을수 없습니다."),
+    NOT_FOUND_SIZE(NOT_FOUND,"싸이즈를 찾을수 없습니다."),
+
     //CartException
     CART_ITEM_NOT_MODIFIABLE(FORBIDDEN, "본인의 장바구니에 담긴 물품만 수정할 수 있습니다."),
     CART_ITEM_QUANTITY_MIN_LIMIT(BAD_REQUEST, "최소 1개 이상 담아야합니다."),
@@ -28,9 +32,10 @@ public enum ErrorCode {
     IMAGE_TOO_LARGE(PAYLOAD_TOO_LARGE, "파일 크기가 1MB를 초과합니다."),
     NOT_FOUND_IMAGE_URL(NOT_FOUND,"해당 사진의 주소가 존재 하지 않습니다."),
     NOT_VALID_URL(NOT_FOUND,"잘못된 URL 형태입니다."),
-    NOT_ENOUGH_IMAGES(NOT_FOUND,"최소 1장의 이미지를 업로드해야 합니다."),
-    MAX_UPLOAD_LIMIT(NOT_FOUND,"최대 3장 까지만 업로드가 가능합니다."),
-    INVALID_URL_FORMAT(NOT_FOUND,"잘못된 URL 형식입니다.")
+    NOT_ENOUGH_IMAGES(BAD_REQUEST,"최소 1장의 이미지를 업로드해야 합니다."),
+    MAX_UPLOAD_LIMIT(BAD_REQUEST,"최대 3장 까지만 업로드가 가능합니다."),
+    INVALID_URL_FORMAT(NOT_FOUND,"잘못된 URL 형식입니다."),
+    UPLOAD_FALL(INTERNAL_SERVER_ERROR,"업로드에 실패 했습니다.")
 
     ;
 

@@ -2,6 +2,7 @@ package com.example.shoppingmall.global.exception;
 
 import com.example.shoppingmall.domain.cart.excepction.CartException;
 import com.example.shoppingmall.domain.item.excepction.ItemException;
+import com.example.shoppingmall.domain.item.excepction.S3Exception;
 import com.example.shoppingmall.domain.user.excepction.UserException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(CartException.class)
     public ResponseEntity<ErrorResult> handleCartException(CartException e){
+        return makeErrorResult(e.getErrorCode());
+    }
+
+    @ExceptionHandler(S3Exception.class)
+    public ResponseEntity<ErrorResult> handleS3Exception(S3Exception e){
         return makeErrorResult(e.getErrorCode());
     }
 
