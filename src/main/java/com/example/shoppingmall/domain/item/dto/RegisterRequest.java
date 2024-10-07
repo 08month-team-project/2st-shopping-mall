@@ -40,6 +40,7 @@ public class RegisterRequest {
     private String description;
 
     @Future(message = "만료일은 현재 시점 이후여야 합니다.")
+    @JsonProperty("expired_at")
     private LocalDateTime expiredAt;
 
     @NotNull(message = "싸이즈를 선택해주세요")

@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
 import static com.example.shoppingmall.global.exception.ErrorCode.*;
 
 @RequiredArgsConstructor
-@Transactional
+@Transactional(readOnly = true)
 @Service
 public class ItemService {
 
@@ -51,7 +51,6 @@ public class ItemService {
 
 
 
-    @Transactional(readOnly = true)
     public Page<ItemResponse> searchItems(Long categoryId,
                                           String itemName,
                                           StatusCondition statusCondition,
@@ -76,7 +75,6 @@ public class ItemService {
     }
 
     // 옷 상품 싸이즈 목록 전체 조회
-    @Transactional(readOnly = true)
     public SizeResponse getSizeList() {
         List<ClothingSize> sizes = clothSizeRepository.findAll();
 
@@ -90,6 +88,7 @@ public class ItemService {
     }
 
     // 아이템 등록 기능
+    @Transactional
     public SellerResponse itemRegister(RegisterRequest request, CustomUserDetails userDetails) {
 
         /*
