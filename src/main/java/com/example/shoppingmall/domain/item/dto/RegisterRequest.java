@@ -5,12 +5,14 @@ import com.example.shoppingmall.domain.item.type.ClothingSizeName;
 import com.example.shoppingmall.global.annotation.BadWordFilter;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.*;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Getter
+@Builder
 public class RegisterRequest {
 
     @NotNull(message = "이미지 목록은 필수입니다.")
