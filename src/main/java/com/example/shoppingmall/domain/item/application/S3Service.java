@@ -5,12 +5,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 import software.amazon.awssdk.services.s3.presigner.S3Presigner;
 import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.time.Duration;
@@ -31,7 +33,6 @@ public class S3Service {
     private final long maxFileSize = 1_000_000;
 
     public List<String> createUrlsForUpload(List<MultipartFile> files) {
-
         // 파일 수를 체크
         if (files.size() > 3) throw new S3Exception(MAX_UPLOAD_LIMIT);
 
@@ -60,7 +61,6 @@ public class S3Service {
     }
 
     private String uploadValidation(MultipartFile file) {
-
         // 1. 파일 이름이 동일할 경우를 대비해서 UUID 에서 생성된 키와 함께 S3에 저장
         String uniqueFileName = Optional.of(file)
                 .filter(f -> !f.isEmpty())
@@ -76,6 +76,10 @@ public class S3Service {
         // 3. 이미지 크기 확인 = 1MB
         checkFileSize(file.getSize());
 
+        // S3에 파일 업로드
+        uploadFileToS3(file, uniqueFileName);
+
+        // 4. URL 생성
         PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                 .bucket(bucket)
                 .key("test/" + uniqueFileName)
@@ -87,6 +91,20 @@ public class S3Service {
                 .build();
 
         return s3Presigner.presignPutObject(preSignRequest).url().toString();
+    }
+
+    private void uploadFileToS3(MultipartFile file, String uniqueFileName) {
+        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                .bucket(bucket)
+                .key("test/" + uniqueFileName)
+                .build();
+
+        try {
+            // S3에 파일 업로드
+            s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+        } catch (IOException e) {
+            throw new S3Exception(UPLOAD_FALL); // 업로드 실패 시 예외 처리
+        }
     }
 
     private void checkImageExtension(String originalFileName) {
@@ -123,5 +141,4 @@ public class S3Service {
             throw new S3Exception(INVALID_URL_FORMAT); // 잘못된 URL 형식일 경우 예외 발생
         }
     }
-
 }

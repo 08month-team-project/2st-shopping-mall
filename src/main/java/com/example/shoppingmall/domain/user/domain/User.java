@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.FetchType.*;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
 @NoArgsConstructor
@@ -58,7 +59,7 @@ public class User extends BaseTimeEntity {
 
     private String profileImageUrl;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.PERSIST)
+    @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = LAZY)
     private Cart cart;
 
     private String comment;
@@ -74,6 +75,10 @@ public class User extends BaseTimeEntity {
     // 모종의 이유로 cart 가 존재하지 않을 때, 서비스에서 새로 만들 수 있게 하기 위함
     public void addCart() {
         cart = new Cart(this);
+    }
+
+    public void deleteUser(){
+        status = UserStatus.WITHDRAWAL;
     }
 
 }
