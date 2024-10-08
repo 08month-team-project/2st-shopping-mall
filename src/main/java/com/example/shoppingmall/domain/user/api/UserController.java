@@ -46,4 +46,9 @@ public class UserController {
         return ResponseEntity.ok(userResponse);
     }
 
+    @PatchMapping("/role/seller")
+    public ResponseEntity<UserResponse> changeRole(@AuthenticationPrincipal CustomUserDetails userDetails){
+        return ResponseEntity.ok(userService.changeRoleSeller(userDetails));
+    }
+
 }
