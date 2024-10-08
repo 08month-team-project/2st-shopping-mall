@@ -64,6 +64,8 @@ public class User extends BaseTimeEntity {
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = LAZY)
     private Cart cart;
 
+    private String comment;
+
 
     @PrePersist
     public void prePersist() {
@@ -97,6 +99,7 @@ public class User extends BaseTimeEntity {
         this.gender = myPageRequest.getGender();
         this.phoneNumber = myPageRequest.getPhone();
         this.address = myPageRequest.getAddress();
+        this.comment = myPageRequest.getComment();
     }
 
 }

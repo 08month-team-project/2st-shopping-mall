@@ -36,4 +36,6 @@ public class MyPageRequest {
 
     @Valid
     private Address address;
+
+    private String comment;
 }
