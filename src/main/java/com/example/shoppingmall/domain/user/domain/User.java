@@ -2,7 +2,6 @@ package com.example.shoppingmall.domain.user.domain;
 
 import com.example.shoppingmall.domain.cart.domain.Cart;
 import com.example.shoppingmall.domain.common.BaseTimeEntity;
-import com.example.shoppingmall.domain.my.dto.MyPageRequest;
 import com.example.shoppingmall.domain.user.type.Gender;
 import com.example.shoppingmall.domain.user.type.UserRole;
 import com.example.shoppingmall.domain.user.type.UserStatus;
@@ -58,13 +57,11 @@ public class User extends BaseTimeEntity {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    @Column(name = "profile_image_url", columnDefinition = "TEXT")
     private String profileImageUrl;
 
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST,CascadeType.REMOVE}, fetch = LAZY)
     private Cart cart;
 
-    private String comment;
 
     @PrePersist
     public void prePersist() {
@@ -83,17 +80,8 @@ public class User extends BaseTimeEntity {
         status = UserStatus.WITHDRAWAL;
     }
 
-    public void updateProfileImageUrl(String imageUrl){
-        this.profileImageUrl = imageUrl;
-    }
-    public void updateProfile(MyPageRequest myPageRequest){
-        this.email = myPageRequest.getEmail();
-        this.name = myPageRequest.getName();
-        this.nickname = myPageRequest.getNickname();
-        this.password = myPageRequest.getPassword();
-        this.gender = myPageRequest.getGender();
-        this.phoneNumber = myPageRequest.getPhone();
-        this.address = myPageRequest.getAddress();
+    public void changeRoleSeller(){
+        role = UserRole.SELLER;
     }
 
 }
