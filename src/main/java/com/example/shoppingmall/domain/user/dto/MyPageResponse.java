@@ -1,4 +1,4 @@
-package com.example.shoppingmall.domain.my.dto;
+package com.example.shoppingmall.domain.user.dto;
 
 import com.example.shoppingmall.domain.user.domain.Address;
 import com.example.shoppingmall.domain.user.domain.User;

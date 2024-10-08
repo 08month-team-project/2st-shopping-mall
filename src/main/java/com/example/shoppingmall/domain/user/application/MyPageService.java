@@ -1,11 +1,12 @@
-package com.example.shoppingmall.domain.my.application;
+package com.example.shoppingmall.domain.user.application;
 
 
 import com.example.shoppingmall.domain.item.application.S3Service;
-import com.example.shoppingmall.domain.my.dto.MyPageRequest;
-import com.example.shoppingmall.domain.my.dto.MyPageResponse;
+
 import com.example.shoppingmall.domain.user.dao.UserRepository;
 import com.example.shoppingmall.domain.user.domain.User;
+import com.example.shoppingmall.domain.user.dto.MyPageRequest;
+import com.example.shoppingmall.domain.user.dto.MyPageResponse;
 import com.example.shoppingmall.domain.user.excepction.UserException;
 import com.example.shoppingmall.global.exception.ErrorCode;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;

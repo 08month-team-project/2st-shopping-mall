@@ -1,8 +1,8 @@
-package com.example.shoppingmall.domain.my.api;
+package com.example.shoppingmall.domain.user.api;
 
-import com.example.shoppingmall.domain.my.application.MyPageService;
-import com.example.shoppingmall.domain.my.dto.MyPageRequest;
-import com.example.shoppingmall.domain.my.dto.MyPageResponse;
+import com.example.shoppingmall.domain.user.application.MyPageService;
+import com.example.shoppingmall.domain.user.dto.MyPageRequest;
+import com.example.shoppingmall.domain.user.dto.MyPageResponse;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
-@RequestMapping("/my-page")
+@RequestMapping("/users/my-page")
 @RequiredArgsConstructor
 public class MyPageController {
 
@@ -24,16 +24,16 @@ public class MyPageController {
     }
 
     @PostMapping
-    public ResponseEntity<?> modifyMyPage(@AuthenticationPrincipal
+    public ResponseEntity<Void> modifyMyPage(@AuthenticationPrincipal
                                               CustomUserDetails userDetails
-                                                ,MyPageRequest myPageRequest) {
+                                                , MyPageRequest myPageRequest) {
         myPageService.profileModify(userDetails,myPageRequest);
 
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/image")
-    public ResponseEntity<?> uploadProfileImage(@AuthenticationPrincipal
+    public ResponseEntity<Void> uploadProfileImage(@AuthenticationPrincipal
                                                     CustomUserDetails userDetails,
                                                 @RequestParam("file") MultipartFile file) {
         myPageService.updateProfileImage(userDetails,file);

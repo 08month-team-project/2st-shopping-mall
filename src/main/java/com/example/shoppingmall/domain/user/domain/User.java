@@ -2,7 +2,7 @@ package com.example.shoppingmall.domain.user.domain;
 
 import com.example.shoppingmall.domain.cart.domain.Cart;
 import com.example.shoppingmall.domain.common.BaseTimeEntity;
-import com.example.shoppingmall.domain.my.dto.MyPageRequest;
+import com.example.shoppingmall.domain.user.dto.MyPageRequest;
 import com.example.shoppingmall.domain.user.type.Gender;
 import com.example.shoppingmall.domain.user.type.UserRole;
 import com.example.shoppingmall.domain.user.type.UserStatus;
