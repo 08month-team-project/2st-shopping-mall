@@ -1,6 +1,7 @@
 package com.example.shoppingmall.global.security.detail;
 
 import com.example.shoppingmall.global.security.dto.UserDetailsDTO;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -9,21 +10,32 @@ import java.util.Collection;
 
 public class CustomUserDetails implements UserDetails {
 
-    private Long userId;
+
     private String userEmail;
     private String userPassword;
     private Collection<GrantedAuthority> authorities;
+    @Getter
+    private Long userId;
+    @Getter
+    private String name;
+    @Getter
+    private String nickname;
+    @Getter
+    private String phoneNumber;
+    @Getter
+    private String gender;
+
 
     public CustomUserDetails(UserDetailsDTO dto) {
         userId = dto.getUserId();
         userEmail = dto.getEmail();
         userPassword = dto.getPassword();
+        name = dto.getName();
+        nickname = dto.getNickname();
+        phoneNumber = dto.getPhoneNumber();
+        gender = dto.getGender();
         authorities = new ArrayList<>();
         authorities.add((GrantedAuthority) dto::getRole);
-    }
-
-    public Long getUserId() {
-        return userId;
     }
 
     @Override
