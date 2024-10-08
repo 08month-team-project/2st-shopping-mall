@@ -56,7 +56,6 @@ public class MyPageService {
         User user = userRepository.findById(userDetails.getUserId())
                 .orElseThrow(() -> new UserException(ErrorCode.USER_NOT_FOUND));
         user.updateProfileImageUrl(imageUrl);
-        userRepository.save(user);
     }
 }
 // 변동사항이 발생되면 이미지 url을 db에 저장 이미지는 s3에 저장
