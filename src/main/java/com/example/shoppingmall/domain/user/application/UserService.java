@@ -7,6 +7,7 @@ import com.example.shoppingmall.domain.user.dto.SignupRequest;
 import com.example.shoppingmall.domain.user.dto.SignupResponse;
 import com.example.shoppingmall.domain.user.dto.UserResponse;
 import com.example.shoppingmall.domain.user.excepction.UserException;
+import com.example.shoppingmall.domain.user.type.UserRole;
 import com.example.shoppingmall.domain.user.type.UserStatus;
 import com.example.shoppingmall.global.exception.ErrorCode;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
@@ -78,6 +79,19 @@ public class UserService {
 
         return UserResponse.builder()
                 .message("정삭적으로 탈퇴되었습니다.").build();
+    }
+
+    @Transactional
+    public UserResponse changeRoleSeller(CustomUserDetails userDetails){
+        User user = userRepository.findById(userDetails.getUserId())
+                .orElseThrow(()->new UserException(ErrorCode.USER_NOT_FOUND));
+
+        if (user.getRole().equals(UserRole.SELLER)){
+            throw new UserException(ErrorCode.ALREADY_SELLER_USER);
+        }else {
+            user.changeRoleSeller();
+            return UserResponse.builder().message("판매자로 변경되었습니다.").build();
+        }
     }
 
 }
