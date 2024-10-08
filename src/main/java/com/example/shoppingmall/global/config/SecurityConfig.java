@@ -52,19 +52,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-        http.cors((corsCustomizer -> corsCustomizer.configurationSource(request -> {
-            CorsConfiguration configuration = new CorsConfiguration();
-            configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-            configuration.setAllowedOrigins(Collections.singletonList(awsUrl));
-            configuration.setAllowedMethods(Collections.singletonList("*"));
-            configuration.setAllowCredentials(true);
-            configuration.setAllowedHeaders(Collections.singletonList("*"));
-            configuration.setAllowedMethods(Collections.singletonList("POST"));
-            configuration.setAllowedMethods(Collections.singletonList("GET"));
-            configuration.setMaxAge(3600L);
-            configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-            return configuration;
-        })));
+//        http.cors((corsCustomizer -> corsCustomizer.configurationSource(request -> {
+//            CorsConfiguration configuration = new CorsConfiguration();
+//            configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+//            configuration.setAllowedOrigins(Collections.singletonList(awsUrl));
+//            configuration.setAllowedMethods(Collections.singletonList("*"));
+//            configuration.setAllowCredentials(true);
+//            configuration.setAllowedHeaders(Collections.singletonList("*"));
+//            configuration.setAllowedMethods(Collections.singletonList("POST"));
+//            configuration.setAllowedMethods(Collections.singletonList("GET"));
+//            configuration.setMaxAge(3600L);
+//            configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+//            return configuration;
+//        })));
 
         http.formLogin(auth->auth.disable())
                 .httpBasic(auth->auth.disable())
