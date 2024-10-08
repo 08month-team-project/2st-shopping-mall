@@ -80,4 +80,8 @@ public class User extends BaseTimeEntity {
         status = UserStatus.WITHDRAWAL;
     }
 
+    public void changeRoleSeller(){
+        role = UserRole.SELLER;
+    }
+
 }
