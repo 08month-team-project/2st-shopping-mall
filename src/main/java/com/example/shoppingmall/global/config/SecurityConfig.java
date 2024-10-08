@@ -73,18 +73,7 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests(auth-> auth
                 .requestMatchers(
-                        "/",
-                        "users/signup",
-                        "users/login",
-                        "users/check-email",
-                        "items/search",
-                        "items/categories",
-                        "items/size").permitAll()
-                .requestMatchers(GET, "items/{item_id}").permitAll()
-                .requestMatchers(GET, "items/{item_id}/images").permitAll()
-                .requestMatchers(
-                        "items/images/upload",
-                        "items/seller/register").permitAll()
+                        "/**").permitAll()
                 .anyRequest().authenticated());
 
 
