@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/users/my-page")
 @RequiredArgsConstructor
 public class MyPageController {
