@@ -13,15 +13,23 @@ import lombok.NoArgsConstructor;
 public class UserDetailsDTO {
 
     private Long userId;
+    private String name;
+    private String nickname;
     private String email;
     private String password;
+    private String phoneNumber;
+    private String gender;
     private String role;
 
     public static UserDetailsDTO from(User user){
         return UserDetailsDTO.builder()
                 .userId(user.getId())
+                .name(user.getName())
+                .nickname(user.getNickname())
                 .email(user.getEmail())
                 .password(user.getPassword())
+                .gender(user.getGender().name())
+                .phoneNumber(user.getPhoneNumber())
                 .role(user.getRole().name()).build();
     }
 }
