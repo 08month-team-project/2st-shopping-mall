@@ -6,6 +6,7 @@ import com.example.shoppingmall.global.security.filter.LoginFilter;
 import com.example.shoppingmall.global.security.util.JwtUtil;
 import com.example.shoppingmall.global.security.util.RedisAuthUtil;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -33,6 +34,10 @@ public class SecurityConfig {
     private final JwtUtil jwtUtil;
     private final RedisAuthUtil redisAuthUtil;
 
+    @Value("${custom.url}")
+    private String awsUrl;
+
+
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
         return config.getAuthenticationManager();
@@ -50,6 +55,7 @@ public class SecurityConfig {
         http.cors((corsCustomizer -> corsCustomizer.configurationSource(request -> {
             CorsConfiguration configuration = new CorsConfiguration();
             configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
+            configuration.setAllowedOrigins(Collections.singletonList(awsUrl));
             configuration.setAllowedMethods(Collections.singletonList("*"));
             configuration.setAllowCredentials(true);
             configuration.setAllowedHeaders(Collections.singletonList("*"));
