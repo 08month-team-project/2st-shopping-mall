@@ -29,6 +29,7 @@ public class MyPageResponse {
         this.gender = user.getGender();
         this.address = user.getAddress();
         this.comment = user.getComment();
+        this.imageUrl = user.getProfileImageUrl();
     }
 
 }
