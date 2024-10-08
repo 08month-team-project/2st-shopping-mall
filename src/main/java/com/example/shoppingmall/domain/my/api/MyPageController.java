@@ -36,7 +36,7 @@ public class MyPageController {
     public ResponseEntity<?> uploadProfileImage(@AuthenticationPrincipal
                                                     CustomUserDetails userDetails,
                                                 @RequestParam("file") MultipartFile file) {
-            MyPageService.updateProfileImage(userDetails,file);
-            return ResponseEntity.ok().build();
+        myPageService.updateProfileImage(userDetails,file);
+        return ResponseEntity.ok().build();
     }
 }
