@@ -15,7 +15,7 @@ spring:
     password: ${AWS_DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
 
   cloud:
     aws:
