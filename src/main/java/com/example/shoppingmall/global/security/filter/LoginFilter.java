@@ -124,7 +124,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 "\"name\":\"" + name + "\"," +
                 "\"nickname\":\"" + nickname + "\"," +
                 "\"gender\":\"" + gender + "\"," +
-                "\"phone\":\"" + phoneNumber + "\"" +
+                "\"phone\":\"" + phoneNumber + "\"," +
                 "\"refresh\":\"" + refreshToken +"\""+
                 "}");
         response.setStatus(HttpServletResponse.SC_OK);
