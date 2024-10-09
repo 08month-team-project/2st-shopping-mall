@@ -29,7 +29,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = jwtUtil.extractAccessToken(request);
         String refreshTokenFromCookie = jwtUtil.extractRefreshToken(request.getCookies());
-
         try {
             if (StringUtils.hasText(accessToken) && !jwtUtil.isExpired(accessToken)) {
                 if (!jwtUtil.getCategory(accessToken).equals("access")) {
@@ -40,6 +39,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     return;
                 }
                 if (!validateRefreshToken(refreshTokenFromCookie)){
+                    log.info("리프레시 = {}",refreshTokenFromCookie);
                     log.info("액세스 토큰은 유효한데 리프레시 토큰이 유효하지 않습니다.");
                     expiredRefreshTokenResponse(response);
                     return;

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface ItemRepository extends JpaRepository<Item, Long>, ItemRepositoryCustom {
+public interface ItemRepository extends JpaRepository<Item, Long>, ItemRepositoryCustom, ItemRepositorySellerCustom {
 
     /**
      * 물품 상세보기 api 요청 시 사용되지도 않는 cart 에 대한 추가 쿼리가 실행되는 문제 발생

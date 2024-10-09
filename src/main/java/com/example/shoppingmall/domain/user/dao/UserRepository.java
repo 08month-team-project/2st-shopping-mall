@@ -14,6 +14,7 @@ public interface UserRepository extends JpaRepository<User, Long>{
     Optional<User> findByEmail(String email);
     boolean existsByEmail(String email);
 
+
     @Query("select u from User u join fetch u.cart where u.id = :userId")
     Optional<User> findUserWithCartByUserId(@Param("userId") Long userId);
 }

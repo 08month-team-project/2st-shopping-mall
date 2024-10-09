@@ -38,7 +38,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-
         try {
             if (!request.getMethod().equals("POST")){
                 response.setContentType("application/json; charset=UTF-8");
@@ -111,12 +110,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String refreshToken = jwtUtil.createJwt("refresh",userId,userEmail,role, 1000*60*60*24*3L);
         redisAuthUtil.saveRefreshToken(userEmail,refreshToken);
 
-        Cookie refreshCookie = new Cookie("refresh",refreshToken);
-        refreshCookie.setHttpOnly(true);
-        refreshCookie.setSecure(true);
-        refreshCookie.setPath("/");
-        refreshCookie.setMaxAge(60 * 60 * 24 * 3);
-        response.addCookie(refreshCookie);
+//        Cookie refreshCookie = new Cookie("refresh",refreshToken);
+//        refreshCookie.setHttpOnly(true);
+//        refreshCookie.setSecure(true);
+//        refreshCookie.setPath("/");
+//        refreshCookie.setMaxAge(60 * 60 * 24 * 3);
+//        response.addCookie(refreshCookie);
 
         response.setContentType("application/json; charset=UTF-8");
         response.getWriter().write("{" +
@@ -125,7 +124,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
                 "\"name\":\"" + name + "\"," +
                 "\"nickname\":\"" + nickname + "\"," +
                 "\"gender\":\"" + gender + "\"," +
-                "\"phone\":\"" + phoneNumber + "\"" +
+                "\"phone\":\"" + phoneNumber + "\"," +
+                "\"refresh\":\"" + refreshToken +"\""+
                 "}");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setHeader("Authorization","Bearer "+accessToken);
@@ -133,6 +133,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
+
         response.setContentType("application/json; charset=UTF-8");
         response.getWriter().write("{\"message\":\"사용자 인증에 실패했습니다.\"}");
         response.setStatus(401);

@@ -24,6 +24,10 @@ public enum ErrorCode {
     // 등록 상황 ItemException
     NOT_FOUND_CATEGORY(NOT_FOUND,"카테고리를 찾을수 없습니다."),
     NOT_FOUND_SIZE(NOT_FOUND,"싸이즈를 찾을수 없습니다."),
+    NOT_ROLE_SELLER(BAD_REQUEST, "판매자만 접근 가능합니다."),
+    NOT_FOUND_ITEM_STOCK(NOT_FOUND,"해당 상품에 수량이 존재하지 않습니다."),
+    INVALID_STOCK(BAD_REQUEST,"수량은 0 이하가 될 수 없습니다."),
+
 
     //CartException
     CART_ITEM_NOT_MODIFIABLE(FORBIDDEN, "본인의 장바구니에 담긴 물품만 수정할 수 있습니다."),

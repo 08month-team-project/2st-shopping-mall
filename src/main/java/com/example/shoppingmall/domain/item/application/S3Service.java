@@ -60,7 +60,7 @@ public class S3Service {
                 }, () -> { throw new S3Exception(NOT_VALID_URL); });
     }
 
-    private String uploadValidation(MultipartFile file) {
+    public String uploadValidation(MultipartFile file) {
         // 1. 파일 이름이 동일할 경우를 대비해서 UUID 에서 생성된 키와 함께 S3에 저장
         String uniqueFileName = Optional.of(file)
                 .filter(f -> !f.isEmpty())
