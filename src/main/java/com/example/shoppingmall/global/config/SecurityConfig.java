@@ -23,7 +23,9 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 
 import static org.springframework.http.HttpMethod.*;
 
@@ -54,20 +56,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-//        http.cors((corsCustomizer -> corsCustomizer.configurationSource(request -> {
-//            CorsConfiguration configuration = new CorsConfiguration();
-//            configuration.setAllowedOrigins(Collections.singletonList("http://localhost:3000"));
-//            configuration.setAllowedOrigins(Collections.singletonList(awsUrl));
-//            configuration.setAllowedMethods(Collections.singletonList("*"));
-//            configuration.setAllowCredentials(true);
-//            configuration.setAllowedHeaders(Collections.singletonList("*"));
-//            configuration.setAllowedMethods(Collections.singletonList("POST"));
-//            configuration.setAllowedMethods(Collections.singletonList("GET"));
-//            configuration.setMaxAge(3600L);
-//            configuration.setExposedHeaders(Collections.singletonList("Authorization"));
-//            return configuration;
-//        })));
-        http.cors((auth)->auth.disable());
+        http.cors((corsCustomizer -> corsCustomizer.configurationSource(request -> {
+            CorsConfiguration configuration = new CorsConfiguration();
+            configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"));
+            configuration.setAllowCredentials(true);
+            configuration.setMaxAge(3600L);
+            configuration.setExposedHeaders(Arrays.asList("Authorization","Content-Type"));
+            return configuration;
+        })));
 
         http.formLogin(auth->auth.disable())
                 .httpBasic(auth->auth.disable())
@@ -92,16 +89,16 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = new CorsConfiguration();
-        config.setAllowCredentials(true);
-        config.addAllowedOrigin("http://localhost:3000");
-        config.addAllowedHeader("");
-        config.addAllowedMethod("");
-        source.registerCorsConfiguration("/**", config);
-        return new CorsFilter(source);
-    }
+//    @Bean
+//    public CorsFilter corsFilter() {
+//        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//        CorsConfiguration config = new CorsConfiguration();
+//        config.setAllowCredentials(true);
+//        config.addAllowedOrigin("http://localhost:3000");
+//        config.addAllowedHeader("");
+//        config.addAllowedMethod("");
+//        source.registerCorsConfiguration("/**", config);
+//        return new CorsFilter(source);
+//    }
 }
 
