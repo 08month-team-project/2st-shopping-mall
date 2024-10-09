@@ -11,7 +11,16 @@ import java.util.Optional;
 @Repository
 public interface ItemStockRepository extends JpaRepository<ItemStock, Long> {
 
-    @Query("select is from ItemStock is join fetch is.item i where is.id = :itemStockId")
+    @Query("select is from ItemStock is " +
+            " join fetch is.item i " +
+            " where is.id = :itemStockId")
     Optional<ItemStock> findItemStockWithItem(@Param("itemStockId") long itemStockId);
+
+
+    @Query("select is from ItemStock is " +
+            " join fetch is.item " +
+            " join fetch is.clothingSize " +
+            " where is.id = :itemStockId")
+    Optional<ItemStock> findItemStockByFetch(@Param("itemStockId") long itemStockId);
 }
 
