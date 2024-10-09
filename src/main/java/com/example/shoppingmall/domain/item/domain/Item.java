@@ -126,7 +126,7 @@ public class Item extends BaseTimeEntity {
                 .sum();
 
         if (totalStock == 0) {
-            this.status = ItemStatus.OUT_OF_STOCK;
+            this.status = ItemStatus.ALL_OUT_OF_STOCK;
         } else {
             this.status = ItemStatus.IN_STOCK;
         }

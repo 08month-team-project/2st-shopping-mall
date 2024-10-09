@@ -79,7 +79,7 @@ public class ItemRepositorySellerCustomImpl implements ItemRepositorySellerCusto
         return switch (status) {
             case IN_STOCK ->
                     item.expiredAt.gt(now).and(itemStock.stock.gt(0));
-            case OUT_OF_STOCK ->
+            case ALL_OUT_OF_STOCK ->
                     item.expiredAt.lt(now).or(itemStock.stock.eq(0));
             default ->
                     null;
