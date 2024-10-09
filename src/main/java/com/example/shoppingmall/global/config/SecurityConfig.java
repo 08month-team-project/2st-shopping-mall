@@ -52,15 +52,15 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
 
-        http.cors((corsCustomizer -> corsCustomizer.configurationSource(request -> {
-            CorsConfiguration configuration = new CorsConfiguration();
-            configuration.setAllowedOrigins(List.of("http://localhost:3000"));
-            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"));
-            configuration.setAllowCredentials(true);
-            configuration.setMaxAge(3600L);
-            configuration.setExposedHeaders(Arrays.asList("Authorization","Content-Type"));
-            return configuration;
-        })));
+//        http.cors((corsCustomizer -> corsCustomizer.configurationSource(request -> {
+//            CorsConfiguration configuration = new CorsConfiguration();
+//            configuration.setAllowedOrigins(List.of("http://localhost:3000"));
+//            configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS","PATCH"));
+//            configuration.setAllowCredentials(true);
+//            configuration.setMaxAge(3600L);
+//            configuration.setExposedHeaders(Arrays.asList("Authorization","Content-Type"));
+//            return configuration;
+//        })));
 
         http.formLogin(auth->auth.disable())
                 .httpBasic(auth->auth.disable())

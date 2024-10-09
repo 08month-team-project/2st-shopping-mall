@@ -26,8 +26,12 @@ public class CustomLogoutFilter extends GenericFilterBean {
     }
     private void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws IOException, ServletException{
         String requestUri = request.getRequestURI();
+        if (request.getMethod().equals("OPTIONS")) {
+            return;
+        }
 
         if (!requestUri.matches("^||/users/logout$")){
+
             filterChain.doFilter(request,response);
             return;
         }
@@ -86,6 +90,8 @@ public class CustomLogoutFilter extends GenericFilterBean {
         cookie.setPath("/");
         redisAuthUtil.deleteRefreshToken(email);
 
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
         response.addCookie(cookie);
         response.setContentType("application/json; charset=UTF-8");
         response.getWriter().write("{\"message\":\"로그아웃 성공\"}");

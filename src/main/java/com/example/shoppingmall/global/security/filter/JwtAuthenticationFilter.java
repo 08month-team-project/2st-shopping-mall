@@ -29,7 +29,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = jwtUtil.extractAccessToken(request);
         String refreshTokenFromCookie = jwtUtil.extractRefreshToken(request.getCookies());
-
+        if (request.getMethod().equals("OPTIONS")) {
+            return;
+        }
         try {
             if (StringUtils.hasText(accessToken) && !jwtUtil.isExpired(accessToken)) {
                 if (!jwtUtil.getCategory(accessToken).equals("access")) {
@@ -68,6 +70,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 return;
             }
         }
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
         filterChain.doFilter(request, response);
     }
     private void expiredRefreshTokenResponse(HttpServletResponse response) throws IOException {
