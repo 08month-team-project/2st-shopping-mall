@@ -37,7 +37,11 @@ public enum ErrorCode {
     NOT_ENOUGH_IMAGES(BAD_REQUEST,"최소 1장의 이미지를 업로드해야 합니다."),
     MAX_UPLOAD_LIMIT(BAD_REQUEST,"최대 3장 까지만 업로드가 가능합니다."),
     INVALID_URL_FORMAT(NOT_FOUND,"잘못된 URL 형식입니다."),
-    UPLOAD_FALL(INTERNAL_SERVER_ERROR,"업로드에 실패 했습니다.")
+    UPLOAD_FALL(INTERNAL_SERVER_ERROR,"업로드에 실패 했습니다."),
+
+    //OrderException  왜 구매하지 못하는 지에 대해서는 따로 dto를 같이 보냄
+    ITEM_UNAVAILABLE(CONFLICT, "해당 상품은 구매 가능한 상태가 아닙니다."),
+    UNPROCESSABLE_ORDER(INTERNAL_SERVER_ERROR, "해당 주문을 처리할 수 없습니다.");
 
     ;
 
