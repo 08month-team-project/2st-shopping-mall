@@ -82,12 +82,14 @@ public class CustomLogoutFilter extends GenericFilterBean {
             return;
         }
 
-        Cookie cookie = new Cookie("refresh",null);
-        cookie.setMaxAge(0);
-        cookie.setPath("/");
+//        Cookie cookie = new Cookie("refresh",null);
+//        cookie.setMaxAge(0);
+//        cookie.setPath("/");
+//        response.addCookie(cookie);
+
+
         redisAuthUtil.deleteRefreshToken(email);
 
-        response.addCookie(cookie);
         response.setContentType("application/json; charset=UTF-8");
         response.getWriter().write("{\"message\":\"로그아웃 성공\"}");
         response.setStatus(HttpServletResponse.SC_OK);
