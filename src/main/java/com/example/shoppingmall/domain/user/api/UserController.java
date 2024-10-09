@@ -18,6 +18,10 @@ import org.springframework.web.bind.annotation.*;
 
 
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000"},
+        allowCredentials = "true",maxAge = 3600,
+        methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PATCH,RequestMethod.PUT,RequestMethod.OPTIONS},
+        exposedHeaders = {"Authorization","Content-Type"})
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
