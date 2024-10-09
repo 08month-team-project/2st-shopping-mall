@@ -64,7 +64,9 @@ class MyPageControllerTest {
     @Test
     @DisplayName("프로필 수정")
     void modifyMyPage() throws Exception {
-        MyPageRequest myPageRequest = new MyPageRequest();
+        MyPageRequest myPageRequest = MyPageRequest.builder()
+                .name("홍길동")
+                .build();
 
         ResponseEntity<Void> result = myPageController.modifyMyPage(userDetails, myPageRequest);
 

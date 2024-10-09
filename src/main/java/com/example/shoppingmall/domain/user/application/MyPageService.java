@@ -49,11 +49,11 @@ public class MyPageService {
 
     @Transactional
     public void updateProfileImage(CustomUserDetails userDetails,MultipartFile file) {
-        String imageUrl = s3Service.uploadValidation(file);
-
         // DB에 URL 저장
         User user = userRepository.findById(userDetails.getUserId())
                 .orElseThrow(() -> new UserException(ErrorCode.USER_NOT_FOUND));
+
+        String imageUrl = s3Service.uploadValidation(file);
         user.updateProfileImageUrl(imageUrl);
     }
 }
