@@ -95,6 +95,7 @@ public class Item extends BaseTimeEntity {
         this.status = ItemStatus.IN_STOCK;
     }
 
+    // #38 pr 참고해주세요.
     public static Item createItem(RegisterRequest request, User user, String thumbnailUrl) {
         return Item.builder()
                 .name(request.getName())
