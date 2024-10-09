@@ -16,6 +16,7 @@ import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.excepction.UserException;
 import com.example.shoppingmall.global.exception.ErrorCode;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
@@ -48,6 +49,7 @@ public class OrderServiceV1 {
     private final ItemStockRepository itemStockRepository;
 
     private final RedissonClient redissonClient;
+    private final EntityManager entityManager;
 
     // 읽으셔도 되고, 안 읽으셔도 됩니다...
     // 제 생각이 정리가 안돼서 주저리주저리 적어놓은 겁니다. (pr에만 적을까 하다가 코드랑 바로 볼 수 있는게 좋을 듯 하여... 물론 노션에도 적어놓을 겁니다.)
@@ -128,7 +130,7 @@ public class OrderServiceV1 {
      * 일단 딱봐도 안되는 상황이지만 테스트코드를 세팅하고 실행해보았는데 역시나였다.
      *
      *
-     *
+     * + 중간에 flush문을 추가하여 처음 의도했던 대로 쿼리 순서가 진행됐으나, 여전히 동시성 문제는 해결하지 못하였다.
      */
 
     @Transactional
@@ -220,6 +222,8 @@ public class OrderServiceV1 {
 
         // 주문 성공 시 실제 주문아이템 데이터 생성 후 order 에 추가
         order.addOrderItem(itemStock, request.getQuantity(), itemStock.getItem().getPrice());
+
+        entityManager.flush(); // update 문이 가장 마지막에 일어나서 flush를 적용
 
         // 주문 결과의 상태를 같이 넣어서 다시 dto 로 반환
         return OrderItemResponse.of(
