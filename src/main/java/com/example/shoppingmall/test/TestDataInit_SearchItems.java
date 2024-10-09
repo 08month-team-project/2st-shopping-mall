@@ -1,4 +1,4 @@
-package com.example.shoppingmall;
+package com.example.shoppingmall.test;
 
 import com.example.shoppingmall.domain.item.dao.CategoryRepository;
 import com.example.shoppingmall.domain.item.dao.ItemRepository;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.shoppingmall.domain.item.type.ItemStatus.IN_STOCK;
-import static com.example.shoppingmall.domain.item.type.ItemStatus.OUT_OF_STOCK;
+import static com.example.shoppingmall.domain.item.type.ItemStatus.ALL_OUT_OF_STOCK;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -112,7 +112,7 @@ public class TestDataInit_SearchItems {
                         name + i,
                         category,
                         itemPrice--, itemHits++,
-                        OUT_OF_STOCK,
+                        ALL_OUT_OF_STOCK,
                         expiryDateTime(i, true)));
             }
 
@@ -122,7 +122,7 @@ public class TestDataInit_SearchItems {
                         name + i,
                         category,
                         itemPrice++, itemHits--,
-                        OUT_OF_STOCK,
+                        ALL_OUT_OF_STOCK,
                         expiryDateTime(i, false)));
             }
 

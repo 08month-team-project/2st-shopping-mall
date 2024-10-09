@@ -1,4 +1,4 @@
-package com.example.shoppingmall;
+package com.example.shoppingmall.test;
 
 import com.example.shoppingmall.domain.item.dao.CategoryRepository;
 import com.example.shoppingmall.domain.item.dao.ClothingSizeRepository;
@@ -11,7 +11,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
-@Component
+//@Component
 public class DataInit_CateAndSize implements CommandLineRunner {
 
     private final CategoryRepository categoryRepository;
