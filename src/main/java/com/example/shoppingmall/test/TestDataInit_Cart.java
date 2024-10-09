@@ -37,7 +37,7 @@ public class TestDataInit_Cart {
     private final ClothingSizeRepository clothingSizeRepository;
 
     @Transactional
-    //@EventListener(value = ApplicationReadyEvent.class)
+    @EventListener(value = ApplicationReadyEvent.class)
     public void initData() {
 
         // 유저 ===================================================
