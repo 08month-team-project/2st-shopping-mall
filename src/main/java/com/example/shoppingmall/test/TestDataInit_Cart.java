@@ -1,4 +1,4 @@
-package com.example.shoppingmall;
+package com.example.shoppingmall.test;
 
 import com.example.shoppingmall.domain.item.dao.CategoryRepository;
 import com.example.shoppingmall.domain.item.dao.ItemRepository;
@@ -14,6 +14,8 @@ import com.example.shoppingmall.domain.user.domain.Address;
 import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.type.Gender;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.shoppingmall.domain.item.type.ItemStatus.IN_STOCK;
-import static com.example.shoppingmall.domain.item.type.ItemStatus.OUT_OF_STOCK;
+import static com.example.shoppingmall.domain.item.type.ItemStatus.ALL_OUT_OF_STOCK;
 
 @RequiredArgsConstructor
 @Component
@@ -35,7 +37,7 @@ public class TestDataInit_Cart {
     private final ClothingSizeRepository clothingSizeRepository;
 
     @Transactional
-    //@EventListener(value = ApplicationReadyEvent.class)
+    @EventListener(value = ApplicationReadyEvent.class)
     public void initData() {
 
         // 유저 ===================================================
@@ -100,7 +102,7 @@ public class TestDataInit_Cart {
                         name + i,
                         categories.get(0),
                         0, 0,
-                        OUT_OF_STOCK,
+                        ALL_OUT_OF_STOCK,
                         expiryDateTime(i, true));
                 item.addItemStock(clothingSize,2);
                 items.add(item);
@@ -124,7 +126,7 @@ public class TestDataInit_Cart {
                         name + i,
                         categories.get(0),
                         0, 0,
-                        OUT_OF_STOCK,
+                        ALL_OUT_OF_STOCK,
                         expiryDateTime(i, false));
                 item.addItemStock(clothingSize,2);
                 items.add(item);
