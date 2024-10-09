@@ -38,10 +38,6 @@ public class SecurityConfig {
     private final JwtUtil jwtUtil;
     private final RedisAuthUtil redisAuthUtil;
 
-    @Value("${custom.url}")
-    private String awsUrl;
-
-
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception{
         return config.getAuthenticationManager();
