@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,6 +30,9 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     private final JwtUtil jwtUtil;
     private final RedisAuthUtil redisAuthUtil;
     private final AuthenticationManager authenticationManager;
+
+    @Value("${custom.url}")
+    private String url;
 
     public LoginFilter(JwtUtil jwtUtil, RedisAuthUtil redisAuthUtil, AuthenticationManager authenticationManager) {
         this.jwtUtil = jwtUtil;
@@ -119,6 +123,8 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         refreshCookie.setMaxAge(60 * 60 * 24 * 3);
         response.addCookie(refreshCookie);
 
+        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setContentType("application/json; charset=UTF-8");
         response.getWriter().write("{" +
                 "\"message\":\"로그인 성공\"," +
