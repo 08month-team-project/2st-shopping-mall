@@ -18,6 +18,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -41,6 +42,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         setFilterProcessesUrl("/users/login");
     }
 
+    @CrossOrigin(origins = {"http://localhost:3000"},
+            allowCredentials = "true",maxAge = 3600,
+            methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PATCH,RequestMethod.PUT,RequestMethod.OPTIONS},
+            exposedHeaders = {"Authorization","Content-Type"})
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
 
@@ -98,6 +103,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         return passwordMatcher.find();
     }
 
+    @CrossOrigin(origins = {"http://localhost:3000"},
+            allowCredentials = "true",maxAge = 3600,
+            methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PATCH,RequestMethod.PUT,RequestMethod.OPTIONS},
+            exposedHeaders = {"Authorization","Content-Type"})
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
         CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
@@ -138,6 +147,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         response.setHeader("Authorization","Bearer "+accessToken);
     }
 
+    @CrossOrigin(origins = {"http://localhost:3000"},
+            allowCredentials = "true",maxAge = 3600,
+            methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PATCH,RequestMethod.PUT,RequestMethod.OPTIONS},
+            exposedHeaders = {"Authorization","Content-Type"})
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
         response.setContentType("application/json; charset=UTF-8");

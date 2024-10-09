@@ -16,6 +16,10 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+@CrossOrigin(origins = {"http://localhost:3000"},
+        allowCredentials = "true",maxAge = 3600,
+        methods = {RequestMethod.GET,RequestMethod.POST,RequestMethod.DELETE,RequestMethod.PATCH,RequestMethod.PUT,RequestMethod.OPTIONS},
+        exposedHeaders = {"Authorization","Content-Type"})
 @RequestMapping("/carts")
 public class CartController { // TODO 정말 만약에 시간이 남는다면, 미로그인 장바구니 이용 로직 추가..
 
