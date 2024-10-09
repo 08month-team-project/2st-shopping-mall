@@ -38,8 +38,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
         try {
             if (!request.getMethod().equals("POST")){
                 response.setContentType("application/json; charset=UTF-8");
@@ -96,9 +94,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
-        if (request.getMethod().equals("OPTIONS")) {
-            return;
-        }
         CustomUserDetails customUserDetails = (CustomUserDetails) authResult.getPrincipal();
         Long userId = customUserDetails.getUserId();
         String userEmail = customUserDetails.getUsername();
@@ -122,8 +117,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         refreshCookie.setMaxAge(60 * 60 * 24 * 3);
         response.addCookie(refreshCookie);
 
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setContentType("application/json; charset=UTF-8");
         response.getWriter().write("{" +
                 "\"message\":\"로그인 성공\"," +
@@ -139,11 +132,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     @Override
     protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException failed) throws IOException, ServletException {
-        if (request.getMethod().equals("OPTIONS")) {
-            return;
-        }
-        response.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-        response.setHeader("Access-Control-Allow-Credentials", "true");
+
         response.setContentType("application/json; charset=UTF-8");
         response.getWriter().write("{\"message\":\"사용자 인증에 실패했습니다.\"}");
         response.setStatus(401);
