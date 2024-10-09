@@ -2,7 +2,8 @@ spring:
   profiles:
     group:
       local: prod
-
+#custom:
+#  url: ${AWS_URL}
 ---
 spring:
   config:

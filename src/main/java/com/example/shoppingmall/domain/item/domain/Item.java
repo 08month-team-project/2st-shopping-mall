@@ -111,4 +111,24 @@ public class Item extends BaseTimeEntity {
                 .forEach(url -> this.images.add(ItemImage.of(this, url)));
     }
 
+    public void updateStockAndStatus(ClothingSize size, int newStock) {
+
+        // 사이즈에 맞는 재고를 업데이트
+        for (ItemStock itemStock : stocks) {
+            if (itemStock != null && itemStock.getClothingSize().getId().equals(size.getId())) {
+                itemStock.changeStock(newStock);
+            }
+        }
+
+        int totalStock = stocks.stream()
+                .mapToInt(ItemStock::getStock)
+                .sum();
+
+        if (totalStock == 0) {
+            this.status = ItemStatus.OUT_OF_STOCK;
+        } else {
+            this.status = ItemStatus.IN_STOCK;
+        }
+
+    }
 }
