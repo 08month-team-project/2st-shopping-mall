@@ -58,7 +58,7 @@ public class CartItem extends BaseTimeEntity {
         if (quantity < 1) quantity = 1;
 
         // 물품에 속하는 모든 옵션(사이즈 등) 의 재고가 없을 때 or 만료일자
-        if (item.getStatus() == ItemStatus.OUT_OF_STOCK ||
+        if (item.getStatus() == ItemStatus.ALL_OUT_OF_STOCK ||
                 item.getExpiredAt().isBefore(LocalDateTime.now())) {
             throw new ItemException(PRODUCT_NOT_FOR_SALE);
         }
@@ -75,7 +75,7 @@ public class CartItem extends BaseTimeEntity {
     // 장바구니 수정 (수량 변경)
     public void modifyQuantity(int quantity) {
         // 이미 담아놨던 물품이 만료일자인지, 품절처리 상태인지 확인
-        if ((item.getStatus() == null) || item.getStatus().equals(ItemStatus.OUT_OF_STOCK)) {
+        if ((item.getStatus() == null) || item.getStatus().equals(ItemStatus.ALL_OUT_OF_STOCK)) {
             throw new ItemException(PRODUCT_NOT_FOR_SALE);
         }
         // 판매중이면, 넣어놓은 옵션(사이즈) 의 물품의 개별 재고를 확인
