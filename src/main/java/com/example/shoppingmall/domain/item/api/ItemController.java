@@ -3,12 +3,15 @@ package com.example.shoppingmall.domain.item.api;
 import com.example.shoppingmall.domain.item.application.ItemService;
 import com.example.shoppingmall.domain.item.application.S3Service;
 import com.example.shoppingmall.domain.item.dto.*;
+import com.example.shoppingmall.domain.item.type.ItemStatus;
 import com.example.shoppingmall.domain.item.type.SortCondition;
 import com.example.shoppingmall.domain.item.type.StatusCondition;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -78,6 +81,23 @@ public class ItemController {
     public ResponseEntity<SellerResponse> itemResister(@Valid @RequestBody RegisterRequest request,
                                                        @AuthenticationPrincipal CustomUserDetails userDetails) {
         SellerResponse response = itemService.itemRegister(request, userDetails);
+        return ResponseEntity.ok(response);
+    }
+
+    // 물품 리스트
+    @GetMapping("/status")
+    public ResponseEntity<Page<SellerItemResponse>> searchItems(@AuthenticationPrincipal CustomUserDetails userDetails,
+                                                                @RequestParam ItemStatus status,
+                                                                @PageableDefault(size = 3) Pageable pageable,
+                                                                @RequestParam(defaultValue = "1") Integer page) {
+        Page<SellerItemResponse> result = itemService.searchPageComplex(userDetails,status, pageable,page);
+        return ResponseEntity.ok(result);
+    }
+
+    @PutMapping("/{item-id}/stock")
+    public ResponseEntity<SellerResponse> updateItemStock(@PathVariable(name = "item-id") Long id,
+                                                          @RequestBody UpdateItemRequest request) {
+        SellerResponse response = itemService.updateItemStock(id, request);
         return ResponseEntity.ok(response);
     }
 }
