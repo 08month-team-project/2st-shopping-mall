@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
-//@Component
+@Component
 public class DataInit_CateAndSize implements CommandLineRunner {
 
     private final Logger logger = LoggerFactory.getLogger(DataInit_CateAndSize.class);
