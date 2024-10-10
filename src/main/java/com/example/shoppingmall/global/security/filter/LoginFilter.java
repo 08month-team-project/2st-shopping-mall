@@ -110,12 +110,12 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
         String refreshToken = jwtUtil.createJwt("refresh",userId,userEmail,role, 1000*60*60*24*3L);
         redisAuthUtil.saveRefreshToken(userEmail,refreshToken);
 
-//        Cookie refreshCookie = new Cookie("refresh",refreshToken);
-//        refreshCookie.setHttpOnly(true);
-//        refreshCookie.setSecure(true);
-//        refreshCookie.setPath("/");
-//        refreshCookie.setMaxAge(60 * 60 * 24 * 3);
-//        response.addCookie(refreshCookie);
+        Cookie refreshCookie = new Cookie("refresh",refreshToken);
+        refreshCookie.setHttpOnly(true);
+        refreshCookie.setSecure(true);
+        refreshCookie.setPath("/");
+        refreshCookie.setMaxAge(60 * 60 * 24 * 3);
+        response.addCookie(refreshCookie);
 
         response.setContentType("application/json; charset=UTF-8");
         response.getWriter().write("{" +
