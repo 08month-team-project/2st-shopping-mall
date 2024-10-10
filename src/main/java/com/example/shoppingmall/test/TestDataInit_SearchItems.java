@@ -10,6 +10,7 @@ import com.example.shoppingmall.domain.user.dao.UserRepository;
 import com.example.shoppingmall.domain.user.domain.Address;
 import com.example.shoppingmall.domain.user.domain.User;
 import com.example.shoppingmall.domain.user.type.Gender;
+import com.example.shoppingmall.domain.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
@@ -56,6 +57,7 @@ public class TestDataInit_SearchItems {
                 .password("mypass1234")
                 .gender(Gender.MALE)
                 .phoneNumber("010-1234-1234")
+                .role(UserRole.SELLER)
                 .address(address).build());
 
         // 카테고리 세팅 ============================================
