@@ -1,12 +1,17 @@
 package com.example.shoppingmall.domain.item.domain;
 
 import com.example.shoppingmall.domain.item.excepction.ItemException;
+import com.example.shoppingmall.domain.order.type.OrderResult;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import static com.example.shoppingmall.global.exception.ErrorCode.INVALID_STOCK;
+import java.time.LocalDateTime;
+
+import static com.example.shoppingmall.domain.item.type.ItemStatus.ALL_OUT_OF_STOCK;
+import static com.example.shoppingmall.domain.order.type.OrderResult.*;
 import static jakarta.persistence.FetchType.LAZY;
 import static jakarta.persistence.GenerationType.IDENTITY;
 
@@ -38,6 +43,10 @@ public class ItemStock {
         this.stock = stock;
     }
 
+    public static ItemStock of(Item item, ClothingSize size, Integer stock) {
+        return new ItemStock(item, size, stock);
+    }
+
     public void addStock(int stock) {
         this.stock += stock;
     }
@@ -49,5 +58,21 @@ public class ItemStock {
         if (this.stock < 0) {
             throw new ItemException(INVALID_STOCK);
         }
+    }
+
+    public OrderResult orderItemStock(int quantity) {
+
+        if (ALL_OUT_OF_STOCK.equals(this.item.getStatus())) {
+            return FAIL_SOLD_OUT;
+        }
+        if (item.getExpiredAt().isBefore(LocalDateTime.now())) {
+            return FAIL_SALE_DATE_EXPIRATION;
+        }
+        if (this.stock - quantity < 0) {
+            return STOCK_SHORTAGE;
+        }
+
+        this.stock -= quantity;
+        return SUCCESS;
     }
 }
