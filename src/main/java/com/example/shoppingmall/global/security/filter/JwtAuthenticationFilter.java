@@ -29,7 +29,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String accessToken = jwtUtil.extractAccessToken(request);
-        log.info(String.valueOf(request));
+        request.getParameterMap().forEach((key, value) ->
+                log.info("Parameter Name: {}, Value: {}", key, String.join(", ", value))
+        );
         String refreshTokenFromCookie = jwtUtil.extractRefreshToken(request.getCookies());
         try {
             if (StringUtils.hasText(accessToken) && !jwtUtil.isExpired(accessToken)) {
