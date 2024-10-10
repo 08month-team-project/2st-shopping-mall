@@ -37,6 +37,9 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Headers",
                 "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
+        request.getParameterMap().forEach((key, value) ->
+                log.info("Parameter Name: {}, Value: {}", key, String.join(", ", value))
+        );
         Cookie[] cookies = request.getCookies();
         log.info(Arrays.toString(cookies));
         if (cookies != null) {
