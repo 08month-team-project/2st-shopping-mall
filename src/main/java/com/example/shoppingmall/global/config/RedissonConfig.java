@@ -21,12 +21,13 @@ public class RedissonConfig {
 
     private static final String REDISSON_HOST_PREFIX = "redis://";
 
-
     @Bean
     public RedissonClient redissonClient(){
         Config config = new Config();
         config.useSingleServer().setAddress(REDISSON_HOST_PREFIX + host + ":" + port)
-                .setPassword(password.isEmpty() ? null : password);
+                .setPassword(password.isEmpty() ? null : password)
+                .setConnectionPoolSize(2)
+                .setConnectionMinimumIdleSize(1);
 
         return Redisson.create(config);
     }
