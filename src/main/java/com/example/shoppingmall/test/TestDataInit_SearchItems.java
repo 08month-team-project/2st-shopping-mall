@@ -57,7 +57,6 @@ public class TestDataInit_SearchItems {
                 .password("mypass1234")
                 .gender(Gender.MALE)
                 .phoneNumber("010-1234-1234")
-                .role(UserRole.SELLER)
                 .address(address).build());
 
         // 카테고리 세팅 ============================================
