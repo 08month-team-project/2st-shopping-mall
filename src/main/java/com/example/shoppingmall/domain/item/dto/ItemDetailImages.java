@@ -1,6 +1,8 @@
 package com.example.shoppingmall.domain.item.dto;
 
 import com.example.shoppingmall.domain.item.domain.ItemImage;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -10,6 +12,7 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @Getter
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class ItemDetailImages {
 
     private Long itemId;
