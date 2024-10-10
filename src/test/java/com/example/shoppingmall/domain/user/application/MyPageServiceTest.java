@@ -50,7 +50,7 @@ class MyPageServiceTest {
     }
 
     @Test
-    @DisplayName("조회 매서드 테스트")
+    @DisplayName("프로필 조회: 유저가 존재했을때")
     public void testProfileCheck_UserExists() {
         // Given
         when(userRepository.findById(userDetails.getUserId())).thenReturn(Optional.of(user));
@@ -64,7 +64,7 @@ class MyPageServiceTest {
         verify(userRepository, times(1)).findById(userDetails.getUserId());
     }
     @Test
-    @DisplayName("조회 유저가 존재했을때")
+    @DisplayName("프로필 조회: 유저가 존재하지 않았을때")
     public void testProfileCheck_UserNotFound() {
         // Given
         when(userRepository.findById(userDetails.getUserId())).thenReturn(Optional.empty());
@@ -77,7 +77,7 @@ class MyPageServiceTest {
     }
 
     @Test
-    @DisplayName("수정 매서드 테스트")
+    @DisplayName("프로필 수정: 유저가 존재했을때")
     public void testProfileModify_UserExists() {
         // Given
         MyPageRequest myPageRequest = MyPageRequest.builder()
@@ -85,7 +85,6 @@ class MyPageServiceTest {
                 .nickname("길동이")
                 .phone("010-0000-0000")
                 .email("example@gmail.com")
-                .comment("안녕")
                 .password("a123456789")
                 .gender(Gender.MALE)
                 .build();
@@ -100,7 +99,7 @@ class MyPageServiceTest {
 
     }
     @Test
-    @DisplayName("파일저장 테스트")
+    @DisplayName("프로필이미지: 유저가 존재했을때")
     public void testUpdateProfileImage_UserExists() {
         // Given
         MultipartFile file = mock(MultipartFile.class);
@@ -117,7 +116,7 @@ class MyPageServiceTest {
     }
 
     @Test
-    @DisplayName("파일저장시 유저가 없을때")
+    @DisplayName("프로필이미지: 유저가 존재하지 않았을때")
     public void testUpdateProfileImage_UserNotFound() {
         // Given
         MultipartFile file = mock(MultipartFile.class);
