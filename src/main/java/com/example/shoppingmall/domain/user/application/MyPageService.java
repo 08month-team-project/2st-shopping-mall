@@ -23,8 +23,6 @@ public class MyPageService {
 
     private final S3Service s3Service;
 
-
-
     public MyPageResponse profileCheck(CustomUserDetails userDetails) {
 
         //소개글 추가?
@@ -44,18 +42,18 @@ public class MyPageService {
            따로 db에 저장되지않는 default image를 프론트에서 관리하고
            프론트에서는 백에서 null이 보내지면 기본이미지으로 설정되게 설정
 
-           백에서 default 처리
+           *백에서 default 처리*
             db에 image url을 default 처리
             default image 마저 프론트로 전송
  */
 
     @Transactional
     public void updateProfileImage(CustomUserDetails userDetails,MultipartFile file) {
-        String imageUrl = s3Service.uploadValidation(file);
-
         // DB에 URL 저장
         User user = userRepository.findById(userDetails.getUserId())
                 .orElseThrow(() -> new UserException(ErrorCode.USER_NOT_FOUND));
+
+        String imageUrl = s3Service.uploadValidation(file);
         user.updateProfileImageUrl(imageUrl);
     }
 }

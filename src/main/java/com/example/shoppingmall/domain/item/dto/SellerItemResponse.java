@@ -1,6 +1,5 @@
 package com.example.shoppingmall.domain.item.dto;
 
-import com.example.shoppingmall.domain.item.domain.ClothingSize;
 import com.example.shoppingmall.domain.item.type.CategoryName;
 import com.example.shoppingmall.domain.item.type.ClothingSizeName;
 import com.example.shoppingmall.domain.item.type.ItemStatus;
@@ -14,6 +13,7 @@ import java.time.LocalDateTime;
 @Builder
 public class SellerItemResponse {
 
+    private Long id;
 
     private String nickname;
 
@@ -33,10 +33,11 @@ public class SellerItemResponse {
 
     private ItemStatus status;
 
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private LocalDateTime expiredAt;
 
-    public SellerItemResponse(String nickname, String name, String imageUrl, String description, Integer price, Integer stock, ClothingSizeName sizeName, CategoryName categoryName, ItemStatus status, LocalDateTime expiredAt) {
+    public SellerItemResponse(Long id, String nickname, String name, String imageUrl, String description, Integer price, Integer stock, ClothingSizeName sizeName, CategoryName categoryName, ItemStatus status, LocalDateTime expiredAt) {
+        this.id = id;
         this.nickname = nickname;
         this.name = name;
         this.imageUrl = imageUrl;

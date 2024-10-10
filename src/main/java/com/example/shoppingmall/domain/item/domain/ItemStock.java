@@ -53,7 +53,7 @@ public class ItemStock {
 
     public void changeStock(int newStock) {
 
-        this.stock -= newStock;
+        this.stock = newStock;
 
         if (this.stock < 0) {
             throw new ItemException(INVALID_STOCK);
