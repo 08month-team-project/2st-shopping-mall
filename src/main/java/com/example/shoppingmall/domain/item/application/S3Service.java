@@ -9,13 +9,10 @@ import software.amazon.awssdk.core.sync.RequestBody;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.presigner.S3Presigner;
-import software.amazon.awssdk.services.s3.presigner.model.PutObjectPresignRequest;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.time.Duration;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -27,7 +24,10 @@ public class S3Service {
 
     @Value("${spring.cloud.aws.s3.bucket}")
     private String bucket;
-    private final S3Presigner s3Presigner;
+
+    @Value("${spring.cloud.aws.region.static}")
+    private String region; // S3 지역 정보 추가
+
     private final S3Client s3Client;
     private final List<String> allowedExtensions = Arrays.asList("jpg", "jpeg", "png");
     private final long maxFileSize = 1_000_000;
@@ -79,18 +79,8 @@ public class S3Service {
         // S3에 파일 업로드
         uploadFileToS3(file, uniqueFileName);
 
-        // 4. URL 생성
-        PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                .bucket(bucket)
-                .key("test/" + uniqueFileName)
-                .build();
-
-        PutObjectPresignRequest preSignRequest = PutObjectPresignRequest.builder()
-                .signatureDuration(Duration.ofMinutes(3))
-                .putObjectRequest(putObjectRequest)
-                .build();
-
-        return s3Presigner.presignPutObject(preSignRequest).url().toString();
+        // 4. URL 생성 (S3 URL)
+        return generateS3Url(uniqueFileName);
     }
 
     private void uploadFileToS3(MultipartFile file, String uniqueFileName) {
@@ -105,6 +95,11 @@ public class S3Service {
         } catch (IOException e) {
             throw new S3Exception(UPLOAD_FALL); // 업로드 실패 시 예외 처리
         }
+    }
+
+    private String generateS3Url(String uniqueFileName) {
+        // S3 URL 생성
+        return String.format("https://%s.s3.%s.amazonaws.com/test/%s", bucket, region, uniqueFileName);
     }
 
     private void checkImageExtension(String originalFileName) {

@@ -34,7 +34,8 @@ public class ItemRepositorySellerCustomImpl implements ItemRepositorySellerCusto
         // 페이징을 위한 쿼리 실행 (offset, limit 사용)
         List<SellerItemResponse> content = queryFactory
                 .select(Projections.constructor(SellerItemResponse.class,
-                        user.email,
+                        item.id,
+                        user.nickname,
                         item.name,
                         item.thumbnailUrl,
                         item.description,
