@@ -4,6 +4,7 @@ import jakarta.servlet.*;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -12,6 +13,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Optional;
 
+@Slf4j
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
@@ -35,11 +37,14 @@ public class CorsFilter implements Filter {
         response.setHeader("Access-Control-Allow-Headers",
                 "Origin, X-Requested-With, Content-Type, Accept, Authorization");
 
-        Cookie[] cookies = ((HttpServletRequest) req).getCookies();
+        Cookie[] cookies = request.getCookies();
+        log.info(Arrays.toString(cookies));
         if (cookies != null) {
+
             Optional<Cookie> refreshCookie = Arrays.stream(cookies)
                     .filter(c -> c.getName().equals("refresh"))
                     .findFirst();
+            log.info(refreshCookie.toString());
             refreshCookie.ifPresent(response::addCookie);
         }
 
