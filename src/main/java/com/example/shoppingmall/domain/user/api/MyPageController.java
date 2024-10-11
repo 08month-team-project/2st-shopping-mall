@@ -4,6 +4,7 @@ import com.example.shoppingmall.domain.user.application.MyPageService;
 import com.example.shoppingmall.domain.user.dto.MyPageRequest;
 import com.example.shoppingmall.domain.user.dto.MyPageResponse;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -21,12 +22,14 @@ public class MyPageController {
 
     private final MyPageService myPageService;
 
+    @Operation(summary = "마이페이지 조회")
     @GetMapping
     public ResponseEntity<MyPageResponse> myPage(@AuthenticationPrincipal
                                                     CustomUserDetails userDetails) {
         return ResponseEntity.ok(myPageService.profileCheck(userDetails));
     }
 
+    @Operation(summary ="마이페이지 수정")
     @PostMapping
     public ResponseEntity<Void> modifyMyPage(@AuthenticationPrincipal
                                               CustomUserDetails userDetails
@@ -36,6 +39,7 @@ public class MyPageController {
         return ResponseEntity.ok().build();
     }
 
+    @Operation(summary = "마이페이지 이미지 등록")
     @PostMapping("/image")
     public ResponseEntity<Void> uploadProfileImage(@AuthenticationPrincipal
                                                     CustomUserDetails userDetails,

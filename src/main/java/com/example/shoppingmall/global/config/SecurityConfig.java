@@ -75,7 +75,9 @@ public class SecurityConfig {
                         "users/check-email",
                         "items/search",
                         "items/categories",
-                        "items/size").permitAll()
+                        "items/size",
+                        "swagger-ui/**",
+                        "v3/**").permitAll()
                 .requestMatchers(GET, "items/{item_id}").permitAll()
                 .requestMatchers(GET, "items/{item_id}/images").permitAll()
                 .requestMatchers(

@@ -10,6 +10,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -38,12 +39,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                     response.getWriter().write("{\"message\":\"토큰 카테고리가 일치하지 않습니다.\"}");
                     return;
                 }
-                if (!validateRefreshToken(refreshTokenFromCookie)){
-                    log.info("리프레시 = {}",refreshTokenFromCookie);
-                    log.info("액세스 토큰은 유효한데 리프레시 토큰이 유효하지 않습니다.");
-                    expiredRefreshTokenResponse(response);
-                    return;
-                }
+//                if (!validateRefreshToken(refreshTokenFromCookie)){
+//                    log.info("리프레시 = {}",refreshTokenFromCookie);
+//                    log.info("액세스 토큰은 유효한데 리프레시 토큰이 유효하지 않습니다.");
+//                    expiredRefreshTokenResponse(response);
+//                    return;
+//                }
                 authenticateWithAccessToken(accessToken);
             }
         } catch (ExpiredJwtException e) {
