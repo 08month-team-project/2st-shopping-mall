@@ -7,6 +7,7 @@ import com.example.shoppingmall.domain.user.dto.SignupRequest;
 import com.example.shoppingmall.domain.user.dto.SignupResponse;
 import com.example.shoppingmall.domain.user.dto.UserResponse;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -27,16 +28,19 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     private final UserService userService;
 
+    @Operation(summary = "회원가입")
     @PostMapping("/signup")
     public ResponseEntity<SignupResponse> signup(@Valid @RequestBody SignupRequest signupRequest){
         return ResponseEntity.ok(userService.createUser(signupRequest));
     }
 
+    @Operation(summary = "이메일 체크")
     @PostMapping("/check-email")
     public ResponseEntity<UserResponse> checkEmail(@Valid @RequestBody CheckEmailRequest checkEmailRequest){
         return ResponseEntity.ok(userService.checkEmailDuplicate(checkEmailRequest));
     }
 
+    @Operation(summary = "비활성 사용자")
     @PatchMapping("/status/inactive")
     public ResponseEntity<UserResponse> inactiveUser(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                      HttpServletResponse servletResponse){
@@ -50,6 +54,7 @@ public class UserController {
         return ResponseEntity.ok(userResponse);
     }
 
+    @Operation(summary = "판매자 전환")
     @PatchMapping("/role/seller")
     public ResponseEntity<UserResponse> changeRole(@AuthenticationPrincipal CustomUserDetails userDetails){
         return ResponseEntity.ok(userService.changeRoleSeller(userDetails));

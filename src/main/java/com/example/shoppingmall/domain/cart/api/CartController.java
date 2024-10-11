@@ -4,6 +4,7 @@ import com.example.shoppingmall.domain.cart.application.CartService;
 import com.example.shoppingmall.domain.cart.dto.AddCartItemRequest;
 import com.example.shoppingmall.domain.item.dto.CartItemResponse;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Slice;
@@ -24,7 +25,7 @@ import java.util.List;
 public class CartController { // TODO 정말 만약에 시간이 남는다면, 미로그인 장바구니 이용 로직 추가..
 
     private final CartService cartService;
-
+    @Operation(summary = "장바구니 담기")
     @PostMapping
     public ResponseEntity<Void> addCartItem(
             @Valid @RequestBody AddCartItemRequest request,
@@ -34,7 +35,7 @@ public class CartController { // TODO 정말 만약에 시간이 남는다면, �
         return ResponseEntity.ok().build();
     }
 
-
+    @Operation(summary = "장바구니 조회")
     @GetMapping
     public ResponseEntity<Slice<CartItemResponse>> getMyCartItems(
             @AuthenticationPrincipal CustomUserDetails userDetails,
@@ -43,7 +44,7 @@ public class CartController { // TODO 정말 만약에 시간이 남는다면, �
         return ResponseEntity.ok(cartService.getMyCartItems(userDetails, pageNumber));
     }
 
-
+    @Operation(summary = "장바구니 물품내역 수정")
     @PatchMapping("/items/{cart_item_id}")
     public ResponseEntity<Void> modifyCartItemQuantity(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
@@ -54,7 +55,7 @@ public class CartController { // TODO 정말 만약에 시간이 남는다면, �
         return ResponseEntity.ok().build();
     }
 
-
+    @Operation(summary = "장바구니 물품 삭제")
     @DeleteMapping("/items")
     public ResponseEntity<Void> deleteCartItems(
             @RequestParam("cart_item_id") List<Long> cartItemIdList,

@@ -9,6 +9,7 @@ import com.example.shoppingmall.domain.item.type.StatusCondition;
 import com.example.shoppingmall.global.security.detail.CustomUserDetails;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -73,6 +74,7 @@ public class ItemController {
      * 너무 긴가..? 한두개 저장할 것도 아니고 key값 자체가 길면 뭔가 메모리를 많이 먹지 않을려나? -> 이걸 고유한 짧은 값으로 만들 수 없나? -> 해시화?
      */
 
+    @Operation(summary = "물품 상세 정보 조회")
     @GetMapping("/{item_id}")
     public ResponseEntity<ItemDetailResponse> getItemDetail(
             @PathVariable("item_id") long itemId,
@@ -82,6 +84,7 @@ public class ItemController {
                 .getItemDetail(itemId, request, response));
     }
 
+    @Operation(summary = "물품 상세정보 이미지 조회")
     @GetMapping("/{item_id}/images")
     public ResponseEntity<ItemDetailImages> getItemImages(
             @PathVariable("item_id") long itemId) {
@@ -89,6 +92,7 @@ public class ItemController {
         return ResponseEntity.ok(itemService.getItemImages(itemId));
     }
 
+    @Operation(summary = "물품목록 조회")
     @GetMapping("/search")
     public ResponseEntity<Page<ItemResponse>> searchItems(
             @RequestParam(name = "category_id", required = false) Long categoryId,
@@ -103,6 +107,7 @@ public class ItemController {
     }
 
     // 이미지 업로드
+    @Operation(summary = "이미지 업로드")
     @PostMapping("/images/upload")
     public ResponseEntity<List<String>> getResignedUrls(@RequestParam("images") List<MultipartFile> multipartFiles) {
         List<String> urls = s3Service.createUrlsForUpload(multipartFiles);
@@ -110,6 +115,7 @@ public class ItemController {
     }
 
     // 카테고리 조회 -> 추후 캐싱 도전
+    @Operation(summary = "카테고리 조회")
     @GetMapping("/categories")
     public ResponseEntity<CategoryResponse> getCategoryList() {
         CategoryResponse response = itemService.getCategoryList();
@@ -117,6 +123,7 @@ public class ItemController {
     }
 
     // size 조회 -> 추후 캐싱 도전
+    @Operation(summary = "size 조회")
     @GetMapping("/size")
     public ResponseEntity<SizeResponse> getSizeList() {
         SizeResponse response = itemService.getSizeList();
@@ -124,6 +131,7 @@ public class ItemController {
     }
 
     // 상품등록
+    @Operation(summary = "상품 등록")
     @PostMapping("/seller/register")
     public ResponseEntity<SellerResponse> itemResister(@Valid @RequestBody RegisterRequest request,
                                                        @AuthenticationPrincipal CustomUserDetails userDetails) {
@@ -132,6 +140,7 @@ public class ItemController {
     }
 
     // 물품 리스트
+    @Operation(summary = "판매중인 전체 물품 리스트")
     @GetMapping("/status")
     public ResponseEntity<Page<SellerItemResponse>> searchItems(@AuthenticationPrincipal CustomUserDetails userDetails,
                                                                 @RequestParam ItemStatus status,
@@ -141,6 +150,7 @@ public class ItemController {
         return ResponseEntity.ok(result);
     }
 
+    @Operation(summary = "판매물품 재고 수정")
     @PutMapping("/{item-id}/stock")
     public ResponseEntity<SellerResponse> updateItemStock(@PathVariable(name = "item-id") Long id,
                                                           @RequestBody UpdateItemRequest request) {

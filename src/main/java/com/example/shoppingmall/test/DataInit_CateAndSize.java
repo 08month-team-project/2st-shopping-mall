@@ -10,6 +10,7 @@ import com.example.shoppingmall.domain.item.type.CategoryName;
 import com.example.shoppingmall.domain.item.type.ClothingSizeName;
 import com.example.shoppingmall.domain.user.dao.UserRepository;
 import com.example.shoppingmall.domain.user.domain.User;
+import com.example.shoppingmall.domain.user.type.UserRole;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +21,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
-//@Component
+@Component
 public class DataInit_CateAndSize implements CommandLineRunner {
 
     private final Logger logger = LoggerFactory.getLogger(DataInit_CateAndSize.class);
@@ -50,6 +51,7 @@ public class DataInit_CateAndSize implements CommandLineRunner {
                 .password("password")
                 .phoneNumber("010-2222-3333")
                 .email("seller@example.com")
+                .role(UserRole.SELLER)
                 .build();
 
         userRepository.save(seller);
