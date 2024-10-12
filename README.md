@@ -131,7 +131,6 @@
 ## Erd
 
 ---
-
 ![](C:\Users\USER\Documents\GitHub\2st-shopping-mall-BE\2st-shopping-mall-erd.png)
 
 
