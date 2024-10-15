@@ -68,6 +68,11 @@ public class Item extends BaseTimeEntity {
     @Column(nullable = false, name = "item_status")
     private ItemStatus status;
 
+
+    public void increaseHit() {
+        hitCount++;
+    }
+
     public void addItemStock(ClothingSize size, int stock) {
 
         // 물품에 이미 등록돼있는 사이즈옵션이라면 재고수량을 추가
